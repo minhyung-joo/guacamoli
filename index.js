@@ -12,6 +12,22 @@ app.set('view engine', 'ejs');
 app.get('/', function(request, response) {
   response.render('pages/index');
 });
+app.get('/lg1', function(request, response) {
+  response.render('pages/lg1');
+});
+app.get('/lg7', function(request, response) {
+  response.render('pages/lg7');
+});
+app.get('/cafe', function(request, response) {
+  response.render('pages/cafe');
+});
+app.get('/lsk', function(request, response) {
+  response.render('pages/lsk');
+});
+app.get('/rankings', function(request, response) {
+  response.render('pages/index');
+  //$('.ranking_link').trigger('click');
+});
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
