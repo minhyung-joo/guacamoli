@@ -36,7 +36,7 @@ app.listen(app.get('port'), function() {
 var pg = require('pg');
 
 app.get('/db', function (request, response) {
-  pg.connect((process.env.DATABASE_URL || "postgres://bibcnlyezwlkhl:gdhvCdkdw5znI-LjSspT6wKOfR@ec2-54-225-223-40.compute-1.amazonaws.com:5432/davktp8lndlj83"), function(err, client, done) {
+  pg.connect((process.env.DATABASE_URL+ '?ssl=true'), function(err, client, done) {
     client.query('SELECT * FROM test_table', function(err, result) {
       done();
       if (err)
