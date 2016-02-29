@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ../partials/header.ejs %>
+</head>
+
+<body>
+
+  <% include ../partials/nav.ejs %>
+
+  <div>
+    <legend>Add menu</legend>
+    <br>
+    <label>Location (LG7, Cafe, LSK, etc...)</label><br>
+    <input type="text" id="Location"><br><br>
+
+    <label>Restaurant name (GRB, Cafe, etc..)</label><br>
+    <input type="text" id="RestaurantName"><br><br>
+
+    <label>Category (chef's specia, pasta, etc..)</label><br>
+    <input type="text" id="Category"><br><br>
+
+    <label>Meal name </label><br>
+    <input type="text" id="MealName"><br><br>
+
+    <label>picture_url </label><br>
+    <input type="text" id="MealName"><br><br>
+
+    <label>price </label><br>
+    <input type="text" id="MealName"><br><br>
+
+    <input type="radio" id="pMaterialRadio" name="offeredBreakfast" checked>offered for breakfast</input><br>
+    <input type="radio" name="offeredBreakfast" >not offered for breakfast</input>
+    <input type="radio" id="pMaterialRadio" name="offeredLunch" checked>offered for lunch</input><br>
+    <input type="radio" name="offeredLunch" >not offered for lunch</input>
+    <input type="radio" id="pMaterialRadio" name="offeredDinner" checked>offered for dinner</input><br>
+    <input type="radio" name="offeredDinner" >not offered for dinner</input>
+
+    <div>
+      <button type="button" id = "packageStatus" class="btn btn-primary"
+        style="display: inline-block;font-size: 12px;display: none; margin: 10px;">
+      </button>
+    </div>
+  </div>
+
+
+</body>
+</html>
