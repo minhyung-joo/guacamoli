@@ -28,6 +28,10 @@ app.get('/rankings', function(request, response) {
   response.render('pages/index');
   //$('.ranking_link').trigger('click');
 });
+app.get('/insertMenu', function(request, response) {
+  response.render('pages/insertMenu');
+  //$('.ranking_link').trigger('click');
+});
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
