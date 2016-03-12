@@ -30,7 +30,14 @@ app.get('/rankings', function(request, response) {
 });
 app.get('/insertMenu', function(request, response) {
   response.render('pages/insertMenu');
-  //$('.ranking_link').trigger('click');
+});
+app.get('/searchResult', function(request, response) {
+  response.render('pages/search_result_page');
+});
+
+//this one is dummy page for prototype
+app.get('/filterSearchResult', function(request, response) {
+  response.render('pages/dummyFilterSearchPage');
 });
 
 app.listen(app.get('port'), function() {
