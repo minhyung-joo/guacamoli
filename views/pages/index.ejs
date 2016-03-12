@@ -60,7 +60,7 @@
             <div class="form-group intro-search">
               <input type="text" class="form-control" placeholder="Search" id="keyword" name="keyword">
             </div>
-            <button type="button" class="btn filter">
+            <button type="button" class="btn filter" data-toggle="modal" data-target="#filterModal">
               <i class="fa fa-filter"><h5 class="inline"> Filters</h5></i>
             </button>
         </div>
@@ -827,6 +827,122 @@
     </div>
 </div>
 
+<!-- Filter Modal -->
+<div id="filterModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Filter Search</h4>
+      </div>
+      <div class="modal-body">
+          <div class="row">
+            <div class="col-md-4"><label>Location</label></div>
+            <div class="col-md-8">
+              <select name="location" class="form-control">
+                <option value="">Default</option>
+                <option value="1">LG1</option>
+                <option value="2">LG7</option>
+                <option value="3">Einstein Cafe</option>
+                <option value="4">LSK</option>
+              </select>
+            </div>
+          </div><br>
+
+          <div class="row">
+            <div class="col-md-4"><label>Restaurant name</label></div>
+            <div class="col-md-8">
+              <select name="restaurantName" class="form-control">
+                <option value="">Default</option>
+                <option value="1">GRB</option>
+                <option value="2">Milano</option>
+                <option value="3">APC</option>
+                <option value="4">Ebenezer</option>
+                <option value="4">LSK canteen</option>
+              </select>
+            </div>
+          </div><br>
+
+          <div class="row">
+          <div class="col-md-4"><label>Delivery Speed</label></div>
+          <div class="col-md-8">
+            <select name="deliverySpeed" class="form-control">
+              <option value="">Default</option>
+              <option value="1">Fast - Pickup</option>
+              <option value="2">Moderate</option>
+              <option value="3">Slow</option>
+            </select>
+          </div>
+        </div><br>
+
+        <div class="row">
+          <div class="col-md-4"><label>Offered Time</label></div>
+          <div class="col-md-8">
+            <select name="offeredTime" class="form-control">
+              <option value="">Default</option>
+              <option value="1">Morning</option>
+              <option value="2">Lunch</option>
+              <option value="3">Tea Time</option>
+              <option value="4">Dinner</option>
+            </select>
+          </div>
+        </div><br>
+
+        <div class="row">
+          <div class="col-md-4"><label>Cuisine Type</label></div>
+          <div class="col-md-8">
+            <select name="cuisine" class="form-control">
+              <option value="">Default</option>
+              <option value="1">Chinese</option>
+              <option value="2">Japanese</option>
+              <option value="3">Italian</option>
+              <option value="4">Thai</option>
+              <option value="5">Vietnamese</option>
+              <option value="6">Indian/Turkey</option>
+            </select>
+          </div>
+        </div><br>
+
+        <div class="row">
+          <div class="col-md-4"><label>Taste Type</label></div>
+          <div class="col-md-8">
+            <input type="checkbox" name="tasteType" value="1"> spicy &nbsp;
+            <input type="checkbox" name="tasteType" value="2"> sweet &nbsp;
+            <input type="checkbox" name="tasteType" value="3"> salty &nbsp;
+            <input type="checkbox" name="tasteType" value="4"> sour &nbsp;
+          </div>
+        </div><br>
+
+        <div class="row">
+          <div class="col-md-4"><label>Food Type</label></div>
+          <div class="col-md-8">
+            <div>
+              <input type="checkbox" name="foodType" value="1"> noodle &nbsp;
+              <input type="checkbox" name="foodType" value="2"> rice &nbsp;
+              <input type="checkbox" name="foodType" value="3"> soup &nbsp;
+              <input type="checkbox" name="foodType" value="4"> bread &nbsp;
+              <input type="checkbox" name="foodType" value="5"> vegetable &nbsp;
+            </div>
+            <div>
+              <input type="checkbox" name="foodType" value="6"> meat &nbsp;
+              <input type="checkbox" name="foodType" value="7"> drinks &nbsp;
+              <input type="checkbox" name="foodType" value="8"> dessert &nbsp;
+              <input type="checkbox" name="foodType" value="9"> dimsum &nbsp;
+            </div>
+          </div>
+        </div><br>
+      </div>
+      <div class="modal-footer">
+        <button type="button" onclick="filterSearch()" class="btn btn-default" style="background-color:#bddebd;" data-dismiss="modal">Search</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
   <% include ../partials/javascript_dependency.ejs %>
 </body>
 </html>
@@ -837,4 +953,15 @@
         $('.ranking_link').trigger("click");
       }
   });
+
+  $( "#keyword" ).keypress(function(e) {
+    if(e.which == 13) {
+       window.location.replace(window.location.href+"searchResult");
+   }
+  });
+
+  function filterSearch(){
+    window.location.replace(window.location.href+"filterSearchResult");
+  }
+
 </script>
