@@ -10,60 +10,132 @@
       <div class="container">
           <legend>Add menu</legend>
           <br>
+          <form>
+            <div class="row">
+              <div class="col-md-4"><label>Meal name </label></div>
+              <div class="col-md-8">
+                <input class="form-control" type="text" name="mealName"><br>
+              </div>
+
+              <div class="col-md-4"><label>Price </label></div>
+              <div class="col-md-8">
+                <input class="form-control" type="text" name="price"><br>
+              </div>
+
+              <div class="col-md-4"><label>Image Upload </label></div>
+              <div class="col-md-8">
+                <input type="file" name="image" accept="image/*"><br>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4"><label>Location</label></div>
+              <div class="col-md-8">
+                <select name="location" class="form-control">
+                  <option value="">Please select one</option>
+                  <option value="1">LG1</option>
+                  <option value="2">LG7</option>
+                  <option value="3">Einstein Cafe</option>
+                  <option value="4">LSK</option>
+                </select>
+              </div>
+            </div><br>
+
+            <div class="row">
+              <div class="col-md-4"><label>Restaurant name</label></div>
+              <div class="col-md-8">
+                <select name="restaurantName" class="form-control">
+                  <option value="">Please select one</option>
+                  <option value="1">GRB</option>
+                  <option value="2">Milano</option>
+                  <option value="3">APC</option>
+                  <option value="4">Ebenezer</option>
+                  <option value="4">LSK canteen</option>
+                </select>
+              </div>
+            </div><br>
+
+            <div class="row">
+            <div class="col-md-4"><label>Delivery Speed</label></div>
+            <div class="col-md-8">
+              <select name="deliverySpeed" class="form-control">
+                <option value="">Please select one</option>
+                <option value="1">Fast - Pickup</option>
+                <option value="2">Moderate</option>
+                <option value="3">Slow</option>
+              </select>
+            </div>
+          </div><br>
+
           <div class="row">
-            <div class="col-md-3"><label>Location (LG7, Cafe, LSK, etc...)</label></div>
-            <div class="col-md-9">
-              <input class="form-control" type="text" id="Location">
+            <div class="col-md-4"><label>Offered Time</label></div>
+            <div class="col-md-8">
+              <select name="offeredTime" class="form-control">
+                <option value="">Please select one</option>
+                <option value="1">Morning</option>
+                <option value="2">Lunch</option>
+                <option value="3">Tea Time</option>
+                <option value="4">Dinner</option>
+              </select>
             </div>
+          </div><br>
 
-            <div class="col-md-3"><label>Restaurant name (GRB, Cafe, etc..)</label></div>
-            <div class="col-md-9">
-              <input type="text" id="RestaurantName"><br>
+          <div class="row">
+            <div class="col-md-4"><label>Cuisine Type</label></div>
+            <div class="col-md-8">
+              <select name="cuisine" class="form-control">
+                <option value="">Please select one</option>
+                <option value="1">Chinese</option>
+                <option value="2">Japanese</option>
+                <option value="3">Italian</option>
+                <option value="4">Thai</option>
+                <option value="5">Vietnamese</option>
+                <option value="6">Indian/Turkey</option>
+              </select>
             </div>
+          </div><br>
 
-            <div class="col-md-3"><label>Category (chef's specia, pasta, etc..)</label></div>
-            <div class="col-md-9">
-              <input type="text" id="Category"><br>
+          <div class="row">
+            <div class="col-md-4"><label>Taste Type</label></div>
+            <div class="col-md-8">
+              <input type="checkbox" name="tasteType" value="1"> spicy &nbsp;
+              <input type="checkbox" name="tasteType" value="2"> sweet &nbsp;
+              <input type="checkbox" name="tasteType" value="3"> salty &nbsp;
+              <input type="checkbox" name="tasteType" value="4"> sour &nbsp;
             </div>
+          </div><br>
 
-
-            <div class="col-md-3"><label>Meal name </label></div>
-            <div class="col-md-9">
-              <input type="text" id="MealName">
+          <div class="row">
+            <div class="col-md-4"><label>Food Type</label></div>
+            <div class="col-md-8">
+              <input type="checkbox" name="foodType" value="1"> noodle &nbsp;
+              <input type="checkbox" name="foodType" value="2"> rice &nbsp;
+              <input type="checkbox" name="foodType" value="3"> soup &nbsp;
+              <input type="checkbox" name="foodType" value="4"> bread &nbsp;
+              <input type="checkbox" name="foodType" value="5"> vegetable &nbsp;
+              <input type="checkbox" name="foodType" value="6"> meat &nbsp;
+              <input type="checkbox" name="foodType" value="7"> drinks &nbsp;
+              <input type="checkbox" name="foodType" value="8"> dessert &nbsp;
+              <input type="checkbox" name="foodType" value="9"> dimsum &nbsp;
             </div>
+          </div><br>
 
-            <div class="col-md-3"><label>Category (chef's specia, pasta, etc..)</label><br></div>
-            <div class="col-md-9">
-              <input type="text" id="Category"><br><br>
+          <div class="row">
+            <div class="col-md-4"><label>Rating</label></div>
+            <div class="col-md-8">
+              <select name="rating" class="form-control">
+                <option value="">Please select one</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
             </div>
+          </div><br>
 
-
-
-
-
-          <br><br>
-
-          <label>picture_url </label><br>
-          <input type="text" id="MealName"><br><br>
-
-          <label>price </label><br>
-          <input type="text" id="MealName"><br><br>
-
-          <input type="radio" id="pMaterialRadio" name="offeredBreakfast" checked>offered for breakfast</input><br>
-          <input type="radio" name="offeredBreakfast" >not offered for breakfast</input>
-          <input type="radio" id="pMaterialRadio" name="offeredLunch" checked>offered for lunch</input><br>
-          <input type="radio" name="offeredLunch" >not offered for lunch</input>
-          <input type="radio" id="pMaterialRadio" name="offeredDinner" checked>offered for dinner</input><br>
-          <input type="radio" name="offeredDinner" >not offered for dinner</input>
-
-          <div>
-            <button type="button" id = "packageStatus" class="btn btn-primary"
-              style="display: inline-block;font-size: 12px;display: none; margin: 10px;">
-            </button>
-          </div>
-        </div>
-
-
-
+          <button type="submit" class="btn btn-primary pull-right">Upload</button>
+      </form>
+      <br><br><br><br>
 </body>
 </html>
