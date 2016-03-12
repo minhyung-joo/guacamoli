@@ -24,9 +24,18 @@
 
               <div class="col-md-4"><label>Image Upload </label></div>
               <div class="col-md-8">
-                <input type="file" name="image" accept="image/*"><br>
+                <table>
+                  <tr>
+                    <td>
+                      <center><img id="imgs" width="170px" height="160px" hidden="true"></img></center>
+                    </td>
+                    <td>
+                      <input type="file" name="image" accept="image/*" id="image" onchange="imgchange(this)"><br>
+                    </td>
+                  </tr>
+                </table>
               </div>
-            </div>
+            </div><br>
 
             <div class="row">
               <div class="col-md-4"><label>Location</label></div>
@@ -137,5 +146,18 @@
           <button type="submit" class="btn btn-primary pull-right">Upload</button>
       </form>
       <br><br><br><br>
+      <% include ../partials/javascript_dependency.ejs %>
 </body>
+
 </html>
+<script type="text/javascript">
+function imgchange(f) {
+   var filePath = $('#image').val();
+   var reader = new FileReader();
+   reader.onload = function (e) {
+       $('#imgs').attr('src',e.target.result);
+       $('#imgs').attr("hidden",false);
+   };
+   reader.readAsDataURL(f.files[0]);
+}
+</script>
