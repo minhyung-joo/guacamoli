@@ -14,12 +14,12 @@
             <div class="row">
               <div class="col-md-4"><label>Meal name </label></div>
               <div class="col-md-8">
-                <input class="form-control" type="text" name="mealName"><br>
+                <input class="form-control" type="text" name="mealName" id="mealName"><br>
               </div>
 
               <div class="col-md-4"><label>Price </label></div>
               <div class="col-md-8">
-                <input class="form-control" type="text" name="price"><br>
+                <input class="form-control" type="text" name="price" id="price"><br>
               </div>
 
               <div class="col-md-4"><label>Image Upload </label></div>
@@ -40,8 +40,8 @@
             <div class="row">
               <div class="col-md-4"><label>Location</label></div>
               <div class="col-md-8">
-                <select name="location" class="form-control">
-                  <option value="">Please select one</option>
+                <select id="location" name="location" class="form-control">
+                  <option value="0">Please select one</option>
                   <option value="1">LG1</option>
                   <option value="2">LG7</option>
                   <option value="3">Einstein Cafe</option>
@@ -53,8 +53,8 @@
             <div class="row">
               <div class="col-md-4"><label>Restaurant name</label></div>
               <div class="col-md-8">
-                <select name="restaurantName" class="form-control">
-                  <option value="">Please select one</option>
+                <select id="restaurantName" name="restaurantName" class="form-control">
+                  <option value="0">Please select one</option>
                   <option value="1">GRB</option>
                   <option value="2">Milano</option>
                   <option value="3">APC</option>
@@ -65,10 +65,25 @@
             </div><br>
 
             <div class="row">
+              <div class="col-md-4"><label>Cuisine Type</label></div>
+              <div class="col-md-8">
+                <select id="cuisine" name="cuisine" class="form-control">
+                  <option value="0">Please select one</option>
+                  <option value="1">Chinese</option>
+                  <option value="2">Japanese</option>
+                  <option value="3">Italian</option>
+                  <option value="4">Thai</option>
+                  <option value="5">Vietnamese</option>
+                  <option value="6">Indian/Turkey</option>
+                </select>
+              </div>
+            </div><br>
+
+            <div class="row">
             <div class="col-md-4"><label>Delivery Speed</label></div>
             <div class="col-md-8">
-              <select name="deliverySpeed" class="form-control">
-                <option value="">Please select one</option>
+              <select id="deliverySpeed" name="deliverySpeed" class="form-control">
+                <option value="0">Please select one</option>
                 <option value="1">Fast - Pickup</option>
                 <option value="2">Moderate</option>
                 <option value="3">Slow</option>
@@ -79,61 +94,43 @@
           <div class="row">
             <div class="col-md-4"><label>Offered Time</label></div>
             <div class="col-md-8">
-              <select name="offeredTime" class="form-control">
-                <option value="">Please select one</option>
-                <option value="1">Morning</option>
-                <option value="2">Lunch</option>
-                <option value="3">Tea Time</option>
-                <option value="4">Dinner</option>
-              </select>
-            </div>
-          </div><br>
-
-          <div class="row">
-            <div class="col-md-4"><label>Cuisine Type</label></div>
-            <div class="col-md-8">
-              <select name="cuisine" class="form-control">
-                <option value="">Please select one</option>
-                <option value="1">Chinese</option>
-                <option value="2">Japanese</option>
-                <option value="3">Italian</option>
-                <option value="4">Thai</option>
-                <option value="5">Vietnamese</option>
-                <option value="6">Indian/Turkey</option>
-              </select>
+              <input type="checkbox" name="offeredTimes[]" value="1"> Morning &nbsp;
+              <input type="checkbox" name="offeredTimes[]" value="2"> Lunch &nbsp;
+              <input type="checkbox" name="offeredTimes[]" value="3"> Tea Time &nbsp;
+              <input type="checkbox" name="offeredTimes[]" value="4"> Dinner &nbsp;
             </div>
           </div><br>
 
           <div class="row">
             <div class="col-md-4"><label>Taste Type</label></div>
             <div class="col-md-8">
-              <input type="checkbox" name="tasteType" value="1"> spicy &nbsp;
-              <input type="checkbox" name="tasteType" value="2"> sweet &nbsp;
-              <input type="checkbox" name="tasteType" value="3"> salty &nbsp;
-              <input type="checkbox" name="tasteType" value="4"> sour &nbsp;
+              <input type="checkbox" name="tasteTypes[]" value="1"> spicy &nbsp;
+              <input type="checkbox" name="tasteTypes[]" value="2"> sweet &nbsp;
+              <input type="checkbox" name="tasteTypes[]" value="3"> salty &nbsp;
+              <input type="checkbox" name="tasteTypes[]" value="4"> sour &nbsp;
             </div>
           </div><br>
 
           <div class="row">
             <div class="col-md-4"><label>Food Type</label></div>
             <div class="col-md-8">
-              <input type="checkbox" name="foodType" value="1"> noodle &nbsp;
-              <input type="checkbox" name="foodType" value="2"> rice &nbsp;
-              <input type="checkbox" name="foodType" value="3"> soup &nbsp;
-              <input type="checkbox" name="foodType" value="4"> bread &nbsp;
-              <input type="checkbox" name="foodType" value="5"> vegetable &nbsp;
-              <input type="checkbox" name="foodType" value="6"> meat &nbsp;
-              <input type="checkbox" name="foodType" value="7"> drinks &nbsp;
-              <input type="checkbox" name="foodType" value="8"> dessert &nbsp;
-              <input type="checkbox" name="foodType" value="9"> dimsum &nbsp;
+              <input type="checkbox" name="foodTypes[]" value="1"> noodle &nbsp;
+              <input type="checkbox" name="foodTypes[]" value="2"> rice &nbsp;
+              <input type="checkbox" name="foodTypes[]" value="3"> soup &nbsp;
+              <input type="checkbox" name="foodTypes[]" value="4"> bread &nbsp;
+              <input type="checkbox" name="foodTypes[]" value="5"> vegetable &nbsp;
+              <input type="checkbox" name="foodTypes[]" value="6"> meat &nbsp;
+              <input type="checkbox" name="foodTypes[]" value="7"> drinks &nbsp;
+              <input type="checkbox" name="foodTypes[]" value="8"> dessert &nbsp;
+              <input type="checkbox" name="foodTypes[]" value="9"> dimsum &nbsp;
             </div>
           </div><br>
 
           <div class="row">
             <div class="col-md-4"><label>Rating</label></div>
             <div class="col-md-8">
-              <select name="rating" class="form-control">
-                <option value="">Please select one</option>
+              <select id="rating" name="rating" class="form-control">
+                <option value="0">Please select one</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -143,13 +140,14 @@
             </div>
           </div><br>
 
-          <button type="submit" class="btn btn-primary pull-right">Upload</button>
       </form>
+      <button id="submit" type="submit" class="btn btn-primary pull-right">Upload</button>
       <br><br><br><br>
       <% include ../partials/javascript_dependency.ejs %>
 </body>
 
 </html>
+
 <script type="text/javascript">
 function imgchange(f) {
    var filePath = $('#image').val();
@@ -160,4 +158,61 @@ function imgchange(f) {
    };
    reader.readAsDataURL(f.files[0]);
 }
+
+$(document).ready(function() {
+  $("#submit").click(function() {
+    console.log("submit");
+
+    var location = $("#location").val();
+    var restaurant_name = $("#restaurantName").val();
+    var name = $("#mealName").val();
+    var price = $("#price").val();
+    var picture_url = "";
+
+    var deliverySpeed= $("#deliverySpeed").val();
+    var cuisineType = $("#cuisine").val();
+
+    var offeredTimes = new Array();
+    $.each($("input[name='offeredTimes[]']:checked"), function() {
+      offeredTimes.push($(this).val());
+    });
+    console.log(offeredTimes);
+
+    var tasteTypes = new Array();
+    $.each($("input[name='tasteTypes[]']:checked"), function() {
+      tasteTypes.push($(this).val());
+    });
+    console.log(tasteTypes);
+
+    var foodTypes = new Array();
+    $.each($("input[name='foodTypes[]']:checked"), function() {
+      foodTypes.push($(this).val());
+    });
+    console.log(foodTypes);
+
+    var rating = $("#rating").val();
+
+    $.post("/uploadMeal", {   // post body
+      "location": location,
+      "restaurant_name": restaurant_name,
+      "name": name,
+      "price": price,
+      "picture_url": picture_url,
+      "deliverySpeed": deliverySpeed,
+      "cuisineType": cuisineType,
+      "offeredTimes": offeredTimes,
+      "tasteTypes": tasteTypes,
+      "foodTypes": foodTypes,
+      "rating": rating
+    }, function (result) {  // callback
+      console.log(result);
+
+
+
+
+    });
+
+  });
+});
+
 </script>

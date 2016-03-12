@@ -101,9 +101,31 @@ req.body =
 
 
 */
+
+//TODO: insert tasteTypeInfo, and foodTypeInfo
 app.post('/uploadMeal', function (request, response) {
   console.log("req.body = "+request.body);
-  var restaurant = request.body.restaurant;
+  console.log("restaurant id  = "+ request.body.restaurant_name);
+  console.log("offeredTimes = "+request.body.offeredTimes);
+  pg.connect((process.env.DATABASE_URL || LOCAL_DATABASE_URL), function(err, client, done) {
+    client.query("INSERT INTO meal"+
+                  "(location, restaurantNameId, name, price, picture_url, "+
+                  "deliverySpeed, offeredTimes, "+
+                  "cuisineTypeId, rating)"+
+                  " values ($1,$2,$3,$4,$5,$6,$7,$8,$9)",
+                  [request.body.location, request.body.restaurant_name, request.body.name,
+                    request.body.price, request.body.picture_url, request.body.deliverySpeed,
+                    request.body.offeredTimes, request.body.cuisineType, request.body.rating],
+                  function(err, result) {
+
+      if (err)
+       { console.error(err); response.send("Error " + err); }
+      else
+       { response.json({"status":"SUCCESS"}); }
+    });
+    done();
+  });
+  /*var restaurant = request.body.restaurant;
   var category = request.body.category;
   var name = request.body.name;
   var picture_url = request.body.picture_url;
@@ -126,6 +148,6 @@ app.post('/uploadMeal', function (request, response) {
       else
        { response.json({"status":"SUCCESS"}); }
     });
-  });
+  });*/
   //response.json({"status":"SUCCESS", "result":request.body});
 });
