@@ -1,16 +1,19 @@
 DROP TABLE if exists meal cascade;
 
+DROP TABLE if exists restaurantNameInfo cascade;
+DROP TABLE if exists tasteTypeInfo cascade;
+DROP TABLE if exists foodTypeInfo cascade;
+DROP TABLE if exists cuisineTypeInfo cascade;
 DROP TABLE if exists tasteTypeInfo cascade;
 DROP TABLE if exists foodTypeInfo cascade;
 DROP TABLE if exists cuisineTypeInfo cascade;
 DROP TABLE if exists tastes cascade;
-DROP TABLE if exists typeIs cascade;
-DROP TABLE if exists cuisineIs cascade;
+DROP TABLE if exists foodTypes cascade;
 
 CREATE TABLE meal (
   id serial primary key,
   location text,  -- ie. lg1, lg7, etc
-  restaurant_name text,  -- GRB, Milano, etc
+  restaurantNameId smallint,  --single -- GRB, Milano, etc
   name text,
   price decimal(8,2),
   picture_url text,
@@ -18,46 +21,57 @@ CREATE TABLE meal (
 
   -- enum stuff
   deliverySpeed smallint,
-  offeredTime smallint,
+  offeredTimes smallint[], -- multiple
 
-  -- many-to-many relationship
-  tasteTypeInfoId smallint,
-  foodTypeInfoId smallint,
-  cuisineTypeId smallint,
+  -- many-to-many relationship,
+  -- do we need tasteType field in this table??
+  --tasteTypeInfoId smallint, -- multiple
+  --foodTypeInfoId smallint, -- multiple
+  cuisineTypeId smallint, -- single
 
   -- user-can-update stuff
   rating integer,
   comments text[]
 );
 
+-- as enum
+CREATE TABLE restaurantNameInfo (
+  id smallint,
+  name text
+);
+
+-- as enum
 CREATE TABLE tasteTypeInfo (
-  id serial primary key,
+  id smallint,
   tasteType text
 );
 
+-- as enum
 CREATE TABLE foodTypeInfo (
-  id serial primary key,
+  id smallint,
   foodType text
 );
 
 CREATE TABLE cuisineTypeInfo (
-  id serial primary key,
+  id smallint,
   cuisineType text
 );
 
+-- many to many
 CREATE TABLE tastes (
-  foodId smallint,
+  foodId integer,
   foodTasteId  smallint
 );
 
-CREATE TABLE typeIs (
-  id serial primary key,
-  foodId smallint,
+-- many to many
+CREATE TABLE foodTypes (
+  foodId integer,
   foodTypeId  smallint
 );
 
+/*
 CREATE TABLE cuisineIs (
-  id serial primary key,
-  foodId smallint,
+  foodId integer,
   cuisineTypeId smallint
 );
+*/
