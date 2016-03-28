@@ -161,8 +161,8 @@
           </table>
         </div>
 
-        <input type="submit" value="Upload" name="submit" onsubmit="return false"class="btn btn-primary pull-right">
-        <br><br><br><span id = "status"></span>
+        <input id="submit" type="submit" value="Upload" name="submit" onsubmit="return false"class="btn btn-primary pull-right">
+        <br><br><br><br><br><span id = "status">WARNING: DO NOT CLOSE BROWSER UNTIL SUCCESS</span>
       </form>
       <!--<button id="submit" type="submit" class="btn btn-primary pull-right">Upload</button>-->
       <br><br><br><br>
@@ -232,13 +232,14 @@ $(document).ready(function() {
 
   $('#uploadForm').submit(function() {
     console.log("submit");
+    $('#submit').prop('disabled', true); //TO DISABLED
     $("#status").empty().text("File is uploading...");
     $(this).ajaxSubmit({
       error: function(xhr) {
-        status('Error: ' + xhr.status);
+        $("#status").empty().text('Error: ' + "image upload failure");
       },
       success: function(response) {
-        $("#status").empty().text("image upload success: "+JSON.stringify(response));
+        $("#status").empty().text("image uploaded. please wait... : "+JSON.stringify(response));
         console.log(response);
         postMenu(response.Filepath);
       }
