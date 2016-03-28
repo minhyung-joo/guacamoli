@@ -2,6 +2,8 @@
 <html>
 <head>
   <% include ../partials/header.ejs %>
+  <!--<script type="text/javascript" src="jquery.fileupload.js"></script>
+  <script type="text/javascript" src="jquery.cloudinary.js"></script>-->
 </head>
 
 <body>
@@ -10,161 +12,165 @@
       <div class="container">
           <legend>Add menu</legend>
           <br>
-          <form>
-            <div class="row">
-              <div class="col-md-3"><label>Meal name </label></div>
-              <div class="col-md-9">
-                <input class="form-control" type="text" name="mealName" id="mealName"><br>
-              </div>
-
-              <div class="col-md-3"><label>Price </label></div>
-              <div class="col-md-9">
-                <input class="form-control" type="text" name="price" id="price"><br>
-              </div>
-
-              <div class="col-md-3"><label>Image Upload </label></div>
-              <div class="col-md-9">
-                <table>
-                  <tr>
-                    <td>
-                      <center><img id="imgs" width="170px" height="160px" hidden="true"></img></center>
-                    </td>
-                    <td>
-                      <input type="file" name="image" accept="image/*" id="image" onchange="imgchange(this)"><br>
-                    </td>
-                  </tr>
-                </table>
-              </div>
-            </div><br>
-
-            <div class="row">
-              <div class="col-md-3"><label>Restaurant</label></div>
-              <div class="col-md-9">
-                <select name="restaurant" class="form-control">
-                  <option value="">Default</option>
-                  <option value="1">LG1</option>
-                  <option value="2">McDonald</option>
-                  <option value="3">LG7 - GRB</option>
-                  <option value="4">LG7 - APC</option>
-                  <option value="5">LG7 - Milano</option>
-                  <option value="6">Einstein Cafe</option>
-                  <option value="7">Ebenezer</option>
-                  <option value="8">LSK canteen</option>
-                </select>
-              </div>
-            </div><br>
-
-            <div class="row">
-              <div class="col-md-3"><label>Cuisine Type</label></div>
-              <div class="col-md-9">
-                <select id="cuisine" name="cuisine" class="form-control">
-                  <option value="0">Please select one</option>
-                  <option value="1">Chinese</option>
-                  <option value="2">Japanese</option>
-                  <option value="3">Italian</option>
-                  <option value="4">Thai</option>
-                  <option value="5">Vietnamese</option>
-                  <option value="6">Indian</option>
-                </select>
-              </div>
-            </div><br>
-
-            <div class="row">
-            <div class="col-md-3"><label>Delivery Speed</label></div>
+          <div class="row">
+            <div class="col-md-3"><label>Meal name </label></div>
             <div class="col-md-9">
-              <select id="deliverySpeed" name="deliverySpeed" class="form-control">
-                <option value="0">Please select one</option>
-                <option value="1">Pickup</option>
-                <option value="2">Wait Ticket No.</option>
+              <input class="form-control" type="text" name="mealName" id="mealName"><br>
+            </div>
+
+            <div class="col-md-3"><label>Price </label></div>
+            <div class="col-md-9">
+              <input class="form-control" type="text" name="price" id="price"><br>
+            </div>
+
+
+          </div><br>
+
+          <div class="row">
+            <div class="col-md-3"><label>Restaurant</label></div>
+            <div class="col-md-9">
+              <select id="restaurant" name="restaurant" class="form-control">
+                <option value="">Default</option>
+                <option value="1">LG1</option>
+                <option value="2">McDonald</option>
+                <option value="3">LG7 - GRB</option>
+                <option value="4">LG7 - APC</option>
+                <option value="5">LG7 - Milano</option>
+                <option value="6">Einstein Cafe</option>
+                <option value="7">Ebenezer</option>
+                <option value="8">LSK canteen</option>
               </select>
             </div>
           </div><br>
 
           <div class="row">
-            <div class="col-md-3"><label>Offered Time</label></div>
+            <div class="col-md-3"><label>Cuisine Type</label></div>
             <div class="col-md-9">
-              <input type="checkbox" name="offeredTimes[]" value="1"> Morning &nbsp;
-              <input type="checkbox" name="offeredTimes[]" value="2"> Lunch &nbsp;
-              <input type="checkbox" name="offeredTimes[]" value="3"> Tea Time &nbsp;
-              <input type="checkbox" name="offeredTimes[]" value="4"> Dinner &nbsp;
-            </div>
-          </div><br>
-
-          <div class="row">
-            <div class="col-md-3"><label>Taste Type</label></div>
-            <div class="col-md-9">
-              <input type="checkbox" name="tasteType" value="1"> spicy &nbsp;
-              <input type="checkbox" name="tasteType" value="2"> sweet &nbsp;
-              <input type="checkbox" name="tasteType" value="3"> salty &nbsp;
-              <input type="checkbox" name="tasteType" value="4"> sour &nbsp;
-              <input type="checkbox" name="tasteType" value="5"> oily &nbsp;
-            </div>
-          </div><br>
-
-          <div class="row">
-            <div class="col-md-3"><label>Food Type</label></div>
-            <div class="col-md-9">
-              <div>
-                <input type="checkbox" name="foodType" value="1"> noodle &nbsp;
-                <input type="checkbox" name="foodType" value="2"> rice &nbsp;
-                <input type="checkbox" name="foodType" value="3"> soup &nbsp;
-                <input type="checkbox" name="foodType" value="4"> bread &nbsp;
-                <input type="checkbox" name="foodType" value="5"> dimsum &nbsp;
-              </div>
-              <div>
-                <input type="checkbox" name="foodType" value="7"> pork &nbsp;
-                <input type="checkbox" name="foodType" value="8"> beef &nbsp;
-                <input type="checkbox" name="foodType" value="9"> chicken &nbsp;
-                <input type="checkbox" name="foodType" value="10"> lamb &nbsp;
-                <input type="checkbox" name="foodType" value="11"> fish &nbsp;
-                <input type="checkbox" name="foodType" value="12"> duck &nbsp;
-              </div>
-              <input type="checkbox" name="foodType" value="13"> vegetable &nbsp;
-            </div>
-          </div><br>
-
-          <div class="row">
-            <div class="col-md-3"><label>Sauce Type</label></div>
-            <div class="col-md-9">
-              <div>
-                <div>
-                  <input type="checkbox" name="foodType" value="1"> tomato &nbsp;
-                  <input type="checkbox" name="foodType" value="2"> cream &nbsp;
-                  <input type="checkbox" name="foodType" value="3"> black pepper &nbsp;
-                  <input type="checkbox" name="foodType" value="4"> mayonnaise &nbsp;
-                </div>
-                <div>
-                  <input type="checkbox" name="foodType" value="5"> curry &nbsp;
-                  <input type="checkbox" name="foodType" value="6"> soy sauce &nbsp;
-                  <input type="checkbox" name="foodType" value="7"> oyster sauce &nbsp;
-                  <input type="checkbox" name="foodType" value="8"> teriyaki &nbsp;
-                </div>
-              </div>
-            </div>
-          </div><br>
-
-          <div class="row">
-            <div class="col-md-3"><label>Rating</label></div>
-            <div class="col-md-9">
-              <select id="rating" name="rating" class="form-control">
+              <select id="cuisine" name="cuisine" class="form-control">
                 <option value="0">Please select one</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
+                <option value="1">Chinese</option>
+                <option value="2">Japanese</option>
+                <option value="3">Italian</option>
+                <option value="4">Thai</option>
+                <option value="5">Vietnamese</option>
+                <option value="6">Indian</option>
               </select>
             </div>
           </div><br>
 
+          <div class="row">
+          <div class="col-md-3"><label>Delivery Speed</label></div>
+          <div class="col-md-9">
+            <select id="deliverySpeed" name="deliverySpeed" class="form-control">
+              <option value="0">Please select one</option>
+              <option value="1">Instant pickup</option>
+              <option value="2">Ticketed</option>
+            </select>
+          </div>
+        </div><br>
+
+        <div class="row">
+          <div class="col-md-3"><label>Offered Time</label></div>
+          <div class="col-md-9">
+            <input type="checkbox" name="offeredTimes[]" value="1"> Morning &nbsp;
+            <input type="checkbox" name="offeredTimes[]" value="2"> Lunch &nbsp;
+            <input type="checkbox" name="offeredTimes[]" value="3"> Tea Time &nbsp;
+            <input type="checkbox" name="offeredTimes[]" value="4"> Dinner &nbsp;
+          </div>
+        </div><br>
+
+        <div class="row">
+          <div class="col-md-3"><label>Taste Type</label></div>
+          <div class="col-md-9">
+            <input type="checkbox" name="tasteTypes[]" value="1"> spicy &nbsp;
+            <input type="checkbox" name="tasteTypes[]" value="2"> sweet &nbsp;
+            <input type="checkbox" name="tasteTypes[]" value="3"> salty &nbsp;
+            <input type="checkbox" name="tasteTypes[]" value="4"> sour &nbsp;
+            <input type="checkbox" name="tasteTypes[]" value="5"> oily &nbsp;
+          </div>
+        </div><br>
+
+        <div class="row">
+          <div class="col-md-3"><label>Food Type</label></div>
+          <div class="col-md-9">
+            <div>
+              <input type="checkbox" name="foodTypes[]" value="1"> noodle &nbsp;
+              <input type="checkbox" name="foodTypes[]" value="2"> rice &nbsp;
+              <input type="checkbox" name="foodTypes[]" value="3"> soup &nbsp;
+              <input type="checkbox" name="foodTypes[]" value="4"> bread &nbsp;
+              <input type="checkbox" name="foodTypes[]" value="5"> dimsum &nbsp;
+            </div>
+            <div>
+              <input type="checkbox" name="foodTypes[]" value="7"> pork &nbsp;
+              <input type="checkbox" name="foodTypes[]" value="8"> beef &nbsp;
+              <input type="checkbox" name="foodTypes[]" value="9"> chicken &nbsp;
+              <input type="checkbox" name="foodTypes[]" value="10"> lamb &nbsp;
+              <input type="checkbox" name="foodTypes[]" value="11"> fish &nbsp;
+              <input type="checkbox" name="foodTypes[]" value="12"> duck &nbsp;
+            </div>
+            <input type="checkbox" name="foodTypes[]" value="13"> vegetable &nbsp;
+          </div>
+        </div><br>
+
+        <div class="row">
+          <div class="col-md-3"><label>Sauce Type</label></div>
+          <div class="col-md-9">
+            <div>
+              <div>
+                <input type="checkbox" name="sauceTypes[]" value="1"> tomato &nbsp;
+                <input type="checkbox" name="sauceTypes[]" value="2"> cream &nbsp;
+                <input type="checkbox" name="sauceTypes[]" value="3"> black pepper &nbsp;
+                <input type="checkbox" name="sauceTypes[]" value="4"> mayonnaise &nbsp;
+              </div>
+              <div>
+                <input type="checkbox" name="sauceTypes[]" value="5"> curry &nbsp;
+                <input type="checkbox" name="sauceTypes[]" value="6"> soy sauce &nbsp;
+                <input type="checkbox" name="sauceTypes[]" value="7"> oyster sauce &nbsp;
+                <input type="checkbox" name="sauceTypes[]" value="8"> teriyaki &nbsp;
+              </div>
+            </div>
+          </div>
+        </div><br>
+
+        <div class="row">
+          <div class="col-md-3"><label>Rating</label></div>
+          <div class="col-md-9">
+            <select id="rating" name="rating" class="form-control">
+              <option value="0">Please select one</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+        </div><br>
+
+      <form id="uploadForm"  method="post" enctype="multipart/form-data" action="/uploadPhoto">
+        <div class="col-md-3"><label>Image Upload </label></div>
+        <div class="col-md-9">
+          <table>
+            <tr>
+              <td>
+                <center><img id="imgs" width="170px" height="160px" hidden="true"></img></center>
+              </td>
+              <td>
+                <input type="file" name="image" accept="image/*" id="image" onchange="imgchange(this)"><br>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <input type="submit" value="Upload" name="submit" onsubmit="return false"class="btn btn-primary pull-right">
+        <br><br><br><span id = "status"></span>
       </form>
-      <button id="submit" type="submit" class="btn btn-primary pull-right">Upload</button>
+      <!--<button id="submit" type="submit" class="btn btn-primary pull-right">Upload</button>-->
       <br><br><br><br>
       <% include ../partials/javascript_dependency.ejs %>
 </body>
 
 </html>
-
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
 <script type="text/javascript">
 function imgchange(f) {
    var filePath = $('#image').val();
@@ -176,60 +182,80 @@ function imgchange(f) {
    reader.readAsDataURL(f.files[0]);
 }
 
-$(document).ready(function() {
-  $("#submit").click(function() {
-    console.log("submit");
+function postMenu(picture_url) {
 
-    var location = $("#location").val();
-    var restaurant_name = $("#restaurantName").val();
-    var name = $("#mealName").val();
-    var price = $("#price").val();
-    var picture_url = "";
-
-    var deliverySpeed= $("#deliverySpeed").val();
-    var cuisineType = $("#cuisine").val();
-
-    var offeredTimes = new Array();
-    $.each($("input[name='offeredTimes[]']:checked"), function() {
-      offeredTimes.push($(this).val());
-    });
-    console.log(offeredTimes);
-
-    var tasteTypes = new Array();
-    $.each($("input[name='tasteTypes[]']:checked"), function() {
-      tasteTypes.push($(this).val());
-    });
-    console.log(tasteTypes);
-
-    var foodTypes = new Array();
-    $.each($("input[name='foodTypes[]']:checked"), function() {
-      foodTypes.push($(this).val());
-    });
-    console.log(foodTypes);
-
-    var rating = $("#rating").val();
-
-    $.post("/uploadMeal", {   // post body
-      "location": location,
-      "restaurant_name": restaurant_name,
-      "name": name,
-      "price": price,
-      "picture_url": picture_url,
-      "deliverySpeed": deliverySpeed,
-      "cuisineType": cuisineType,
-      "offeredTimes": offeredTimes,
-      "tasteTypes": tasteTypes,
-      "foodTypes": foodTypes,
-      "rating": rating
-    }, function (result) {  // callback
-      console.log(result);
-
-
-
-
-    });
-
+  var offeredTimes = new Array();
+  $.each($("input[name='offeredTimes[]']:checked"), function() {
+    offeredTimes.push($(this).val());
   });
+  console.log(offeredTimes);
+
+  var tasteTypes = new Array();
+  $.each($("input[name='tasteTypes[]']:checked"), function() {
+    tasteTypes.push($(this).val());
+  });
+  console.log(tasteTypes);
+
+  var foodTypes = new Array();
+  $.each($("input[name='foodTypes[]']:checked"), function() {
+    foodTypes.push($(this).val());
+  });
+  console.log(foodTypes);
+
+  var sauceTypes = new Array();
+  $.each($("input[name='sauceTypes[]']:checked"), function() {
+    sauceTypes.push($(this).val());
+  });
+  console.log(sauceTypes);
+
+  $.post("/uploadMeal", {   // post body
+    "restaurant_name": $("#restaurant").val(),
+    "name": $("#mealName").val(),
+    "price": $("#price").val(),
+    "picture_url": picture_url,
+
+    "cuisineType": $("#cuisine").val(),
+    "deliverySpeed": $("#deliverySpeed").val(),
+
+    "offeredTimes": offeredTimes,
+    "tasteTypes": tasteTypes,
+    "foodTypes": foodTypes,
+    "sauceTypes": sauceTypes,
+    "rating": $("#rating").val()
+  }, function (result) {  // callback
+    console.log(result);
+    $("#status").empty().text(JSON.stringify(result));
+  });
+}
+
+$(document).ready(function() {
+
+  $('#uploadForm').submit(function() {
+    console.log("submit");
+    $("#status").empty().text("File is uploading...");
+    $(this).ajaxSubmit({
+      error: function(xhr) {
+        status('Error: ' + xhr.status);
+      },
+      success: function(response) {
+        $("#status").empty().text("image upload success: "+JSON.stringify(response));
+        console.log(response);
+        postMenu(response.Filepath);
+      }
+    });
+    return false;
+  });
+  // automatic cloudinary configuration for direct image upload
+  /*cloudinary.cloudinary_js_config();
+  console.log("cloudinary configured");*/
+
+  /*$("#submit").click(function() {
+    //image upload test
+
+    console.log("postMenu()");
+    postMenu();
+
+  });*/
 });
 
 </script>
