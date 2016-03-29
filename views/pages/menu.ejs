@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include ../partials/header.ejs %>
+</head>
+
+<body id="page-top" class="index">
+  <% include ../partials/nav.ejs %>
+  <div class="container">
+      <div class="single">
+        <div class="container">
+           <div class="single_box1">
+             <div class="col-sm-5 single_left">
+               <br><br>
+               <h4> <%= result.restaurantid %> </h4>
+               <img src= <%= result.picture_url %> class="img-responsive" id="food_profile" alt=""/>
+             </div>
+
+             <div class="col-sm-7" style="margin-top: 50px;">
+              <ul class="size">
+
+                <h3 class="tag_head"> <%= result.name %> </h3>
+                <h5 class="tag_head"> <%= result.chinesename %> </h5>
+                <ul style="list-style-type:none">
+                    <li><b>Price</b>: <%= result.price %></li><br>
+                    <li><b>Availability</b>: <%= result.offeredtimesid %> </li><br>
+                    <li><b>Restaurant</b>: <%= result.restaurantid %> </li><br>
+                    <li><b>Delivery Speed</b>: <%= result.deliveryspeedid %> </li><br>
+                    <li><b>Cuisine Type</b>: <%= result.cuisinetypeid %></li><br>
+                    <li><b>Taste Type</b>: <%= result.tastetypesid %> </li><br>
+                    <li><b>Ingredient Type</b>: <%= result.ingredienttypesid %> </li><br>
+                </ul>
+                </ul>
+              </ul>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div><!-- /.container -->
+
+
+
+  <% include ../partials/javascript_dependency.ejs %>
+</body>
+</html>
+<script>
+
+</script>

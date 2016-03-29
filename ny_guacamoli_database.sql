@@ -11,32 +11,32 @@ DROP TABLE if exists sauceType cascade;
 */
 CREATE TABLE restaurant (
   id smallint,
-  value text
+  restaurant text
 );
 
 CREATE TABLE cuisineType (
   id smallint,
-  value text
+  cuisineType text
 );
 
 CREATE TABLE deliverySpeed (
   id smallint,
-  value text
+  deliverySpeed text
 );
 
 CREATE TABLE offeredTime (
   id smallint,
-  value text
+  offeredTime text
 );
 
 CREATE TABLE ingredient (
   id smallint,
-  value text
+  ingredient text
 );
 
 CREATE TABLE sauceType (
   id smallint,
-  value text
+  sauceType text
 );
 
 

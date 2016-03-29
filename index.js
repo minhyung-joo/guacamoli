@@ -145,6 +145,49 @@ app.post('/uploadMeal', function (request, response) {
 });
 
 
+app.get('/menu_list', function (req, res) {
+  console.log("menu_list");
+  pg.connect((process.env.DATABASE_URL || LOCAL_DATABASE_URL), function(err, client, done) {
+    client.query("SELECT id, name FROM meal",
+                  function(err, result) {
+      if (err)
+      {
+        console.error(err); res.send("Error " + err);
+      }
+      else
+      {
+        console.log(result.rows);
+        res.render('pages/menu_list', {results: result.rows});
+      }
+    });
+    done();
+  });
+});
+
+app.get('/menu/:menuID', function (req, res) {
+  console.log("/menu/params menuID = " + req.params.menuId);
+  pg.connect((process.env.DATABASE_URL || LOCAL_DATABASE_URL), function(err, client, done) {
+    client.query("SELECT * FROM meal "+
+                  " "+
+                  "WHERE id = $1",
+                  [req.params.menuID],
+                  function(err, result) {
+      if (err)
+      {
+        console.error(err); res.send("Error " + err);
+      }
+      else
+      {
+        console.log(result.rows);
+        res.render('pages/menu', {result: result.rows[0]});
+      }
+    });
+    done();
+  });
+});
+
+
+
 //////////////////////////////////////////////////////////////////////
 /// Image upload
 //////////////////////////////////////////////////////////////////////
