@@ -257,6 +257,8 @@ $(document).ready(function() {
       },
       success: function(response) {
         $("#status").empty().text("image uploaded. please wait... : "+JSON.stringify(response));
+        if (response.error)
+          return false;
         console.log(response);
         postMenu(response.Filepath);
       }
