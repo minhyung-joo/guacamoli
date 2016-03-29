@@ -9,13 +9,24 @@
 <body>
 
   <% include ../partials/nav.ejs %>
+  <br><br><br><br>
       <div class="container">
           <legend>Add menu</legend>
           <br>
           <div class="row">
-            <div class="col-md-3"><label>Meal name </label></div>
+            <div class="col-md-3"><label>*Meal name </label></div>
             <div class="col-md-9">
               <input class="form-control" type="text" name="mealName" id="mealName"><br>
+            </div>
+
+            <div class="col-md-3"><label>Meal name (Chinese) </label></div>
+            <div class="col-md-9">
+              <input class="form-control" type="text" name="chineseMealName" id="chineseMealName"><br>
+            </div>
+
+            <div class="col-md-3"><label>Category (if any) </label></div>
+            <div class="col-md-9">
+              <input class="form-control" type="text" name="category" id="category"><br>
             </div>
 
             <div class="col-md-3"><label>Price </label></div>
@@ -30,7 +41,7 @@
             <div class="col-md-3"><label>Restaurant</label></div>
             <div class="col-md-9">
               <select id="restaurant" name="restaurant" class="form-control">
-                <option value="">Default</option>
+                <option value="0">Default</option>
                 <option value="1">LG1</option>
                 <option value="2">McDonald</option>
                 <option value="3">LG7 - GRB</option>
@@ -91,7 +102,7 @@
         </div><br>
 
         <div class="row">
-          <div class="col-md-3"><label>Food Type</label></div>
+          <div class="col-md-3"><label>Ingredients</label></div>
           <div class="col-md-9">
             <div>
               <input type="checkbox" name="foodTypes[]" value="1"> noodle &nbsp;
@@ -162,7 +173,10 @@
         </div>
 
         <input id="submit" type="submit" value="Upload" name="submit" onsubmit="return false"class="btn btn-primary pull-right">
-        <br><br><br><br><br><span id = "status">WARNING: DO NOT CLOSE BROWSER UNTIL SUCCESS</span>
+        <br><br><br><br><br><span id = "status">
+          (HJC added...)<br>WARNING: DO NOT CLOSE THIS TAB UNTIL SUCCESS OR FAILURE<br>
+          (please leave id, names and order of elements unchanged)
+        </span>
       </form>
       <!--<button id="submit" type="submit" class="btn btn-primary pull-right">Upload</button>-->
       <br><br><br><br>
@@ -211,6 +225,9 @@ function postMenu(picture_url) {
   $.post("/uploadMeal", {   // post body
     "restaurant_name": $("#restaurant").val(),
     "name": $("#mealName").val(),
+    "chineseMealName": $("#chineseMealName").val(),
+    "category": $("#category").val(),
+
     "price": $("#price").val(),
     "picture_url": picture_url,
 

@@ -112,16 +112,22 @@ req.body =
 
 //TODO: insert tasteTypeInfo, and foodTypeInfo
 app.post('/uploadMeal', function (request, response) {
-  console.log("req.body = "+request.body);
-  console.log("restaurant id  = "+ request.body.restaurant_name);
-  console.log("offeredTimes = "+request.body.offeredTimes);
+  //console.log("req.body = "+request.body);
+  //console.log("restaurant id  = "+ request.body.restaurant_name);
+  //console.log("offeredTimes = "+request.body.offeredTimes);
+  if (!request.body.name || !request.body.price || !request.body.picture_url) {
+    console.log("upload meal failed: required fields null");
+    response.json({"status":"FAIL: required fields null"});
+  }
+
   pg.connect((process.env.DATABASE_URL || LOCAL_DATABASE_URL), function(err, client, done) {
     client.query("INSERT INTO meal"+
-                  "(restaurantId, name, price, picture_url, "+
+                  "(restaurantId, name, chineseName, category, price, picture_url, "+
                   "cuisineTypeId, deliverySpeedId, offeredTimesId, "+
-                  "tasteTypesId, foodTypesId, sauceTypesId)"+
-                  " values ($1,$2,$3,$4,$5,$6,$7,$8,$9, $10)",
+                  "tasteTypesId, ingredientTypesId, sauceTypesId)"+
+                  " values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)",
                   [request.body.restaurant_name, request.body.name,
+                    request.body.chineseMealName, request.body.category,
                     request.body.price, request.body.picture_url,
                     request.body.cuisineType, request.body.deliverySpeed,
                     request.body.offeredTimes, request.body.tasteTypes,
@@ -187,15 +193,17 @@ app.post('/uploadPhoto', function(req, res){
     if(err) {
       return res.json({error: "uploadphoto has an error:\n"+err});
     }
-    console.log("upload to server complete, file = ");
-    console.log(req.file);
-    var filename = "./public/uploads/" + req.file.filename;
-    //res.json({Filepath: filename});
-    cloudinary.uploader.upload(filename, function(result) {
-	    if (result.error) {
-		    return res.json({error: "Something went wrong with cloudinary upload"});
-	    }
-      res.json({Filepath: result.url});
-	  });
+    else {
+      console.log("upload to server complete, file = ");
+      console.log(req.file);
+      var filename = "./public/uploads/" + req.file.filename;
+      //res.json({Filepath: filename});
+      cloudinary.uploader.upload(filename, function(result) {
+  	    if (result.error) {
+  		    return res.json({error: "Something went wrong with cloudinary upload"});
+  	    }
+        res.json({Filepath: result.url});
+  	  });
+    }
   });
 });

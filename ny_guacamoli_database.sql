@@ -29,7 +29,7 @@ CREATE TABLE offeredTime (
   value text
 );
 
-CREATE TABLE foodType (
+CREATE TABLE ingredient (
   id smallint,
   value text
 );
@@ -48,6 +48,9 @@ CREATE TABLE meal (
 
   -- essentials
   name text,
+  chineseName text,
+  category text,
+
   restaurantId integer,  --single -- GRB, Milano, etc
   price decimal(8,2),
   picture_url text,
@@ -59,7 +62,7 @@ CREATE TABLE meal (
   -- relational, one to many
   offeredTimesId smallint[],
   tasteTypesId smallint[],
-  foodTypesId smallint[],
+  ingredientTypesId smallint[],
   sauceTypesId smallint[],
 
   -- updatable
