@@ -3,8 +3,9 @@ DROP TABLE if exists restaurant cascade;
 DROP TABLE if exists cuisineType cascade;
 DROP TABLE if exists deliverySpeed cascade;
 DROP TABLE if exists offeredTime cascade;
-DROP TABLE if exists foodType cascade;
+DROP TABLE if exists ingredient cascade;
 DROP TABLE if exists sauceType cascade;
+DROP TABLE if exists tasteType cascade;
 
 /*
   enums
@@ -39,6 +40,10 @@ CREATE TABLE sauceType (
   sauceType text
 );
 
+CREATE TABLE tasteType (
+  id smallint,
+  tasteType text
+);
 
 /*
   main
@@ -51,7 +56,7 @@ CREATE TABLE meal (
   chineseName text,
   category text,
 
-  restaurantId integer,  --single -- GRB, Milano, etc
+  restaurantId smallint,  --single -- GRB, Milano, etc
   price decimal(8,2),
   picture_url text,
 

@@ -12,7 +12,7 @@
            <div class="single_box1">
              <div class="col-sm-5 single_left">
                <br><br>
-               <h4> <%= result.restaurantid %> </h4>
+               <h4> <%= result.restaurant %> </h4>
                <img src= <%= result.picture_url %> class="img-responsive" id="food_profile" alt=""/>
              </div>
 
@@ -23,7 +23,7 @@
                 <h5 class="tag_head"> <%= result.chinesename %> </h5>
                 <ul style="list-style-type:none">
                     <li><b>Price</b>: <%= result.price %></li><br>
-                    <li><b>Availability</b>: <%= result.offeredtimesid %> </li><br>
+                    <li><b>Availability</b>: (<%=result.offeredtimesid%>), <%= result.offeredtime %> </li><br>
                     <li><b>Restaurant</b>: <%= result.restaurantid %> </li><br>
                     <li><b>Delivery Speed</b>: <%= result.deliveryspeedid %> </li><br>
                     <li><b>Cuisine Type</b>: <%= result.cuisinetypeid %></li><br>
