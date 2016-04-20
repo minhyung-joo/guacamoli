@@ -79,7 +79,7 @@ var SampleApp = function() {
             console.log("/index route");
             res.setHeader('Content-Type', 'text/html');
             //res.render('views/pages/index.html');
-            res.send(self.cache_get('./views/pages/index.html'));
+            res.send(self.cache_get('index.html'));
         };
     };
 
