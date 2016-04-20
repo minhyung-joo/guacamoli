@@ -110,7 +110,7 @@ var SampleApp = function() {
         self.routes['/index'] = function(req, res) {
             console.log("/index route");
             res.setHeader('Content-Type', 'text/html');
-            res.send('response');
+            res.send(self.cache_get('/views/pages/index.html'));
             //res.render(self.cache_get('/views/pages/index.ejs'));
         };
     };
