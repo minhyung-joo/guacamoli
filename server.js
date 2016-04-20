@@ -79,7 +79,7 @@ var SampleApp = function() {
             console.log("/index route");
             res.setHeader('Content-Type', 'text/html');
             //res.render('views/pages/index.html');
-            res.send(self.cache_get('/app-root/repo/index.html'));
+            res.send(self.cache_get('/var/lib/openshift/5715d7274058f3835f00055f/app-root/repo/index.html'));
         };
     };
 
