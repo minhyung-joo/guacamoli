@@ -2,6 +2,7 @@
 //  OpenShift sample Node application
 var express = require('express');
 var fs      = require('fs');
+var app = express();
 
 
 /**
@@ -109,7 +110,8 @@ var SampleApp = function() {
         self.routes['/index'] = function(req, res) {
             console.log("/index route");
             res.setHeader('Content-Type', 'text/html');
-            res.render(self.cache_get('views/pages/index.ejs'));
+            res.send(self.cache_get('index.html') );
+            //res.render(self.cache_get('/views/pages/index.ejs'));
         };
     };
 
