@@ -133,7 +133,7 @@ app.listen(app.get('port'), function() {
 });
 
 app.get('/', function(request, response) {
-  response.render('pages/index');
+  response.send('hello');
 });
 
 
