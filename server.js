@@ -139,6 +139,25 @@ app.get('/', function(request, response) {
   response.render('pages/index');
 });
 
+app.get('/menu_list', function (req, res) {
+  console.log("menu_list");
+  pg.connect((process.env.DATABASE_URL || server_ip_address), function(err, client, done) {
+    client.query("SELECT id, name FROM meal",
+                  function(err, result) {
+      if (err)
+      {
+        console.error(err); res.send("Error " + err);
+      }
+      else
+      {
+        console.log(result.rows);
+        res.render('pages/menu_list', {results: result.rows});
+      }
+    });
+    done();
+  });
+});
+
 
 /*
 var zapp = new SampleApp();
