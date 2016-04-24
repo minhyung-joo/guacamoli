@@ -117,7 +117,7 @@ var SampleApp = function() {
 };
 */
 
-/*
+
 app.set('port', (process.env.OPENSHIFT_NODEJS_PORT || 8080));
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -135,10 +135,10 @@ app.listen(app.get('port'), function() {
 app.get('/', function(request, response) {
   response.render('pages/index');
 });
-*/
 
 
-
+/*
 var zapp = new SampleApp();
 zapp.initialize();
 zapp.start();
+*/
