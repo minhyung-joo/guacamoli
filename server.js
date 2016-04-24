@@ -2,9 +2,10 @@
 //  OpenShift sample Node application
 var express = require('express');
 var fs      = require('fs');
+var bodyParser = require("body-parser");
 var app = express();
 
-
+/*
 var SampleApp = function() {
 
     //  Scope.
@@ -114,8 +115,30 @@ var SampleApp = function() {
     };
 
 };
+*/
+
+app.set('port', (process.env.OPENSHIFT_NODEJS_PORT || 8080));
+app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+// views is directory for all template files
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
 
 
+app.listen(app.get('port'), function() {
+  console.log('Node app is running on port', app.get('port'));
+});
+
+app.get('/', function(request, response) {
+  response.render('pages/index');
+});
+
+
+
+/*
 var zapp = new SampleApp();
 zapp.initialize();
 zapp.start();
+*/
