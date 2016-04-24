@@ -7,7 +7,7 @@ var bodyParser = require("body-parser");
 var app = express();
 
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
-
+var conString = "postgres://admin5bxzk4e:7t32Pgi5GR_e@localhost/guacamoliii";
 /*
 var SampleApp = function() {
 
@@ -141,7 +141,7 @@ app.get('/', function(request, response) {
 
 app.get('/menu_list', function (req, res) {
   console.log("menu_list");
-  pg.connect((process.env.DATABASE_URL || server_ip_address), function(err, client, done) {
+  pg.connect((conString), function(err, client, done) {
     client.query("SELECT id, name FROM meal",
                   function(err, result) {
       if (err)
