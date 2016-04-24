@@ -135,7 +135,7 @@ app.listen(app.get('port'), server_ip_address, function() {
 });
 
 app.get('/', function(request, response) {
-  response.send('hello');
+  response.render('pages/index');
 });
 
 
