@@ -5,6 +5,8 @@ var fs      = require('fs');
 var bodyParser = require("body-parser");
 var app = express();
 
+var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+
 /*
 var SampleApp = function() {
 
@@ -128,7 +130,7 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 
-app.listen(app.get('port'), function() {
+app.listen(app.get('port'), server_ip_address, function() {
   console.log('Node app is running on port', app.get('port'));
 });
 
