@@ -142,6 +142,10 @@ app.get('/', function(request, response) {
 app.get('/menu_list', function (req, res) {
   console.log("menu_list");
   pg.connect((conString), function(err, client, done) {
+    if (err) {
+      console.error(err); res.send("Error " + err);
+      return;
+    }
     client.query("SELECT id, name FROM meal",
                   function(err, result) {
       if (err)
