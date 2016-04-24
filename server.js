@@ -7,7 +7,7 @@ var bodyParser = require("body-parser");
 var app = express();
 
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
-var conString = "postgres://admin5bxzk4e:7t32Pgi5GR_e@localhost/guacamoliii";
+var conString = "postgres://admin5bxzk4e:7t32Pgi5GR_e@guacamoliii-hkust25.appcloud.ust.hk:5432/guacamoliii?ssl=true";
 /*
 var SampleApp = function() {
 
