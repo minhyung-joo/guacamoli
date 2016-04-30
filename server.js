@@ -7,7 +7,8 @@ var bodyParser = require("body-parser");
 var app = express();
 
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
-var conString = "postgresql://admin5bxzk4e:7t32Pgi5GR_e@localhost:5432/guacamoliii?ssl=true";
+var conString = "postgresql://"+process.env.OPENSHIFT_POSTGRESQL_DB_HOST+":"+process.env.OPENSHIFT_POSTGRESQL_DB_PORT;
+//var conString = "postgresql://admin5bxzk4e:7t32Pgi5GR_e@localhost:5432/guacamoliii?ssl=true";
 //var conString = postgresql://$OPENSHIFT_POSTGRESQL_DB_HOST:$OPENSHIFT_POSTGRESQL_DB_PORT
 //var conString = "";
 //conString = "postgres://bibcnlyezwlkhl:gdhvCdkdw5znI-LjSspT6wKOfR@ec2-54-225-223-40.compute-1.amazonaws.com:5432/davktp8lndlj83"+'?ssl=true';
