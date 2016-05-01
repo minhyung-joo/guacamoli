@@ -56,7 +56,7 @@ CREATE TABLE meal (
   chineseName text,
   category text,
 
-  restaurantId smallint,  --single -- GRB, Milano, etc
+  restaurantId smallint,  -- single -- GRB, Milano, etc
   price decimal(8,2),
   picture_url text,
 

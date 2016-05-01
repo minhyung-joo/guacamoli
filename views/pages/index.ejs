@@ -19,8 +19,8 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand page-scroll" href="#page-top">
-              <img alt="Brand" src="images/avocado_logo.png">
-              guacamoli
+              <img alt="Brand" src="/images/avocado_logo.png" style="display: inline-block;">
+              Guacamoli
             </a>
         </div>
 
@@ -35,8 +35,8 @@
                 <li><a class="page-scroll" href="#lg7">LG7</a></li>
                 <li><a class="page-scroll" href="#cafe">Cafe</a></li>
                 <li><a class="page-scroll" href="#lsk">LSK</a></li>
-                <li><a class="page-scroll" href="#team">Team</a></li>
-                <li><a class="page-scroll" href="#contact">Contact</a></li>
+                <li><a class="page-scroll team_link" href="#team">Team</a></li>
+                <li><a class="page-scroll contact_link" href="#contact">Contact</a></li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -51,11 +51,11 @@
           <div class="row">
             <div class="col-md-12 intro-title">
               <!--<span class="col-md-3">&nbsp;</span>-->
-              <p>Nutritionize HKUST.</p>
+              <p>Nutritionalize HKUST.</p>
             </div>
             <div class="col-md-12 intro-slogan">
               <!--<span class="col-md-3">&nbsp;</span>-->
-              <p style="color:white;">Use guacamoli, Become healthy</p>
+              <p style="color:white;">Use Guacamoli, Become healthy</p>
             </div>
             <div class="form-group intro-search">
               <input type="text" class="form-control" placeholder="Search" id="keyword" name="keyword">
@@ -125,7 +125,6 @@
         <div class="row">
             <div class="col-lg-12 text-center">
                 <h2 class="section-heading">LG1</h2>
-                <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
             </div>
         </div>
         <div class="row">
@@ -223,7 +222,6 @@
         <div class="row">
             <div class="col-lg-12 text-center">
                 <h2 class="section-heading">LG7</h2>
-                <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
             </div>
         </div>
         <div class="row">
@@ -318,7 +316,6 @@
         <div class="row">
             <div class="col-lg-12 text-center">
                 <h2 class="section-heading">Cafe</h2>
-                <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
             </div>
         </div>
         <div class="row">
@@ -416,7 +413,6 @@
         <div class="row">
             <div class="col-lg-12 text-center">
                 <h2 class="section-heading">LSK</h2>
-                <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
             </div>
         </div>
         <div class="row">
@@ -511,7 +507,6 @@
         <div class="row">
             <div class="col-lg-12 text-center">
                 <h2 class="section-heading">Team</h2>
-                <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
             </div>
         </div>
         <div class="row">
@@ -603,7 +598,6 @@
         <div class="row">
             <div class="col-lg-12 text-center">
                 <h2 class="section-heading">Contact Us</h2>
-                <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
             </div>
         </div>
         <div class="row">
@@ -996,6 +990,10 @@
       var current_url = window.location.href;
       if(current_url.localeCompare("http://localhost:5000/rankings")==0){
         $('.ranking_link').trigger("click");
+      }else if(current_url.localeCompare("http://localhost:5000/team")==0){
+        $('.team_link').trigger("click");
+      }else if(current_url.localeCompare("http://localhost:5000/contact")==0){
+        $('.contact_link').trigger("click");
       }
   });
 
