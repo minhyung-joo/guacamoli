@@ -77,7 +77,8 @@ app.get('/menu_list', function (req, res) {
       else
       {
         console.log(result.rows);
-        res.render('pages/menu_list', {results: result.rows});
+        res.send({result.rows});
+        //res.render('pages/menu_list', {results: result.rows});
       }
     });
     done();
@@ -169,7 +170,7 @@ app.post('/uploadMeal', function (request, response) {
 //////////////////////////////////////////////////////////////////////
 /// Image upload
 //////////////////////////////////////////////////////////////////////
-var cloudinary  =   require('cloudinary')
+//var cloudinary  =   require('cloudinary')
 var multer      =   require('multer');
 var storage =   multer.diskStorage({
   destination: function (req, file, callback) {
@@ -180,13 +181,13 @@ var storage =   multer.diskStorage({
   }
 });
 var upload      =   multer({storage:storage}).single('image');
-
+/*
 cloudinary.config({
   cloud_name: 'hdgw6ruas',
   api_key: '965541217938815',
   api_secret: 'h_2qUkQAXWPeZdW95rb_C9lv0z8'
 });
-
+*/
 
 app.post('/uploadPhoto', function(req, res){
   console.log('/uploadPhoto');
@@ -198,7 +199,7 @@ app.post('/uploadPhoto', function(req, res){
     else {
       console.log("upload to server complete, file = ");
       console.log(req.file);
-      res.json({Filepath: req.file});
+      res.json({Filepath: req.file.filename});
       //var filename = "./public/uploads/" + req.file.filename;
 
       //res.json({Filepath: filename});
