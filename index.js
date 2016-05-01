@@ -10,13 +10,13 @@ var app = express();
 
 
 
-var site_domain = "localhost:8080";/*
+
 if (process.env.PORT) {
-  site_domain = "localhost:8080"
+  image_path = "https://guacamoli.herokuapp.com/uploads/";
 }
 else {
-  site_domain = "http://guacamoliii-hkust25.appcloud.ust.hk/uploads/"
-}*/
+  image_path = "https://guacamoliii-hkust25.appcloud.ust.hk/uploads/";
+}
 
 //"http://guacamoliii-hkust25.appcloud.ust.hk/uploads/"
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
@@ -207,7 +207,7 @@ app.post('/uploadPhoto', function(req, res){
     else {
       console.log("upload to server complete, file = ");
       console.log(req.file);
-      res.json({Filepath: req.file.filename});
+      res.json({Filepath: (image_path+req.file.filename)});
       //var filename = "./public/uploads/" + req.file.filename;
 
       //res.json({Filepath: filename});
