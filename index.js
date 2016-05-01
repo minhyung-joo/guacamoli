@@ -91,7 +91,6 @@ app.get('/menu/:menuId', function (req, res) {
   pg.connect(DATABASE_URL, function(err, client, done) {
     client.query("SELECT * FROM meal "+
                   "INNER JOIN restaurant ON meal.restaurantId = restaurant.id "+
-                  "INNER JOIN offeredTime ON offeredTime.id = ANY(meal.offeredTimesId) "+
                   "WHERE meal.id = $1",
                   [req.params.menuId],
                   function(err, result) {
