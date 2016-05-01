@@ -9,8 +9,6 @@ var pg = require('pg');
 var app = express();
 var LOCAL_DATABASE_URL = "postgres://bibcnlyezwlkhl:gdhvCdkdw5znI-LjSspT6wKOfR@ec2-54-225-223-40.compute-1.amazonaws.com:5432/davktp8lndlj83"+'?ssl=true';
 
-var a = "dd";
-
 app.set('port', (process.env.PORT || 5000));
 
 app.use(express.static(__dirname + '/public'));
@@ -89,8 +87,6 @@ app.get('/menu/:menuId', function (req, res) {
   console.log("/menu/params menuID = " + req.params.menuId);
   pg.connect((process.env.DATABASE_URL || LOCAL_DATABASE_URL), function(err, client, done) {
     client.query("SELECT * FROM meal "+
-                  "INNER JOIN restaurant ON meal.restaurantId = restaurant.id "+
-                  "INNER JOIN offeredTime ON offeredTime.id = ANY(meal.offeredTimesId) "+
                   "WHERE meal.id = $1",
                   [req.params.menuId],
                   function(err, result) {
