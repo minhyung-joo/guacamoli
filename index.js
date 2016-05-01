@@ -90,7 +90,6 @@ app.get('/menu/:menuId', function (req, res) {
   res.send(process.env.OPENSHIFT_POSTGRESQL_DB_URL);
   pg.connect(DATABASE_URL, function(err, client, done) {
     client.query("SELECT * FROM meal "+
-                  "INNER JOIN restaurant ON meal.restaurantId = restaurant.id "+
                   "WHERE meal.id = $1",
                   [req.params.menuId],
                   function(err, result) {
