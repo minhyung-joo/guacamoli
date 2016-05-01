@@ -7,6 +7,7 @@ var cloudinary = require("cloudinary");
 var fs = require('fs');
 var pg = require('pg');
 var app = express();
+<<<<<<< HEAD
 
 
 
@@ -24,6 +25,11 @@ var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var DATABASE_URL = "postgresql://admin5bxzk4e:7t32Pgi5GR_e@127.6.45.2:5432/guacamoliii";
 
 app.set('port', (process.env.OPENSHIFT_NODEJS_PORT || 8080));
+=======
+var LOCAL_DATABASE_URL = "postgres://bibcnlyezwlkhl:gdhvCdkdw5znI-LjSspT6wKOfR@ec2-54-225-223-40.compute-1.amazonaws.com:5432/davktp8lndlj83"+'?ssl=true';
+
+app.set('port', (process.env.PORT || 5000));
+>>>>>>> 7208b39367d01d10bd8223950679aba0f3ca84c2
 
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -33,10 +39,19 @@ app.use(bodyParser.json());
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
+<<<<<<< HEAD
 app.listen(app.get('port'), server_ip_address, function() {
   console.log('Node app is running on port', app.get('port'));
 });
 
+=======
+app.listen(app.get('port'), function() {
+  console.log('Node app is running on port', app.get('port'));
+});
+
+
+
+>>>>>>> 7208b39367d01d10bd8223950679aba0f3ca84c2
 ////////////////////////////////////////////
 //      page views
 ///////////////////////////////////////////
@@ -78,7 +93,11 @@ app.get('/filterSearchResult', function(request, response) {
 
 app.get('/menu_list', function (req, res) {
   console.log("menu_list");
+<<<<<<< HEAD
   pg.connect(DATABASE_URL, function(err, client, done) {
+=======
+  pg.connect((process.env.DATABASE_URL || LOCAL_DATABASE_URL), function(err, client, done) {
+>>>>>>> 7208b39367d01d10bd8223950679aba0f3ca84c2
     client.query("SELECT id, name FROM meal",
                   function(err, result) {
       if (err)
@@ -88,7 +107,10 @@ app.get('/menu_list', function (req, res) {
       else
       {
         console.log(result.rows);
+<<<<<<< HEAD
         //res.send(result.rows);
+=======
+>>>>>>> 7208b39367d01d10bd8223950679aba0f3ca84c2
         res.render('pages/menu_list', {results: result.rows});
       }
     });
@@ -98,7 +120,11 @@ app.get('/menu_list', function (req, res) {
 
 app.get('/menu/:menuId', function (req, res) {
   console.log("/menu/params menuID = " + req.params.menuId);
+<<<<<<< HEAD
   pg.connect(DATABASE_URL, function(err, client, done) {
+=======
+  pg.connect((process.env.DATABASE_URL || LOCAL_DATABASE_URL), function(err, client, done) {
+>>>>>>> 7208b39367d01d10bd8223950679aba0f3ca84c2
     client.query("SELECT * FROM meal "+
                   "WHERE meal.id = $1",
                   [req.params.menuId],
@@ -111,7 +137,10 @@ app.get('/menu/:menuId', function (req, res) {
       {
         console.log("menu select result");
         console.log(result.rows);
+<<<<<<< HEAD
         //res.send(result.rows);
+=======
+>>>>>>> 7208b39367d01d10bd8223950679aba0f3ca84c2
         res.render('pages/menu', {result: result.rows[0]});
       }
     });
@@ -120,13 +149,24 @@ app.get('/menu/:menuId', function (req, res) {
 });
 
 
+<<<<<<< HEAD
+=======
+
+
+
+
+>>>>>>> 7208b39367d01d10bd8223950679aba0f3ca84c2
 ////////////////////////////////////////////
 //      REST APIs
 ///////////////////////////////////////////
 // returns json object
 app.get('/meal/all', function (request, response) {
   //console.log("database URL = "+(process.env.DATABASE_URL || LOCAL_DATABASE_URL));
+<<<<<<< HEAD
   pg.connect(DATABASE_URL, function(err, client, done) {
+=======
+  pg.connect((process.env.DATABASE_URL || LOCAL_DATABASE_URL), function(err, client, done) {
+>>>>>>> 7208b39367d01d10bd8223950679aba0f3ca84c2
     client.query('SELECT * FROM meal', function(err, result) {
       done();
       if (err)
@@ -151,18 +191,31 @@ app.post('/uploadMeal', function (request, response) {
     request.body.price = 0;
   }
 
+<<<<<<< HEAD
   pg.connect(DATABASE_URL, function(err, client, done) {
     client.query("INSERT INTO meal"+
                   "(restaurantId, name, chineseName, category, price, picture_url, "+
                   "cuisineTypeId, deliverySpeedId, offeredTimesId, "+
                   "tasteTypesId, ingredientTypesId, sauceTypesId)"+
                   " values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)",
+=======
+  pg.connect((process.env.DATABASE_URL || LOCAL_DATABASE_URL), function(err, client, done) {
+    client.query("INSERT INTO meal"+
+                  "(restaurantId, name, chineseName, category, price, picture_url, "+
+                  "cuisineTypeId, deliverySpeedId, offeredTimesId, "+
+                  "tasteTypesId, ingredientTypesId, sauceTypesId, rating)"+
+                  " values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)",
+>>>>>>> 7208b39367d01d10bd8223950679aba0f3ca84c2
                   [request.body.restaurant_name, request.body.name,
                     request.body.chineseMealName, request.body.category,
                     request.body.price, request.body.picture_url,
                     request.body.cuisineType, request.body.deliverySpeed,
                     request.body.offeredTimes, request.body.tasteTypes,
+<<<<<<< HEAD
                     request.body.foodTypes, request.body.sauceTypes],
+=======
+                    request.body.foodTypes, request.body.sauceTypes, request.body.rating],
+>>>>>>> 7208b39367d01d10bd8223950679aba0f3ca84c2
                   function(err, result) {
 
       if (err)
@@ -178,24 +231,40 @@ app.post('/uploadMeal', function (request, response) {
 //////////////////////////////////////////////////////////////////////
 /// Image upload
 //////////////////////////////////////////////////////////////////////
+<<<<<<< HEAD
 //var cloudinary  =   require('cloudinary')
+=======
+var cloudinary  =   require('cloudinary')
+>>>>>>> 7208b39367d01d10bd8223950679aba0f3ca84c2
 var multer      =   require('multer');
 var storage =   multer.diskStorage({
   destination: function (req, file, callback) {
     callback(null, './public/uploads');
   },
   filename: function (req, file, callback) {
+<<<<<<< HEAD
     callback(null, file.originalname/* + '-' + Date.now()*/);
   }
 });
 var upload      =   multer({storage:storage}).single('image');
 /*
+=======
+    callback(null, file.originalname + '-' + Date.now());
+  }
+});
+var upload      =   multer({storage:storage}).single('image');
+
+>>>>>>> 7208b39367d01d10bd8223950679aba0f3ca84c2
 cloudinary.config({
   cloud_name: 'hdgw6ruas',
   api_key: '965541217938815',
   api_secret: 'h_2qUkQAXWPeZdW95rb_C9lv0z8'
 });
+<<<<<<< HEAD
 */
+=======
+
+>>>>>>> 7208b39367d01d10bd8223950679aba0f3ca84c2
 
 app.post('/uploadPhoto', function(req, res){
   console.log('/uploadPhoto');
@@ -207,11 +276,18 @@ app.post('/uploadPhoto', function(req, res){
     else {
       console.log("upload to server complete, file = ");
       console.log(req.file);
+<<<<<<< HEAD
       res.json({Filepath: (image_path+req.file.filename)});
       //var filename = "./public/uploads/" + req.file.filename;
 
       //res.json({Filepath: filename});
       /*cloudinary.uploader.upload(filename, function(result) {
+=======
+      var filename = "./public/uploads/" + req.file.filename;
+
+      //res.json({Filepath: filename});
+      cloudinary.uploader.upload(filename, function(result) {
+>>>>>>> 7208b39367d01d10bd8223950679aba0f3ca84c2
   	    if (result.error) {
   		    return res.json({error: "Something went wrong with cloudinary upload"});
   	    }
@@ -219,7 +295,11 @@ app.post('/uploadPhoto', function(req, res){
           fs.unlinkSync(filename);
           res.json({Filepath: result.url});
         }
+<<<<<<< HEAD
   	  });*/
+=======
+  	  });
+>>>>>>> 7208b39367d01d10bd8223950679aba0f3ca84c2
     }
   });
 });

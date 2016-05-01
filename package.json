@@ -18,6 +18,13 @@
   "engines": {
     "node": "0.12.7"
   },
+<<<<<<< HEAD
+=======
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/heroku/node-js-getting-started"
+  },
+>>>>>>> 7208b39367d01d10bd8223950679aba0f3ca84c2
   "keywords": [
     "node",
     "heroku",

@@ -30,7 +30,11 @@
                   <li><b>Ingredient Type</b>: <%= whatIngredient(result.ingredienttypesid) %> </li><br>
               </ul>
               <div class="star" style="margin-top:10px;">
+<<<<<<< HEAD
                 <input id="input-2d" value="1" type="number" class="rating" min=0 max=5 step=0.5 data-size="xs" data-show-clear="false">
+=======
+                <input id="star_rating" value=<%= result.rating %> type="number" class="rating" min=0 max=5 step=0.5 data-size="xs" data-show-clear="false">
+>>>>>>> 7208b39367d01d10bd8223950679aba0f3ca84c2
               </div>
             </ul>
           </div>
@@ -42,6 +46,7 @@
 
   <% include ../partials/javascript_dependency.ejs %>
   <script>
+<<<<<<< HEAD
   /*
     jQuery(document).ready(function () {
       $('#input-2d').rating({
@@ -53,6 +58,11 @@
          });
       alert("testing");
     });*/
+=======
+    $(document).ready(function () {
+      //$('#star_rating').rating('update', 3);
+    });
+>>>>>>> 7208b39367d01d10bd8223950679aba0f3ca84c2
 
   </script>
 </body>

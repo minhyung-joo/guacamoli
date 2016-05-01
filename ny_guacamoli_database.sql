@@ -71,6 +71,11 @@ CREATE TABLE meal (
   sauceTypesId smallint[],
 
   -- updatable
+<<<<<<< HEAD
   rating integer[],
+=======
+  rating integer,
+  rating_count integer,
+>>>>>>> 7208b39367d01d10bd8223950679aba0f3ca84c2
   comments text[]
 );
