@@ -31,18 +31,47 @@ app.listen(app.get('port'), function() {
 app.get('/', function(request, response) {
   response.render('pages/index');
 });
+
+/*
 app.get('/lg1', function(request, response) {
   response.render('pages/lg1');
+}); */
+
+function getMenusByRestaurant(res, _restaurantId, renderPath){
+  console.log(_restaurantId+" menus")
+  pg.connect((process.env.DATABASE_URL || LOCAL_DATABASE_URL), function(err, client, done) {
+    client.query("SELECT id, name, picture_url FROM meal WHERE restaurantId = $1",[_restaurantId],
+    function(err, result) {
+      if (err){
+        console.error(err); res.send("Error " + err);
+      }
+      else{
+        console.log(result.rows);
+        res.render(renderPath, {results: result.rows});
+      }
+    });
+    done();
+  });
+}
+
+app.get('/lg1', function (req, res) {
+  getMenusByRestaurant(res, 1,'pages/lg1');
 });
-app.get('/lg7', function(request, response) {
-  response.render('pages/lg7');
+
+app.get('/cafe', function(req, res) {
+  getMenusByRestaurant(res, 6,'pages/cafe');
+  //response.render('pages/cafe');
 });
-app.get('/cafe', function(request, response) {
-  response.render('pages/cafe');
+app.get('/lsk', function(req, res) {
+  //response.render('pages/lsk');
+  getMenusByRestaurant(res, 8,'pages/lsk');
 });
-app.get('/lsk', function(request, response) {
-  response.render('pages/lsk');
+
+app.get('/lg7', function(req, res) {
+  getMenusByRestaurant(res, 1,'pages/lg7');
+  //response.render('pages/lg7');
 });
+
 app.get('/rankings', function(request, response) {
   response.render('pages/index');
   //$('.ranking_link').trigger('click');
@@ -55,8 +84,22 @@ app.get('/searchResult', function(request, response) {
 });
 
 //this one is dummy page for prototype
-app.get('/filterSearchResult', function(request, response) {
-  response.render('pages/dummyFilterSearchPage');
+app.get('/filterSearchResult', function(req, res) {
+  //response.render('pages/dummyFilterSearchPage');
+  console.log("lg7 menus")
+  pg.connect((process.env.DATABASE_URL || LOCAL_DATABASE_URL), function(err, client, done) {
+    client.query("SELECT id, name, picture_url FROM meal WHERE restaurantId=3 OR restaurantId=4 OR restaurantId=5",
+    function(err, result) {
+      if (err){
+        console.error(err); res.send("Error " + err);
+      }
+      else{
+        console.log(result.rows);
+        res.render('pages/lg7', {results: result.rows});
+      }
+    });
+    done();
+  });
 });
 
 ////////////////////////////////////////////
