@@ -85,6 +85,7 @@ app.get('/menu_list', function (req, res) {
 
 app.get('/menu/:menuId', function (req, res) {
   console.log("/menu/params menuID = " + req.params.menuId);
+  res.send(req.params.menuId);
   pg.connect(DATABASE_URL, function(err, client, done) {
     client.query("SELECT * FROM meal "+
                   "INNER JOIN restaurant ON meal.restaurantId = restaurant.id "+
