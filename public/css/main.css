@@ -93,9 +93,22 @@ ul.tags_images {
 	padding:0;
 }
 
+.ranking-heading{
+  background-color:orange;
+  padding: 15px 0px;
+}
+
 #food_profile {
     margin-top: 50px;
     border-style: solid;
     border-width: 10px;
     border-color: #007300;
+}
+
+
+
+#ranking{
+  border-style: solid;
+  border-width: medium;
+  border-color: orange;
 }

@@ -71,6 +71,7 @@ CREATE TABLE meal (
   sauceTypesId smallint[],
 
   -- updatable
-  rating integer[],
+  rating integer,
+  rating_count integer,
   comments text[]
 );
