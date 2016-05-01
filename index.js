@@ -199,10 +199,11 @@ app.post('/uploadPhoto', function(req, res){
     else {
       console.log("upload to server complete, file = ");
       console.log(req.file);
+      res.json({Filepath: req.file});
       //var filename = "./public/uploads/" + req.file.filename;
 
       //res.json({Filepath: filename});
-      cloudinary.uploader.upload(filename, function(result) {
+      /*cloudinary.uploader.upload(filename, function(result) {
   	    if (result.error) {
   		    return res.json({error: "Something went wrong with cloudinary upload"});
   	    }
@@ -210,7 +211,7 @@ app.post('/uploadPhoto', function(req, res){
           fs.unlinkSync(filename);
           res.json({Filepath: result.url});
         }
-  	  });
+  	  });*/
     }
   });
 });
