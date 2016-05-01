@@ -8,6 +8,17 @@ var fs = require('fs');
 var pg = require('pg');
 var app = express();
 
+
+
+var site_domain = "localhost:8080";/*
+if (process.env.PORT) {
+  site_domain = "localhost:8080"
+}
+else {
+  site_domain = "http://guacamoliii-hkust25.appcloud.ust.hk/uploads/"
+}*/
+
+//"http://guacamoliii-hkust25.appcloud.ust.hk/uploads/"
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 //var DATABASE_URL = "postgresql://"+process.env.OPENSHIFT_POSTGRESQL_DB_HOST+":"+process.env.OPENSHIFT_POSTGRESQL_DB_PORT;
 var DATABASE_URL = "postgresql://admin5bxzk4e:7t32Pgi5GR_e@127.6.45.2:5432/guacamoliii";
