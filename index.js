@@ -87,7 +87,6 @@ app.get('/menu_list', function (req, res) {
 
 app.get('/menu/:menuId', function (req, res) {
   console.log("/menu/params menuID = " + req.params.menuId);
-  res.send(process.env.OPENSHIFT_POSTGRESQL_DB_URL);
   pg.connect(DATABASE_URL, function(err, client, done) {
     client.query("SELECT * FROM meal "+
                   "WHERE meal.id = $1",
