@@ -9,7 +9,7 @@ var pg = require('pg');
 var app = express();
 
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
-var DATABASE_URL = "postgresql://"+process.env.OPENSHIFT_POSTGRESQL_DB_HOST+":"+process.env.OPENSHIFT_POSTGRESQL_DB_PORT+"?ssl=true";
+var DATABASE_URL = "postgresql://"+process.env.OPENSHIFT_POSTGRESQL_DB_HOST+":"+process.env.OPENSHIFT_POSTGRESQL_DB_PORT;
 
 app.set('port', (process.env.OPENSHIFT_NODEJS_PORT || 8080));
 
