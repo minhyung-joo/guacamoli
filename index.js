@@ -9,7 +9,7 @@ var pg = require('pg');
 var app = express();
 
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
-var DATABASE_URL = "postgresql://"+process.env.OPENSHIFT_POSTGRESQL_DB_HOST+":"+process.env.OPENSHIFT_POSTGRESQL_DB_PORT;
+var DATABASE_URL = "postgresql://"+process.env.OPENSHIFT_POSTGRESQL_DB_HOST+":"+process.env.OPENSHIFT_POSTGRESQL_DB_PORT+"?ssl=true";
 
 app.set('port', (process.env.OPENSHIFT_NODEJS_PORT || 8080));
 
@@ -85,7 +85,7 @@ app.get('/menu_list', function (req, res) {
 
 app.get('/menu/:menuId', function (req, res) {
   console.log("/menu/params menuID = " + req.params.menuId);
-  res.send(req.params.menuId);
+  res.send(process.env.OPENSHIFT_POSTGRESQL_DB_URL);
   pg.connect(DATABASE_URL, function(err, client, done) {
     client.query("SELECT * FROM meal "+
                   "INNER JOIN restaurant ON meal.restaurantId = restaurant.id "+
