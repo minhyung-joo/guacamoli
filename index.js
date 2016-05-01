@@ -9,6 +9,8 @@ var pg = require('pg');
 var app = express();
 var LOCAL_DATABASE_URL = "postgres://bibcnlyezwlkhl:gdhvCdkdw5znI-LjSspT6wKOfR@ec2-54-225-223-40.compute-1.amazonaws.com:5432/davktp8lndlj83"+'?ssl=true';
 
+var a = "dd";
+
 app.set('port', (process.env.PORT || 5000));
 
 app.use(express.static(__dirname + '/public'));
