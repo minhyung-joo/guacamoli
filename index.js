@@ -174,7 +174,7 @@ var storage =   multer.diskStorage({
     callback(null, './public/uploads');
   },
   filename: function (req, file, callback) {
-    callback(null, file.originalname + '-' + Date.now());
+    callback(null, file.originalname/* + '-' + Date.now()*/);
   }
 });
 var upload      =   multer({storage:storage}).single('image');
