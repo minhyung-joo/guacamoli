@@ -100,16 +100,13 @@ app.get('/menu/:menuId', function (req, res) {
       {
         console.log("menu select result");
         console.log(result.rows);
-        res.render('pages/menu', {result: result.rows[0]});
+        res.send(result.rows);
+        //res.render('pages/menu', {result: result.rows[0]});
       }
     });
     done();
   });
 });
-
-
-
-
 
 
 ////////////////////////////////////////////
