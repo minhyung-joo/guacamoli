@@ -19,7 +19,7 @@ var DATABASE_URL;
 
 //////////////// on openshift
 if (process.env.OPENSHIFT_NODEJS_PORT) {
-  image_path = "guacamoliii-hkust25.appcloud.ust.hk/uploads/";
+  image_path = "/uploads/";//"guacamoliii-hkust25.appcloud.ust.hk/uploads/";
   DATABASE_URL = "postgresql://admin5bxzk4e:7t32Pgi5GR_e@127.6.45.2:5432/guacamoliii";
 
   app.set('port', (process.env.OPENSHIFT_NODEJS_PORT || 8080));
