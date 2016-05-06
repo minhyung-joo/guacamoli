@@ -238,24 +238,24 @@ app.post('/uploadMeal', function (request, response) {
 //////////////////////////////////////////////////////////////////////
 /// Image upload
 //////////////////////////////////////////////////////////////////////
-var cloudinary  =   require('cloudinary')
+//var cloudinary  =   require('cloudinary')
 var multer      =   require('multer');
 var storage =   multer.diskStorage({
   destination: function (req, file, callback) {
     callback(null, './public/uploads');
   },
   filename: function (req, file, callback) {
-    callback(null, file.originalname + '-' + Date.now());
+    callback(null, file.originalname);
   }
 });
 var upload      =   multer({storage:storage}).single('image');
-
+/*
 cloudinary.config({
   cloud_name: 'hdgw6ruas',
   api_key: '965541217938815',
   api_secret: 'h_2qUkQAXWPeZdW95rb_C9lv0z8'
 });
-
+*/
 
 app.post('/uploadPhoto', function(req, res){
   console.log('/uploadPhoto');
@@ -267,7 +267,8 @@ app.post('/uploadPhoto', function(req, res){
     else {
       console.log("upload to server complete, file = ");
       console.log(req.file);
-      var filename = "./public/uploads/" + req.file.filename;
+      res.json({Filepath: (image_path+req.file.filename)});
+      /*var filename = "./public/uploads/" + req.file.filename;
 
       //res.json({Filepath: filename});
       cloudinary.uploader.upload(filename, function(result) {
@@ -278,7 +279,7 @@ app.post('/uploadPhoto', function(req, res){
           fs.unlinkSync(filename);
           res.json({Filepath: result.url});
         }
-  	  });
+  	  });*/
     }
   });
 });
