@@ -114,7 +114,7 @@ app.get('/searchResult', function(request, response) {
 app.get('/filterSearchResult', function(req, res) {
   //response.render('pages/dummyFilterSearchPage');
   console.log("lg7 menus")
-  pg.connect(DATABASE_URL), function(err, client, done) {
+  pg.connect(DATABASE_URL, function(err, client, done) {
     client.query("SELECT id, name, picture_url FROM meal WHERE restaurantId=3 OR restaurantId=4 OR restaurantId=5",
     function(err, result) {
       if (err){
@@ -136,7 +136,7 @@ app.get('/filterSearchResult', function(req, res) {
 
 app.get('/menu_list', function (req, res) {
   console.log("menu_list");
-  pg.connect(DATABASE_URL), function(err, client, done) {
+  pg.connect(DATABASE_URL, function(err, client, done) {
     client.query("SELECT id, name FROM meal",
                   function(err, result) {
       if (err)
