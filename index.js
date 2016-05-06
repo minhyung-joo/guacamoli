@@ -30,11 +30,7 @@ if (process.env.OPENSHIFT_NODEJS_PORT) {
 }
 /////////////// on heroku or local
 else {
-  image_path = "guacamoli.herokuapp.com/uploads/";
-  // image path on local
-  if (!process.env.PORT) {
-    image_path = "localhost:5000/uploads/";
-  }
+  image_path = "/uploads/";
 
   DATABASE_URL = process.env.DATABASE_URL
     || "postgres://bibcnlyezwlkhl:gdhvCdkdw5znI-LjSspT6wKOfR@ec2-54-225-223-40.compute-1.amazonaws.com:5432/davktp8lndlj83"+'?ssl=true';
@@ -250,7 +246,7 @@ var storage =   multer.diskStorage({
     callback(null, './public/uploads');
   },
   filename: function (req, file, callback) {
-    callback(null, file.originalname);
+    callback(null, Date.now()+"-"+file.originalname);
   }
 });
 var upload      =   multer({storage:storage}).single('image');
