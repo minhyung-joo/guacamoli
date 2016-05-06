@@ -211,6 +211,7 @@ app.post('/uploadMeal', function (request, response) {
     request.body.price = 0;
   }
 
+  
   pg.connect(DATABASE_URL, function(err, client, done) {
     client.query("INSERT INTO meal"+
                   "(restaurantId, name, chineseName, category, price, picture_url, "+
