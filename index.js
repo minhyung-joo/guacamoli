@@ -211,7 +211,7 @@ app.post('/uploadMeal', function (request, response) {
     request.body.price = 0;
   }
 
-  
+
   pg.connect(DATABASE_URL, function(err, client, done) {
     client.query("INSERT INTO meal"+
                   "(restaurantId, name, chineseName, category, price, picture_url, "+
@@ -250,6 +250,7 @@ var storage =   multer.diskStorage({
   }
 });
 var upload      =   multer({storage:storage}).single('image');
+
 /*
 cloudinary.config({
   cloud_name: 'hdgw6ruas',
