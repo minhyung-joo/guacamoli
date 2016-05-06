@@ -7,9 +7,38 @@ var cloudinary = require("cloudinary");
 var fs = require('fs');
 var pg = require('pg');
 var app = express();
-var LOCAL_DATABASE_URL = "postgres://bibcnlyezwlkhl:gdhvCdkdw5znI-LjSspT6wKOfR@ec2-54-225-223-40.compute-1.amazonaws.com:5432/davktp8lndlj83"+'?ssl=true';
 
-app.set('port', (process.env.PORT || 5000));
+
+
+/////////////////////////////////////////////
+//      platform dependent configurations
+/////////////////////////////////////////////
+var image_path;
+var server_ip_address = process.env.OPENSHIFT_NODEJS_IP; // only for openshift
+var DATABASE_URL;
+
+
+//////////////// on openshift
+if (process.env.OPENSHIFT_NODEJS_PORT) {
+  image_path = "guacamoliii-hkust25.appcloud.ust.hk/uploads/";
+  DATABASE_URL = "postgresql://admin5bxzk4e:7t32Pgi5GR_e@127.6.45.2:5432/guacamoliii";
+
+  app.set('port', (process.env.OPENSHIFT_NODEJS_PORT || 8080));
+  app.listen(app.get('port'), server_ip_address, function() {
+    console.log('Node (openshift) app is running on port', app.get('port'));
+  });
+}
+/////////////// on heroku or local
+else {
+  image_path = "guacamoli.herokuapp.com/uploads/";
+  DATABASE_URL = process.env.DATABASE_URL;
+    || "postgres://bibcnlyezwlkhl:gdhvCdkdw5znI-LjSspT6wKOfR@ec2-54-225-223-40.compute-1.amazonaws.com:5432/davktp8lndlj83"+'?ssl=true';
+
+  app.set('port', (process.env.PORT || 5000));
+  app.listen(app.get('port'), function() {
+    console.log('Node (heroku & local) app is running on port', app.get('port'));
+  });
+}
 
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -19,9 +48,7 @@ app.use(bodyParser.json());
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
-app.listen(app.get('port'), function() {
-  console.log('Node app is running on port', app.get('port'));
-});
+
 
 
 
@@ -39,7 +66,7 @@ app.get('/lg1', function(request, response) {
 
 function getMenusByRestaurant(res, _restaurantId, renderPath){
   console.log(_restaurantId+" menus")
-  pg.connect((process.env.DATABASE_URL || LOCAL_DATABASE_URL), function(err, client, done) {
+  pg.connect(DATABASE_URL, function(err, client, done) {
     client.query("SELECT id, name, picture_url FROM meal WHERE restaurantId = $1",[_restaurantId],
     function(err, result) {
       if (err){
@@ -87,7 +114,7 @@ app.get('/searchResult', function(request, response) {
 app.get('/filterSearchResult', function(req, res) {
   //response.render('pages/dummyFilterSearchPage');
   console.log("lg7 menus")
-  pg.connect((process.env.DATABASE_URL || LOCAL_DATABASE_URL), function(err, client, done) {
+  pg.connect(DATABASE_URL), function(err, client, done) {
     client.query("SELECT id, name, picture_url FROM meal WHERE restaurantId=3 OR restaurantId=4 OR restaurantId=5",
     function(err, result) {
       if (err){
@@ -109,7 +136,7 @@ app.get('/filterSearchResult', function(req, res) {
 
 app.get('/menu_list', function (req, res) {
   console.log("menu_list");
-  pg.connect((process.env.DATABASE_URL || LOCAL_DATABASE_URL), function(err, client, done) {
+  pg.connect(DATABASE_URL), function(err, client, done) {
     client.query("SELECT id, name FROM meal",
                   function(err, result) {
       if (err)
@@ -128,7 +155,7 @@ app.get('/menu_list', function (req, res) {
 
 app.get('/menu/:menuId', function (req, res) {
   console.log("/menu/params menuID = " + req.params.menuId);
-  pg.connect((process.env.DATABASE_URL || LOCAL_DATABASE_URL), function(err, client, done) {
+  pg.connect(DATABASE_URL, function(err, client, done) {
     client.query("SELECT * FROM meal "+
                   "WHERE meal.id = $1",
                   [req.params.menuId],
@@ -159,7 +186,7 @@ app.get('/menu/:menuId', function (req, res) {
 // returns json object
 app.get('/meal/all', function (request, response) {
   //console.log("database URL = "+(process.env.DATABASE_URL || LOCAL_DATABASE_URL));
-  pg.connect((process.env.DATABASE_URL || LOCAL_DATABASE_URL), function(err, client, done) {
+  pg.connect(DATABASE_URL, function(err, client, done) {
     client.query('SELECT * FROM meal', function(err, result) {
       done();
       if (err)
@@ -184,7 +211,7 @@ app.post('/uploadMeal', function (request, response) {
     request.body.price = 0;
   }
 
-  pg.connect((process.env.DATABASE_URL || LOCAL_DATABASE_URL), function(err, client, done) {
+  pg.connect(DATABASE_URL, function(err, client, done) {
     client.query("INSERT INTO meal"+
                   "(restaurantId, name, chineseName, category, price, picture_url, "+
                   "cuisineTypeId, deliverySpeedId, offeredTimesId, "+
