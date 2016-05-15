@@ -7,9 +7,38 @@ var cloudinary = require("cloudinary");
 var fs = require('fs');
 var pg = require('pg');
 var app = express();
-var LOCAL_DATABASE_URL = "postgres://bibcnlyezwlkhl:gdhvCdkdw5znI-LjSspT6wKOfR@ec2-54-225-223-40.compute-1.amazonaws.com:5432/davktp8lndlj83"+'?ssl=true';
 
-app.set('port', (process.env.PORT || 5000));
+
+/////////////////////////////////////////////
+//      platform dependent configurations
+/////////////////////////////////////////////
+var image_path;
+var server_ip_address = process.env.OPENSHIFT_NODEJS_IP; // only for openshift
+var DATABASE_URL;
+
+
+//////////////// on openshift
+if (process.env.OPENSHIFT_NODEJS_PORT) {
+  image_path = "/uploads/";//"guacamoliii-hkust25.appcloud.ust.hk/uploads/";
+  DATABASE_URL = "postgresql://admin5bxzk4e:7t32Pgi5GR_e@127.6.45.2:5432/guacamoliii";
+
+  app.set('port', (process.env.OPENSHIFT_NODEJS_PORT || 8080));
+  app.listen(app.get('port'), server_ip_address, function() {
+    console.log('Node (openshift) app is running on port', app.get('port'));
+  });
+}
+/////////////// on heroku or local
+else {
+  image_path = "/uploads/";
+
+  DATABASE_URL = process.env.DATABASE_URL
+    || "postgres://bibcnlyezwlkhl:gdhvCdkdw5znI-LjSspT6wKOfR@ec2-54-225-223-40.compute-1.amazonaws.com:5432/davktp8lndlj83"+'?ssl=true';
+
+  app.set('port', (process.env.PORT || 5000));
+  app.listen(app.get('port'), function() {
+    console.log('Node (heroku & local) app is running on port', app.get('port'));
+  });
+}
 
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -19,9 +48,7 @@ app.use(bodyParser.json());
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
-app.listen(app.get('port'), function() {
-  console.log('Node app is running on port', app.get('port'));
-});
+
 
 
 
@@ -39,8 +66,8 @@ app.get('/lg1', function(request, response) {
 
 function getMenusByRestaurant(res, _restaurantId, renderPath){
   console.log(_restaurantId+" menus")
-  pg.connect((process.env.DATABASE_URL || LOCAL_DATABASE_URL), function(err, client, done) {
-    client.query("SELECT id, name, picture_url, restaurantId FROM meal WHERE restaurantId = $1",[_restaurantId],
+  pg.connect(DATABASE_URL, function(err, client, done) {
+    client.query("SELECT id, name, picture_url FROM meal WHERE restaurantId = $1",[_restaurantId],
     function(err, result) {
       if (err){
         console.error(err); res.send("Error " + err);
@@ -53,6 +80,11 @@ function getMenusByRestaurant(res, _restaurantId, renderPath){
     done();
   });
 }
+
+/*
+  pg.connect((process.env.DATABASE_URL || LOCAL_DATABASE_URL), function(err, client, done) {
+    client.query("SELECT id, name, picture_url, restaurantId FROM meal WHERE restaurantId = $1",[_restaurantId],
+*/
 
 app.get('/lg1', function (req, res) {
   getMenusByRestaurant(res, 1,'pages/lg1');
@@ -101,7 +133,7 @@ app.get('/searchResult', function(request, response) {
 app.get('/filterSearchResult', function(req, res) {
   //response.render('pages/dummyFilterSearchPage');
   console.log("lg7 menus")
-  pg.connect((process.env.DATABASE_URL || LOCAL_DATABASE_URL), function(err, client, done) {
+  pg.connect(DATABASE_URL, function(err, client, done) {
     client.query("SELECT id, name, picture_url FROM meal WHERE restaurantId=3 OR restaurantId=4 OR restaurantId=5",
     function(err, result) {
       if (err){
@@ -123,7 +155,7 @@ app.get('/filterSearchResult', function(req, res) {
 
 app.get('/menu_list', function (req, res) {
   console.log("menu_list");
-  pg.connect((process.env.DATABASE_URL || LOCAL_DATABASE_URL), function(err, client, done) {
+  pg.connect(DATABASE_URL, function(err, client, done) {
     client.query("SELECT id, name FROM meal",
                   function(err, result) {
       if (err)
@@ -142,7 +174,7 @@ app.get('/menu_list', function (req, res) {
 
 app.get('/menu/:menuId', function (req, res) {
   console.log("/menu/params menuID = " + req.params.menuId);
-  pg.connect((process.env.DATABASE_URL || LOCAL_DATABASE_URL), function(err, client, done) {
+  pg.connect(DATABASE_URL, function(err, client, done) {
     client.query("SELECT * FROM meal "+
                   "WHERE meal.id = $1",
                   [req.params.menuId],
@@ -171,7 +203,7 @@ app.get('/menu/:menuId', function (req, res) {
 // returns json object
 app.get('/meal/all', function (request, response) {
   //console.log("database URL = "+(process.env.DATABASE_URL || LOCAL_DATABASE_URL));
-  pg.connect((process.env.DATABASE_URL || LOCAL_DATABASE_URL), function(err, client, done) {
+  pg.connect(DATABASE_URL, function(err, client, done) {
     client.query('SELECT * FROM meal', function(err, result) {
       done();
       if (err)
@@ -196,18 +228,19 @@ app.post('/uploadMeal', function (request, response) {
     request.body.price = 0;
   }
 
-  pg.connect((process.env.DATABASE_URL || LOCAL_DATABASE_URL), function(err, client, done) {
+
+  pg.connect(DATABASE_URL, function(err, client, done) {
     client.query("INSERT INTO meal"+
                   "(restaurantId, name, chineseName, category, price, picture_url, "+
                   "cuisineTypeId, deliverySpeedId, offeredTimesId, "+
-                  "tasteTypesId, ingredientTypesId, sauceTypesId, rating)"+
-                  " values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)",
+                  "tasteTypesId, ingredientTypesId, sauceTypesId)"+
+                  " values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)",
                   [request.body.restaurant_name, request.body.name,
                     request.body.chineseMealName, request.body.category,
                     request.body.price, request.body.picture_url,
                     request.body.cuisineType, request.body.deliverySpeed,
                     request.body.offeredTimes, request.body.tasteTypes,
-                    request.body.foodTypes, request.body.sauceTypes, request.body.rating],
+                    request.body.foodTypes, request.body.sauceTypes],
                   function(err, result) {
 
       if (err)
@@ -223,24 +256,25 @@ app.post('/uploadMeal', function (request, response) {
 //////////////////////////////////////////////////////////////////////
 /// Image upload
 //////////////////////////////////////////////////////////////////////
-var cloudinary  =   require('cloudinary')
+//var cloudinary  =   require('cloudinary')
 var multer      =   require('multer');
 var storage =   multer.diskStorage({
   destination: function (req, file, callback) {
     callback(null, './public/uploads');
   },
   filename: function (req, file, callback) {
-    callback(null, file.originalname + '-' + Date.now());
+    callback(null, Date.now()+"-"+file.originalname);
   }
 });
 var upload      =   multer({storage:storage}).single('image');
 
+/*
 cloudinary.config({
   cloud_name: 'hdgw6ruas',
   api_key: '965541217938815',
   api_secret: 'h_2qUkQAXWPeZdW95rb_C9lv0z8'
 });
-
+*/
 
 app.post('/uploadPhoto', function(req, res){
   console.log('/uploadPhoto');
@@ -252,7 +286,8 @@ app.post('/uploadPhoto', function(req, res){
     else {
       console.log("upload to server complete, file = ");
       console.log(req.file);
-      var filename = "./public/uploads/" + req.file.filename;
+      res.json({Filepath: (image_path+req.file.filename)});
+      /*var filename = "./public/uploads/" + req.file.filename;
 
       //res.json({Filepath: filename});
       cloudinary.uploader.upload(filename, function(result) {
@@ -263,7 +298,7 @@ app.post('/uploadPhoto', function(req, res){
           fs.unlinkSync(filename);
           res.json({Filepath: result.url});
         }
-  	  });
+  	  });*/
     }
   });
 });

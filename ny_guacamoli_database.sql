@@ -69,6 +69,7 @@ CREATE TABLE meal (
   tasteTypesId smallint[],
   ingredientTypesId smallint[],
   sauceTypesId smallint[],
+  ingredientsDescription text,
 
   -- updatable
   rating integer,
