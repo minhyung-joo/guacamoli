@@ -9,8 +9,17 @@
   <div class="container">
       <div class="starter-template">
         <h1> LG7 - Asia Pacific Catering</h1>
+        <div class="row">
+          <% results.forEach(function(r) { %>
+            <div class="col-md-3 meal_info_thumbnail" onclick="window.location='<%= "/menu/"+r.id %>';">
+              <span>
+                <img src= <%= r.picture_url %> class="img-responsive" alt=""/>
+                <p class="meal_information"><%= r.name %></p>
+              </span>
+            </div> <!-- /.thumbnail -->
+          <% }); %>
+        </div> <!-- /.row -->
       </div>
-
     </div><!-- /.container -->
 
 

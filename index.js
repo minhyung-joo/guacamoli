@@ -158,12 +158,10 @@ app.get('/menu_list', function (req, res) {
   pg.connect(DATABASE_URL, function(err, client, done) {
     client.query("SELECT id, name FROM meal",
                   function(err, result) {
-      if (err)
-      {
+      if (err){
         console.error(err); res.send("Error " + err);
       }
-      else
-      {
+      else{
         console.log(result.rows);
         res.render('pages/menu_list', {results: result.rows});
       }

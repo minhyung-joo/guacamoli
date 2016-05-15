@@ -98,14 +98,20 @@ ul.tags_images {
   padding: 15px 0px;
 }
 
+.meal_info_thumbnail {
+  margin-bottom: 20px;
+}
+
+.meal_info_thumbnail>p{
+   word-wrap: break-word;
+}
+
 #food_profile {
     margin-top: 50px;
     border-style: solid;
     border-width: 10px;
     border-color: #007300;
 }
-
-
 
 #ranking{
   border-style: solid;
