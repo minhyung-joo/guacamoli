@@ -8,10 +8,25 @@
   <% include ../partials/nav.ejs %>
   <div class="container">
     <div class="starter-template">
-      <h1> Hello this is lg1 page</h1>
+      <h1> LG1 - Maxim's</h1>
+
+      <div class="row">
+        <% results.forEach(function(r) { %>
+          <div class="col-md-3" onclick="window.location='<%= "/menu/"+r.id %>';">
+            <img src= <%= r.picture_url %> class="img-responsive" alt=""/>
+            <%= r.id %> - <%= r.name %>
+          </div>
+        <% }); %>
+      </div> <!-- /.row -->
     </div>
   </div><!-- /.container -->
 
+<!--
+
+<div class="col-md-3">lala</div>
+<div class="col-md-3">lala</div>
+<div class="col-md-3">lala</div>
+-->
 
 
   <% include ../partials/javascript_dependency.ejs %>

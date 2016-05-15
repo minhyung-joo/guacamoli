@@ -40,7 +40,7 @@ app.get('/lg1', function(request, response) {
 function getMenusByRestaurant(res, _restaurantId, renderPath){
   console.log(_restaurantId+" menus")
   pg.connect((process.env.DATABASE_URL || LOCAL_DATABASE_URL), function(err, client, done) {
-    client.query("SELECT id, name, picture_url FROM meal WHERE restaurantId = $1",[_restaurantId],
+    client.query("SELECT id, name, picture_url, restaurantId FROM meal WHERE restaurantId = $1",[_restaurantId],
     function(err, result) {
       if (err){
         console.error(err); res.send("Error " + err);
@@ -58,6 +58,19 @@ app.get('/lg1', function (req, res) {
   getMenusByRestaurant(res, 1,'pages/lg1');
 });
 
+app.get('/apc', function (req, res) {
+  getMenusByRestaurant(res, 4,'pages/apc');
+});
+
+app.get('/grb', function (req, res) {
+  getMenusByRestaurant(res, 3,'pages/grb');
+});
+
+app.get('/milano', function (req, res) {
+  getMenusByRestaurant(res, 5,'pages/milano');
+});
+
+/*
 app.get('/cafe', function(req, res) {
   getMenusByRestaurant(res, 6,'pages/cafe');
   //response.render('pages/cafe');
@@ -67,10 +80,11 @@ app.get('/lsk', function(req, res) {
   getMenusByRestaurant(res, 8,'pages/lsk');
 });
 
+
 app.get('/lg7', function(req, res) {
   getMenusByRestaurant(res, 1,'pages/lg7');
   //response.render('pages/lg7');
-});
+});*/
 
 app.get('/rankings', function(request, response) {
   response.render('pages/index');
@@ -83,7 +97,7 @@ app.get('/searchResult', function(request, response) {
   response.render('pages/search_result_page');
 });
 
-//this one is dummy page for prototype
+//this one is dummy page for prototype TODO is this necessary?
 app.get('/filterSearchResult', function(req, res) {
   //response.render('pages/dummyFilterSearchPage');
   console.log("lg7 menus")
@@ -147,8 +161,6 @@ app.get('/menu/:menuId', function (req, res) {
     done();
   });
 });
-
-
 
 
 
