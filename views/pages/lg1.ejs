@@ -14,7 +14,7 @@
           <div class="col-md-3 meal_info_thumbnail" onclick="window.location='<%= "/menu/"+r.id %>';">
             <span>
               <img src= <%= r.picture_url %> class="img-responsive" alt=""/>
-              <p class="meal_information"><%= r.name %></p>
+              <p class="meal_information"><%= r.name %> - <%= r.picture_url %></p>
             </span>
           </div> <!-- /.thumbnail -->
         <% }); %>

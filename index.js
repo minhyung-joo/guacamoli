@@ -55,8 +55,21 @@ app.set('view engine', 'ejs');
 ////////////////////////////////////////////
 //      page views
 ///////////////////////////////////////////
-app.get('/', function(request, response) {
-  response.render('pages/index');
+app.get('/', function(request, res) {
+  pg.connect(DATABASE_URL, function(err, client, done) {
+    client.query("SELECT id, name, picture_url FROM meal WHERE restaurantId=1 UNION SELECT id, name, picture_url FROM meal WHERE restaurantId=4",
+    function(err, result) {
+      if (err){
+        console.error(err); res.send("Error " + err);
+      }
+      else{
+        console.log(result.rows);
+        res.render('pages/index', {results: result.rows});
+      }
+    });
+    done();
+  });
+  //response.render('pages/index');
 });
 
 /*
@@ -151,7 +164,6 @@ app.get('/filterSearchResult', function(req, res) {
 ////////////////////////////////////////////
 //      page views - render ejs
 ///////////////////////////////////////////
-
 
 app.get('/menu_list', function (req, res) {
   console.log("menu_list");
