@@ -135,7 +135,7 @@ app.get('/rankings', function(request, response) {
   response.render('pages/index');
   //$('.ranking_link').trigger('click');
 });
-app.get('/insertMenu', function(request, response) {
+app.get('/admin_only_insert_menu', function(request, response) {
   response.render('pages/insertMenu');
 });
 app.get('/searchResult', function(request, response) {
@@ -165,7 +165,7 @@ app.get('/filterSearchResult', function(req, res) {
 //      page views - render ejs
 ///////////////////////////////////////////
 
-app.get('/menu_list', function (req, res) {
+app.get('/admin_only_menu_list', function (req, res) {
   console.log("menu_list");
   pg.connect(DATABASE_URL, function(err, client, done) {
     client.query("SELECT id, name FROM meal",
@@ -237,8 +237,6 @@ app.post('/uploadMeal', function (request, response) {
   if (!request.body.price) {
     request.body.price = 0;
   }
-
-
   pg.connect(DATABASE_URL, function(err, client, done) {
     client.query("INSERT INTO meal"+
                   "(restaurantId, name, chineseName, category, price, picture_url, "+
@@ -252,7 +250,6 @@ app.post('/uploadMeal', function (request, response) {
                     request.body.offeredTimes, request.body.tasteTypes,
                     request.body.foodTypes, request.body.sauceTypes],
                   function(err, result) {
-
       if (err)
        { console.error(err); response.send("Error " + err); }
       else
@@ -262,6 +259,35 @@ app.post('/uploadMeal', function (request, response) {
   });
 
 });
+
+
+//
+app.post('/deleteMeal', function (request, response) {
+  //console.log("req.body = "+request.body);
+  //console.log("restaurant id  = "+ request.body.restaurant_name);
+  //console.log("offeredTimes = "+request.body.offeredTimes);
+  if (!request.body.id) {
+    console.log("delete meal failed: required fields null");
+    response.json({"status":"FAIL: required fields null"});
+    return;
+  }
+  if (!request.body.price) {
+    request.body.price = 0;
+  }
+  pg.connect(DATABASE_URL, function(err, client, done) {
+    client.query("DELETE FROM meal WHERE id = $1",
+                  [request.body.id],
+                  function(err, result) {
+      if (err)
+       { console.error(err); response.send("Error " + err); }
+      else
+       { response.json({"status":"SUCCESSS"}); }
+    });
+    done();
+  });
+
+});
+
 
 //////////////////////////////////////////////////////////////////////
 /// Image upload

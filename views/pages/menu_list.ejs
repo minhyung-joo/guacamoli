@@ -10,13 +10,28 @@
 
 <div class="container">
 <h2>Menus listing</h2>
-<ul>
+<ul id="menu_list">
     <% results.forEach(function(r) { %>
-        <li><a href= <%= "/menu/"+r.id %> ><%= r.id %> - <%= r.name %></a></li>
+        <li id="item"><a href= <%= "/menu/"+r.id %> ><%= r.id %> - <%= r.name %></a>
+          <button id = "deleteButton" style="margin-left:50px;color:red;" onClick="deleteMenu(<%=r.id%>)"> DELETE </button>
+        </li>
     <% }); %>
 </ul>
 
 </div>
 
 </body>
+
+<% include ../partials/javascript_dependency.ejs %>
+<script>
+
+  function deleteMenu(delete_id) {
+    console.log("delete id "+delete_id);
+    $.post("/deleteMeal", {"id": delete_id}, function (result) {  // callback
+      console.log(result);
+      location.reload();
+    });
+  }
+
+</script>
 </html>
