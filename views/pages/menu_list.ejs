@@ -27,10 +27,13 @@
 
   function deleteMenu(delete_id) {
     console.log("delete id "+delete_id);
-    $.post("/deleteMeal", {"id": delete_id}, function (result) {  // callback
-      console.log(result);
-      location.reload();
-    });
+    if (confirm("PLEASE CONFIRM: REMOVE OBJECT ["+delete_id+"] (NOT REVERSIBLE!!)")) {
+      $.post("/deleteMeal", {"id": delete_id}, function (result) {  // callback
+        console.log(result);
+        alert("MENU ["+delete_id+"] PURGED");
+        location.reload();
+      });
+    }
   }
 
 </script>
