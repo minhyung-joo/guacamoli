@@ -14,6 +14,7 @@
     <% results.forEach(function(r) { %>
         <li id="item"><a href= <%= "/menu/"+r.id %> ><%= r.id %> - <%= r.name %></a>
           <button id = "deleteButton" style="margin-left:50px;color:red;" onClick="deleteMenu(<%=r.id%>)"> DELETE </button>
+          <a href= <%= "/admin_only_update_menu/"+r.id %> >update</a>
         </li>
     <% }); %>
 </ul>

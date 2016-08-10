@@ -144,6 +144,11 @@
         </div><br>
 
         <div class="row">
+          <div class="col-md-3"><label>Ingredients</label></div>
+          <textarea id="ingredients" name="ingredients" rows="8" cols="80"></textarea>
+        </div><br>
+
+        <div class="row">
           <div class="col-md-3"><label>Rating</label></div>
           <div class="col-md-9">
             <select id="rating" name="rating" class="form-control">
@@ -238,6 +243,8 @@ function postMenu() {
     "tasteTypes": tasteTypes,
     "foodTypes": foodTypes,
     "sauceTypes": sauceTypes,
+    "ingredientsDescription": $("#ingredients").val(),
+
     "rating": $("#rating").val()
   }, function (result) {  // callback
     console.log(result);
