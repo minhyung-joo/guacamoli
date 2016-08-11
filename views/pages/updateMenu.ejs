@@ -29,13 +29,16 @@
                   <li><b>Taste Type</b>: <%= whatTaste(result.tastetypesid) %> </li><br>
                   <li><b>Ingredient Type</b>: <%= whatIngredient(result.ingredienttypesid) %> </li><br>
                   <!-- textarea tag required to recognize linebreaks-->
-                  <li><b>Ingredients</b>: <textarea rows="4" cols="40"><%= result.ingredientsdescription %></textarea> </li><br>
+                  <li><b>Ingredients</b>: <textarea id="ingredientsDescription" rows="4" cols="40"><%= result.ingredientsdescription %></textarea> </li><br>
               </ul>
               <div class="star" style="margin-top:10px;">
                 <input id="star_rating" value=<%= result.rating %> type="number" class="rating" min=0 max=5 step=0.5 data-size="xs" data-show-clear="false" readonly="true">
               </div>
             </ul>
           </div>
+          <textarea id="menuId" style="visibility:hidden"><%=result.id%></textarea>
+
+          <button id="updateButton" onclick="updateMenu()" class="btn btn-primary pull-right">update menu<button>
         </div>
     </div>
   </div><!-- /.container -->
@@ -44,9 +47,19 @@
 
   <% include ../partials/javascript_dependency.ejs %>
   <script>
-    $(document).ready(function () {
-      //$('#star_rating').rating('update', 3);
-    });
+    function updateMenu() {
+      console.log($("#menuId").val());
+      console.log($("#ingredientsDescription").val());
+
+      $.post("/admin_only_update_menu", {   // post body
+        "menuId": $("#menuId").val(),
+        "ingredientsDescription": $("#ingredientsDescription").val(),
+
+      }, function (result) {  // callback
+        alert(result.status);
+        console.log(result);
+      });
+    }
 
   </script>
 </body>

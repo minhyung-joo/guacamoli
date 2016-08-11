@@ -193,7 +193,6 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
 <script type="text/javascript">
 function postMenu() {
-  alert("clicked");
   var offeredTimes = new Array();
   $.each($("input[name='offeredTimes[]']:checked"), function() {
     offeredTimes.push($(this).val());
@@ -247,6 +246,7 @@ function postMenu() {
 
     "rating": $("#rating").val()
   }, function (result) {  // callback
+    alert(result.status);
     console.log(result);
     $("#status").empty().text(JSON.stringify(result));
   });

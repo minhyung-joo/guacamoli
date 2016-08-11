@@ -282,6 +282,28 @@ app.post('/uploadMeal', function (request, response) {
 
 
 
+app.post('/admin_only_update_menu', function (req, res) {
+  console.log("/admin_only_update_menu menuID = " + req.body.menuId);
+  pg.connect(DATABASE_URL, function(err, client, done) {
+    client.query("UPDATE meal SET ingredientsDescription = $2 "+
+                  "WHERE meal.id = $1",
+                  [req.body.menuId, req.body.ingredientsDescription],
+                  function(err, result) {
+      if (err)
+      {
+        console.error(err); res.send("Error " + err);
+      }
+      else
+      {
+        console.log("menu update result");
+        console.log(result.rows);
+        res.json({"status":"SUCCESS"});
+      }
+    });
+    done();
+  });
+});
+
 
 //
 app.post('/deleteMeal', function (request, response) {
