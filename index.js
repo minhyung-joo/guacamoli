@@ -94,6 +94,38 @@ function getMenusByRestaurant(res, _restaurantId, renderPath){
   });
 }
 
+
+// TODO: we might need to optimize this routine
+function getMenusBySearchTerm(req, res, renderPath) {
+  var keyword = req.query.keyword.toLowerCase();
+  console.log("getMenusBySearchTerm: keyword = "+keyword);
+  pg.connect(DATABASE_URL, function(err, client, done) {
+    client.query("SELECT id, name, picture_url FROM meal",
+    function(err, result) {
+      if (err){
+        console.error(err); res.send("Error " + err);
+      }
+      else{
+
+        var finalResult = new Array();
+        
+        for (var i=0; i<result.rows.length; ++i) {
+          // keyword is a substring of the meal name
+          if ((result.rows[i].name.toLowerCase()).indexOf(keyword) !== -1) {
+            //console.log(result.rows[i]);
+            finalResult.push(result.rows[i]);
+          }
+        }
+        console.log(finalResult);
+        res.render(renderPath, {results: finalResult});
+      }
+    });
+    done();
+  });
+}
+
+
+
 /*
   pg.connect((process.env.DATABASE_URL || LOCAL_DATABASE_URL), function(err, client, done) {
     client.query("SELECT id, name, picture_url, restaurantId FROM meal WHERE restaurantId = $1",[_restaurantId],
@@ -115,6 +147,9 @@ app.get('/milano', function (req, res) {
   getMenusByRestaurant(res, 5,'pages/milano');
 });
 
+app.get('/search', function(req,res) {
+  getMenusBySearchTerm(req, res, 'pages/menu_search_list');
+});
 /*
 app.get('/cafe', function(req, res) {
   getMenusByRestaurant(res, 6,'pages/cafe');

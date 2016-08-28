@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include ../partials/header.ejs %>
+</head>
+
+<body id="page-top" class="index">
+  <% include ../partials/nav.ejs %>
+  <div class="container">
+    <div class="starter-template">
+      <h1> Search results</h1>
+      <div class="row">
+        <% results.forEach(function(r) { %>
+          <div class="col-md-3 meal_info_thumbnail" onclick="window.location='<%= "/menu/"+r.id %>';">
+            <span>
+              <img src= <%= r.picture_url %> class="img-responsive" alt=""/>
+              <p class="meal_information"><%= r.name %> - <%= r.picture_url %></p>
+            </span>
+          </div> <!-- /.thumbnail -->
+        <% }); %>
+      </div> <!-- /.row -->
+    </div>
+  </div><!-- /.container -->
+
+<!--
+
+<div class="col-md-3">lala</div>
+<div class="col-md-3">lala</div>
+<div class="col-md-3">lala</div>
+-->
+
+
+  <% include ../partials/javascript_dependency.ejs %>
+</body>
+</html>
+<script>
+
+</script>

@@ -89,6 +89,11 @@
 </body>
 </html>
 <script>
+  function searchByKeyword() {
+    console.log("searchByKeyword()");
+    window.location.href = "/search?keyword="+$("#keyword").val();
+  }
+
   $(document).ready(function(){
       var current_url = window.location.href;
       if(current_url.localeCompare("http://localhost:5000/rankings")==0){
@@ -98,8 +103,18 @@
       }else if(current_url.localeCompare("http://localhost:5000/contact")==0){
         $('.contact_link').trigger("click");
       }
+
+      $('#keyword').keypress(function (e) {
+       var key = e.which;
+       if(key == 13)  // the enter key code
+        {
+          searchByKeyword();
+        }
+      });
+
   });
   $( "#keyword" ).keypress(function(e) {
     keywordSearch(e);
   });
+
 </script>
