@@ -38,4 +38,10 @@ function filterSearch(){
   }
   console.log(JSON.stringify(filterOptions));
   //TODO send this json to the server
+
+  var urlEncoded = $.param(filterOptions);
+  console.log(urlEncoded);
+
+  window.location.href="/filter_search?"+urlEncoded;
+
 }

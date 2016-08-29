@@ -108,7 +108,7 @@ function getMenusBySearchTerm(req, res, renderPath) {
       else{
 
         var finalResult = new Array();
-        
+
         for (var i=0; i<result.rows.length; ++i) {
           // keyword is a substring of the meal name
           if ((result.rows[i].name.toLowerCase()).indexOf(keyword) !== -1) {
@@ -124,6 +124,75 @@ function getMenusBySearchTerm(req, res, renderPath) {
   });
 }
 
+
+/*
+
+[2, 3];
+
+[1, 3, 5];
+
+SELECT * FROM table WHERE a = b
+
+*/
+
+function getMenusByFilterTerm(req, res, renderPath) {
+  var _restaurantId = req.query.restaurantId;
+  var _deliveryTime = req.query.deliveryTime;
+  var _offeredTime = req.query.offeredTime;
+  var _cusine = req.query.cusine;
+  var _tasteType = req.query.tasteType;
+  var _foodType = req.query.foodType;
+  var _sauceType = req.query.sauceType;
+
+
+  console.log("getMenusByFilterTerm: ");
+  console.log("req.query.restaurantId="+_restaurantId);
+  console.log("req.query.tasteType="+_tasteType);
+
+
+  pg.connect(DATABASE_URL, function(err, client, done) {
+    client.query("SELECT * FROM meal",
+    function(err, result) {
+      if (err){
+        console.error(err); res.send("Error " + err);
+      }
+      else{
+
+        var finalResult = new Array();
+        // filter each item one by one
+        for (var i=0; i<result.rows.length; ++i) {
+          var validMenuFlag = true;
+          // matchesrestaurantId
+          /*if ((result.rows[i].name.toLowerCase()).indexOf(keyword) !== -1) {
+            //console.log(result.rows[i]);
+            finalResult.push(result.rows[i]);
+          }*/
+          if (!(restaurantId!=0 && restaurantId == restaurantIdresult.rows[i].restaurantId)) {
+            validMenuFlag = false;
+          }
+
+
+
+
+          if (validMenuFlag) {
+            finalResult.push(result.rows[i]);
+          }
+
+        }
+        console.log(finalResult);
+        res.render(renderPath, {results: finalResult});
+
+
+
+
+
+
+
+      }
+    });
+    done();
+  });
+}
 
 
 /*
@@ -149,6 +218,10 @@ app.get('/milano', function (req, res) {
 
 app.get('/search', function(req,res) {
   getMenusBySearchTerm(req, res, 'pages/menu_search_list');
+});
+
+app.get('/filter_search', function(req,res) {
+  getMenusByFilterTerm(req, res, 'pages/menu_search_list');
 });
 /*
 app.get('/cafe', function(req, res) {
@@ -216,6 +289,12 @@ app.get('/admin_only_menu_list', function (req, res) {
     done();
   });
 });
+
+
+app.get('/test_api', function (req, res) {
+  res.json({status:"hello"});
+});
+
 
 app.get('/menu/:menuId', function (req, res) {
   console.log("/menu/params menuID = " + req.params.menuId);
