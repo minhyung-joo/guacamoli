@@ -13,7 +13,7 @@ var app = express();
 
 
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP; // only for openshift
-//var DATABASE_URL;
+var DATABASE_URL;
 
 //////////////// on openshift
 if (process.env.OPENSHIFT_NODEJS_PORT) {
@@ -29,7 +29,7 @@ else {
   DATABASE_URL = process.env.DATABASE_URL
     || "postgres://bibcnlyezwlkhl:gdhvCdkdw5znI-LjSspT6wKOfR@ec2-54-225-223-40.compute-1.amazonaws.com:5432/davktp8lndlj83"+'?ssl=true';
 
-  app.set('port', (process.env.PORT || 5000));
+  //app.set('port', (process.env.PORT || 5000));
   app.listen(app.get('port'), function() {
     console.log('Node (heroku & local) app is running on port', app.get('port'));
   });
