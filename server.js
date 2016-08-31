@@ -11,6 +11,8 @@ var fs = require('fs');
 var pg = require('pg');
 var app = express();
 
+var path = require("path");
+
 
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP; // only for openshift
 var DATABASE_URL;
@@ -48,7 +50,7 @@ app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output
 app.use(webpackHotMiddleware(compiler))
 
 app.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname+'index.html'));
+  res.sendFile(path.join(__dirname+'/index.html'));
   //res.sendFile(__dirname + '/index.html')
 });
 
