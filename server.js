@@ -77,28 +77,6 @@ app.get('/admin_only_menu_list', function (req, res) {
 });
 
 
-app.get('/menu/:menuId', function (req, res) {
-  console.log("/menu/params menuID = " + req.params.menuId);
-  pg.connect(DATABASE_URL, function(err, client, done) {
-    client.query("SELECT * FROM meal "+
-                  "WHERE meal.id = $1",
-                  [req.params.menuId],
-                  function(err, result) {
-      if (err)
-      {
-        console.error(err); res.send("Error " + err);
-      }
-      else
-      {
-        console.log("menu select result");
-        console.log(result.rows);
-        res.json('pages/menu', result.rows[0]);
-      }
-    });
-    done();
-  });
-});
-
 app.get('/admin_only_update_menu/:menuId', function (req, res) {
   console.log("/admin_only_update_menu/params menuID = " + req.params.menuId);
   pg.connect(DATABASE_URL, function(err, client, done) {
@@ -130,6 +108,30 @@ app.get('/admin_only_insert_menu', function(request, response) {
 ////////////////////////////////////////////
 //      REACT APIS
 ////////////////////////////////////////////
+
+app.get('api/menu/:menuId', function (req, res) {
+  console.log("/menu/params menuID = " + req.params.menuId);
+  pg.connect(DATABASE_URL, function(err, client, done) {
+    client.query("SELECT * FROM meal "+
+                  "WHERE meal.id = $1",
+                  [req.params.menuId],
+                  function(err, result) {
+      if (err)
+      {
+        console.error(err); res.send("Error " + err);
+      }
+      else
+      {
+        console.log("menu select result");
+        console.log(result.rows);
+        res.json('pages/menu', result.rows[0]);
+      }
+    });
+    done();
+  });
+});
+
+
 app.get('/api/getCanteenList', function(req,res) {
   console.log(req.query.restaurantId+" menus");
 
@@ -176,12 +178,12 @@ app.get('/api/query_search', function (req,res) {
   });
 });
 
-app.get('/api/filter_search', function (req,res) {
-  var _restaurantId = req.query.restaurantId;
-  var _deliveryTime = req.query.deliveryTime;
-  var _offeredTime = req.query.offeredTime;
-  var _cusine = req.query.cusine;
-  var _tasteType = req.query.tasteType;
+app.post('/api/filter_search', function (req,res) {
+  var _restaurantId = req.body.restaurantId;
+  var _deliveryTime = req.body.deliveryTime;
+  var _offeredTime = req.body.offeredTime;
+  var _cusine = req.body.cusine;
+  var _tasteType = req.body.tasteType;
 
   console.log("getMenusByFilterTerm: ");
   console.log("req.query.restaurantId="+_restaurantId);
