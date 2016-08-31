@@ -76,7 +76,7 @@ app.get('/admin_only_menu_list', function (req, res) {
   });
 });
 
-/*
+
 app.get('/menu/:menuId', function (req, res) {
   console.log("/menu/params menuID = " + req.params.menuId);
   pg.connect(DATABASE_URL, function(err, client, done) {
@@ -92,12 +92,12 @@ app.get('/menu/:menuId', function (req, res) {
       {
         console.log("menu select result");
         console.log(result.rows);
-        res.render('pages/menu', {result: result.rows[0]});
+        res.json('pages/menu', result.rows[0]);
       }
     });
     done();
   });
-});*/
+});
 
 app.get('/admin_only_update_menu/:menuId', function (req, res) {
   console.log("/admin_only_update_menu/params menuID = " + req.params.menuId);
@@ -134,7 +134,6 @@ app.get('/api/getCanteenList', function(req,res) {
   console.log(req.query.restaurantId+" menus");
 
   restaurantId=req.query.restaurantId;
-
   pg.connect(DATABASE_URL, function(err, client, done) {
     client.query("SELECT id, name, picture_url, price FROM meal WHERE restaurantId = $1",[restaurantId],
     function(err, result) {
@@ -144,6 +143,97 @@ app.get('/api/getCanteenList', function(req,res) {
       else{
         console.log(result.rows);
         res.json(result.rows);
+      }
+    });
+    done();
+  });
+});
+
+app.get('/api/query_search', function (req,res) {
+  var keyword = req.query.query.toLowerCase();
+  console.log("getMenusBySearchTerm: keyword = "+keyword);
+  pg.connect(DATABASE_URL, function(err, client, done) {
+    client.query("SELECT id, name, picture_url FROM meal",
+    function(err, result) {
+      if (err){
+        console.error(err); res.send("Error " + err);
+      }
+      else{
+        var finalResult = new Array();
+
+        for (var i=0; i<result.rows.length; ++i) {
+          // keyword is a substring of the meal name
+          if ((result.rows[i].name.toLowerCase()).indexOf(keyword) !== -1) {
+            //console.log(result.rows[i]);
+            finalResult.push(result.rows[i]);
+          }
+        }
+        console.log(finalResult);
+        res.json(finalResult);
+      }
+    });
+    done();
+  });
+});
+
+app.get('/api/filter_search', function (req,res) {
+  var _restaurantId = req.query.restaurantId;
+  var _deliveryTime = req.query.deliveryTime;
+  var _offeredTime = req.query.offeredTime;
+  var _cusine = req.query.cusine;
+  var _tasteType = req.query.tasteType;
+
+  console.log("getMenusByFilterTerm: ");
+  console.log("req.query.restaurantId="+_restaurantId);
+  console.log("req.query.tasteType="+_tasteType);
+
+  pg.connect(DATABASE_URL, function(err, client, done) {
+    client.query("SELECT * FROM meal",
+    function(err, result) {
+      if (err){
+        console.error(err); res.send("Error " + err);
+      }
+      else{
+        var finalResult = new Array();
+        // filter each item one by one
+        for (var i=0; i<result.rows.length; ++i) {
+          var validMenuFlag = true;
+
+          if (!(_restaurantId==0 || _restaurantId == result.rows[i].restaurantid)) {
+            validMenuFlag = false;
+          }
+          if (!(_deliveryTime==0 || _deliveryTime == result.rows[i].deliveryspeedid)) {
+            validMenuFlag = false;
+          }
+          if (!(_offeredTime==0 || _offeredTime == result.rows[i].offeredtimesid)) {
+            validMenuFlag = false;
+          }
+          if (!(_cusine==0 || _cusine == result.rows[i].cusinetypeid)) {
+            validMenuFlag = false;
+          }
+
+          // [2]  == [2,4]
+          var db_tasteType = result.rows[i].tastetypesid;
+          //console.log("db_tasteType "+db_tasteType);
+          for (var j=0; j< _tasteType.length; ++j) {
+            var matchExists=false;
+            if (db_tasteType) {
+              for (var k=0; k< db_tasteType.length; ++k) {
+                if (_tasteType[j] == db_tasteType[k]) {
+                  matchExists=true;
+                }
+              }
+            }
+            if (!matchExists) {
+              validMenuFlag=false;
+            }
+          }
+          if (validMenuFlag) {
+            finalResult.push(result.rows[i]);
+          }
+        }
+        console.log(finalResult);
+        res.json(finalResult);
       }
     });
     done();
@@ -167,13 +257,6 @@ app.get('/meal/all', function (request, response) {
     });
   });
 });
-
-
-
-
-
-
-
 
 
 ///////////////////POST////////////////////////
