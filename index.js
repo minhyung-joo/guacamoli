@@ -141,8 +141,6 @@ function getMenusByFilterTerm(req, res, renderPath) {
   var _offeredTime = req.query.offeredTime;
   var _cusine = req.query.cusine;
   var _tasteType = req.query.tasteType;
-  var _foodType = req.query.foodType;
-  var _sauceType = req.query.sauceType;
 
 
   console.log("getMenusByFilterTerm: ");
@@ -162,13 +160,35 @@ function getMenusByFilterTerm(req, res, renderPath) {
         // filter each item one by one
         for (var i=0; i<result.rows.length; ++i) {
           var validMenuFlag = true;
-          // matchesrestaurantId
-          /*if ((result.rows[i].name.toLowerCase()).indexOf(keyword) !== -1) {
-            //console.log(result.rows[i]);
-            finalResult.push(result.rows[i]);
-          }*/
-          if (!(restaurantId!=0 && restaurantId == restaurantIdresult.rows[i].restaurantId)) {
+
+          if (!(_restaurantId==0 || _restaurantId == result.rows[i].restaurantid)) {
             validMenuFlag = false;
+          }
+          if (!(_deliveryTime==0 || _deliveryTime == result.rows[i].deliveryspeedid)) {
+            validMenuFlag = false;
+          }
+          if (!(_offeredTime==0 || _offeredTime == result.rows[i].offeredtimesid)) {
+            validMenuFlag = false;
+          }
+          if (!(_cusine==0 || _cusine == result.rows[i].cusinetypeid)) {
+            validMenuFlag = false;
+          }
+
+          // [2]  == [2,4]
+          var db_tasteType = result.rows[i].tastetypesid;
+          //console.log("db_tasteType "+db_tasteType);
+          for (var j=0; j< _tasteType.length; ++j) {
+            var matchExists=false;
+            if (db_tasteType) {
+              for (var k=0; k< db_tasteType.length; ++k) {
+                if (_tasteType[j] == db_tasteType[k]) {
+                  matchExists=true;
+                }
+              }
+            }
+            if (!matchExists) {
+              validMenuFlag=false;
+            }
           }
 
 
