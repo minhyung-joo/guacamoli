@@ -29,7 +29,7 @@ else {
   DATABASE_URL = process.env.DATABASE_URL
     || "postgres://bibcnlyezwlkhl:gdhvCdkdw5znI-LjSspT6wKOfR@ec2-54-225-223-40.compute-1.amazonaws.com:5432/davktp8lndlj83"+'?ssl=true';
 
-  //app.set('port', (process.env.PORT || 5000));
+  app.set('port', (process.env.PORT || 5000));
   app.listen(app.get('port'), function() {
     console.log('Node (heroku & local) app is running on port', app.get('port'));
   });
@@ -127,10 +127,32 @@ app.get('/admin_only_insert_menu', function(request, response) {
 
 
 
+////////////////////////////////////////////
+//      REACT APIS
+////////////////////////////////////////////
+app.get('/api/getCanteenList', function(req,res) {
+  console.log(req.query.restaurantId+" menus");
+
+  restaurantId=req.query.restaurantId;
+
+  pg.connect(DATABASE_URL, function(err, client, done) {
+    client.query("SELECT id, name, picture_url, price FROM meal WHERE restaurantId = $1",[restaurantId],
+    function(err, result) {
+      if (err){
+        console.error(err); res.send("Error " + err);
+      }
+      else{
+        console.log(result.rows);
+        res.json(result.rows);
+      }
+    });
+    done();
+  });
+});
 
 
 ////////////////////////////////////////////
-//      REST APIs
+//      GET APIs
 ///////////////////////////////////////////
 // returns json object
 app.get('/meal/all', function (request, response) {
