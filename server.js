@@ -13,7 +13,7 @@ var app = express();
 
 
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP; // only for openshift
-var DATABASE_URL;
+//var DATABASE_URL;
 
 //////////////// on openshift
 if (process.env.OPENSHIFT_NODEJS_PORT) {
