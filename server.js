@@ -109,7 +109,7 @@ app.get('/admin_only_insert_menu', function(request, response) {
 //      REACT APIS
 ////////////////////////////////////////////
 
-app.get('api/menu/:menuId', function (req, res) {
+app.get('/api/menu/:menuId', function (req, res) {
   console.log("/menu/params menuID = " + req.params.menuId);
   pg.connect(DATABASE_URL, function(err, client, done) {
     client.query("SELECT * FROM meal "+
@@ -182,7 +182,7 @@ app.post('/api/filter_search', function (req,res) {
   var _restaurantId = req.body.restaurantId;
   var _deliveryTime = req.body.deliveryTime;
   var _offeredTime = req.body.offeredTime;
-  var _cusine = req.body.cusine;
+  var _cusine = req.body.cuisine;
   var _tasteType = req.body.tasteType;
 
   console.log("getMenusByFilterTerm: ");
