@@ -5,7 +5,7 @@ module.exports = {
   devtool: 'cheap-module-source-map', // changed from source-map
   entry: [
     'webpack-hot-middleware/client',
-    '/index'
+    './index'
   ],
   output: {
     path: path.join(__dirname, 'dist'),
