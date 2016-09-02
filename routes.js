@@ -8,20 +8,26 @@ import RankingContainer from './containers/RankingContainer';
 import AboutUsContainer from './containers/AboutUsContainer';
 import FoodDetailContainer from './containers/FoodDetailContainer';
 
+import {restaurantList} from './constants/StaticData';
+
+function canteenNameToIdMapping(canteenName){
+    return restaurantList.indexOf(canteenName);
+}
+
 const NotFound = () => (
     <h1>404.. This page is not found!</h1>);
 
 const lg1CanteenWrapper = () => (
-    <CanteenPage canteenType='lg1'/>
+    <CanteenPage canteenType={canteenNameToIdMapping('LG1')}/>
 );
 const apcCanteenWrapper = () => (
-    <CanteenPage canteenType='apc'/>
+    <CanteenPage canteenType={canteenNameToIdMapping('APC')}/>
 );
 const grbCanteenWrapper = () => (
-    <CanteenPage canteenType='grb'/>
+    <CanteenPage canteenType={canteenNameToIdMapping('GRB')}/>
 );
 const milanoCanteenWrapper = () => (
-    <CanteenPage canteenType='milano'/>
+    <CanteenPage canteenType={canteenNameToIdMapping('Milano')}/>
 );
 
 export default (
@@ -31,7 +37,7 @@ export default (
         <Route path='' component={Appp}>
             <Route path='ranking' component={RankingContainer} />
             <Route path='canteens'>
-                <Route path='lg1' component={lg1CanteenWrapper} testing='lala'/>
+                <Route path='lg1' component={lg1CanteenWrapper} />
                 <Route path='apc' component={apcCanteenWrapper} />
                 <Route path='grb' component={grbCanteenWrapper} />
                 <Route path='milano' component={milanoCanteenWrapper} />

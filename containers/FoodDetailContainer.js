@@ -1,12 +1,15 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {render} from 'react-dom';
 import {Row, Col, Glyphicon, Button, Panel} from 'react-bootstrap';
 
 import FoodListComponent from '../components/FoodList'
+import {getFoodDetail} from '../actions/canteenActions';
 
-export default class FoodDetailContainer extends React.Component {
-    componentWillMount() {
-        console.log(this.props.params.foodid);
+class FoodDetailContainer extends React.Component {
+    componentDidMount() {
+        this.props.getFoodDetail(this.props.params.foodid);
+        console.log(this.props.foodDetail);
     }
 
     constructor(props){
@@ -63,6 +66,16 @@ export default class FoodDetailContainer extends React.Component {
         );
     }
 }
+
+export default connect(
+    state => ({
+        foodDetail: state.canteens.foodDetail
+    }),
+    {
+        getFoodDetail
+    }
+)(FoodDetailContainer)
+
 
 const foodArray=[
     {

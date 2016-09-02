@@ -12,7 +12,7 @@ export default class FoodListComponent extends React.Component {
                     this.props.foodArray.map(function(food){
                         return(
                             <Col md={3} xs={12}>
-                                <Link to={`/food/${1}`}>
+                                <Link to={`/food/${food.id}`}>
                                     <FoodThumbnailComponent key={food.id} foodDetail={food}/>
                                 </Link>
                             </Col>

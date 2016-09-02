@@ -1,13 +1,18 @@
 
 const initialState = {
-    foodArray: []
+    foodArray: [],
+    foodDetail:{}
 };
 
 export default function canteens(state = initialState, action) {
     switch(action.type){
-        case 'GET_FOOD_LIST_DATA':
-            var newFoodArray = state.foodArray.concat(action.value);
-            return {...state, foodArray: newFoodArray};
+        case 'RECIEVE_CANTEEN_DATA':
+            return {...state, foodArray: action.data};
+        case 'RECIEVE_FOOD_DETAIL_DATA':
+            console.log(action.data);
+            return {...state, foodArray: [], foodDetail: action.data};
+        case 'REQUEST_ERROR':
+            return {...state};
         default:
             return state;
     }

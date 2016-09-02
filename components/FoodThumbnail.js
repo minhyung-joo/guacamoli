@@ -7,8 +7,8 @@ export default class FoodThumbnailComponent extends React.Component {
         return (
             <Thumbnail>
                 <div>
-                    <img src={food.imageUrl} height="175" width="100%"/>
-                    <h4>{food.foodName}</h4>
+                    <img src={food.image_url} height="175" width="100%"/>
+                    <h4>{food.name}</h4>
                     <p>{food.price} HKD</p>
                 </div>
             </Thumbnail>

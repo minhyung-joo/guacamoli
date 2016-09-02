@@ -18,7 +18,9 @@ export default class RankingContainer extends React.Component {
                     <Col md={4}>
                         <RankingList rankingObject={rankingObject2}/>
                     </Col>
-
+                    <Col md={4}>
+                        <RankingList rankingObject={rankingObject2}/>
+                    </Col>
                 </div>
             </Row>
         );

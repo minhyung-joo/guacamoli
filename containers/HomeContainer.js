@@ -8,7 +8,12 @@ import NavigationComponent from '../components/NavigationBar';
 import ModalFilter from '../components/ModalFilter';
 import {showModalFilter, hideModalFilter, clickAdvancedFilter} from '../actions/modalActions';
 
+
+var axios = require('axios');
+
 class HomePage extends React.Component {
+    componentDidMount(){
+    }
     render() {
         const {isShowFilterModal, isAdvancedFilter, showModalFilter, hideModalFilter, clickAdvancedFilter} = this.props;
         return (
@@ -49,8 +54,11 @@ export default connect(
 const homeDivStyle = {
     backgroundImage: 'url(' + homeBackgroundImage + ')',
     backgroundSize: 'cover',
-    height: 650,
-    fontWeight: 'bold'
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0
 };
 
 const greetingStyle = {
@@ -59,8 +67,8 @@ const greetingStyle = {
     marginTop:80
 };
 
-const greetingMessage = {fontSize: 60};
-const sloganMessage = {fontSize: 20};
+const greetingMessage = {fontSize: 60, fontWeight: 'bold'};
+const sloganMessage = {fontSize: 20, fontWeight: 'bold'};
 
 const queryInputStyle = {
     height: 40

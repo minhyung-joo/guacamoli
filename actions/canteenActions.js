@@ -1,33 +1,38 @@
-const foodArray= [
-    {
-        id: 1,
-        imageUrl:"http://www.fastfoodmenunutrition.com/wp-content/uploads/2015/03/fast-food.jpg",
-        foodName:"Hot Dog",
-        price:35
-    },
-    {
-        id: 2,
-        imageUrl:"http://pngimg.com/upload/burger_sandwich_PNG4150.png",
-        foodName:"Sandwich",
-        price:25
-    },
-    {
-        id: 3,
-        imageUrl:"http://www.seriouseats.com/images/20110417-dim-sum-har-gau.jpg",
-        foodName:"Shrimp Dimsum",
-        price:15
-    },
-    {
-        id: 4,
-        imageUrl:"https://s3.amazonaws.com/Menu_Pic/c20c3ce3-eef0-4b87-abb4-3909a3c5a246_N1_House_Special_Noodles.jpg",
-        foodName:"Chinese Fried Noodles",
-        price:30
-    }
-];
+var axios = require('axios');
+const getFoodDetailRoute = '/api/menu/(foodid)';
+const getCanteenDataRoute = 'api/getCanteenList?restaurantId=(p1)';
 
-export function getFoodListData() {
-    return {
-        type: 'GET_FOOD_LIST_DATA',
-        value: foodArray
+function recieveFoodDetailData(json){
+    return{
+        type: 'RECIEVE_FOOD_DETAIL_DATA',
+        data: json.data
+    }
+}
+function recieveCanteenData(json){
+    return{
+        type: 'RECIEVE_CANTEEN_DATA',
+        data: json.data
+    }
+}
+function requestFail(error){
+    return{
+        type: 'REQUEST_ERROR',
+        error: error
+    }
+}
+
+export function getFoodDetail(foodid) {
+    const api = getFoodDetailRoute.replace('(foodid)',foodid);
+    console.log(api);
+    return dispatch=>{
+        return axios.get(api).then(json=>dispatch(recieveFoodDetailData(json))).catch(err=>dispatch(requestFail(err)))
+    }
+}
+
+export function getCanteenData(canteenid){
+    const api = getCanteenDataRoute.replace('(p1)',canteenid);
+    console.log(api);
+    return dispatch=>{
+        return axios.get(api).then(json=>dispatch(recieveCanteenData(json))).catch(err=>dispatch(requestFail(err)))
     }
 }

@@ -8,26 +8,26 @@ import FoodListComponent from '../components/FoodList';
 import {logoLG1,logoapc,logogrb,logomilano} from '../constants/ImageHandler';
 
 import {
-    getFoodListData
+    getCanteenData
 }from '../actions/canteenActions';
 
 class CanteenPage extends Component {
     componentWillMount(){
-       this.props.getFoodListData();
-        //TODO pass this.props.canteenType as param, and get corresponding food data
+        this.props.getCanteenData(this.props.canteenType);
     }
 
     determineCanteenName(canteenType){
         const height = 50;
         switch (canteenType){
-            case 'lg1':
+            case 1:
                 return <span><img src={logoLG1} height={height}/> LG1</span>;
-            case 'apc':
-                return <span><img src={logoapc} height={height}/> APC</span>;
-            case 'grb':
+            case 2:
                 return <span><img src={logogrb} height={height}/> GRB</span>;
-            case 'milano':
+            case 3:
+                return <span><img src={logoapc} height={height}/> APC</span>;
+            case 4:
                 return <span><img src={logomilano} height={height}/> Milano</span>;
+
         }
     }
 
@@ -68,6 +68,6 @@ export default connect(
         foodArray: state.canteens.foodArray
     }),
     {
-        getFoodListData
+        getCanteenData
     }
 )(CanteenPage)

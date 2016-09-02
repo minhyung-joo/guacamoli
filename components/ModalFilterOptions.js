@@ -3,7 +3,7 @@ import {render} from 'react-dom';
 import {connect} from 'react-redux';
 import {Row, Col, Panel} from 'react-bootstrap';
 
-import {defaultFilterOptions} from '../constants/StaticData';
+import {defaultFilterOptions, advancedFilterOptions} from '../constants/StaticData';
 
 /**
  * Default Search Option
@@ -59,10 +59,10 @@ export class AdvancedSearchOption extends React.Component {
         return (
             <div>
                 {
-                    Object.keys(defaultFilterOptions).map(function(key){
+                    Object.keys(advancedFilterOptions).map(function(key){
                         return (
                             <Row>
-                                <FilterCheckbox key={key} filterName={key} checkboxOptionList={defaultFilterOptions[key]}/>
+                                <FilterCheckbox key={key} filterName={key} checkboxOptionList={advancedFilterOptions[key]}/>
                             </Row>
                         )
                     })
