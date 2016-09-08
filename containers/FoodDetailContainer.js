@@ -5,6 +5,9 @@ import {Row, Col, Glyphicon, Button, Panel} from 'react-bootstrap';
 
 import FoodListComponent from '../components/FoodList'
 import {getFoodDetail} from '../actions/canteenActions';
+import {availabilityMapper, tasteMapper, imageUrlMapper} from '../constants/Utility';
+import {restaurantList, deliverySpeed, cuisineType} from '../constants/StaticData';
+
 
 class FoodDetailContainer extends React.Component {
     componentDidMount() {
@@ -14,42 +17,35 @@ class FoodDetailContainer extends React.Component {
 
     constructor(props){
         super(props);
-        this.state = {
-            foodDetail: {
-                price: 23,
-                availability: 'lunch',
-                restaurant: 'LG1',
-                deliverySpeed: 'Ticket No.',
-                cuisineType: 'Chinese',
-                tasteType:'normal',
-                ingredient:'seafood'
-            }
-        }
     }
 
     render() {
+        const {foodDetail, isFetching} = this.props;
         return (
+        isFetching?
+            <div>Fetching...</div>
+                :
             <div style={foodDetailStyle}>
                 <Row>
                     <Col mdOffset={1} md={10}>
                         <Panel header="FOOD DETAIL">
                             <Col md={6}>
-                                <img width="100%" src="http://www.seriouseats.com/images/20110417-dim-sum-har-gau.jpg"/>
+                                <img width="100%" src={imageUrlMapper(foodDetail.picture_url)}/>
                             </Col>
                             <Col md={6}>
                                 <Col md={12}>
-                                    <h3>Shrimp dimsum</h3>
-                                    <h5>Chinese name</h5>
+                                    <h3>{foodDetail.name}</h3>
+                                    <h5>{foodDetail.chinesename}</h5>
                                 </Col>
                                 <Col md={12}><span><p> </p></span></Col>
 
-                                <Col md={6}><b>Price</b>: {this.state.foodDetail.price} HKD</Col>
-                                <Col md={6}><b>Availability</b>: {this.state.foodDetail.availability}</Col>
-                                <Col md={6}><b>Restaurant</b>: {this.state.foodDetail.restaurant}</Col>
-                                <Col md={6}><b>Delivery Speed</b>: {this.state.foodDetail.deliverySpeed}</Col>
-                                <Col md={6}><b>Cuisine Type</b>: {this.state.foodDetail.cuisineType}</Col>
-                                <Col md={6}><b>Taste Type</b>: {this.state.foodDetail.tasteType}</Col>
-                                <Col md={6}><b>Ingredient Type</b>: {this.state.foodDetail.ingredient}</Col>
+                                <Col md={6}><b>Price</b>: {foodDetail.price} HKD</Col>
+                                <Col md={6}><b>Availability</b>: {availabilityMapper(foodDetail.offeredtimesid)}</Col>
+                                <Col md={6}><b>Restaurant</b>: {restaurantList[foodDetail.restaurantid]}</Col>
+                                <Col md={6}><b>Delivery Speed</b>: {deliverySpeed[foodDetail.deliveryspeedid]}</Col>
+                                <Col md={6}><b>Cuisine Type</b>: {cuisineType[foodDetail.cuisinetypeid]}</Col>
+                                <Col md={6}><b>Taste Type</b>: {tasteMapper(foodDetail.tastetypesid)}</Col>
+                                <Col md={6}><b>Ingredient Description</b>: {foodDetail.ingredientsdescription}</Col>
                             </Col>
                             <Col md={6}>
                                 <Panel style={{marginTop:30}} header='Nutrition Information' bsStyle="success">
@@ -69,7 +65,8 @@ class FoodDetailContainer extends React.Component {
 
 export default connect(
     state => ({
-        foodDetail: state.canteens.foodDetail
+        foodDetail: state.canteens.foodDetail,
+        isFetching: state.canteens.isFetching
     }),
     {
         getFoodDetail

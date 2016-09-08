@@ -6,6 +6,7 @@ import {Button, Row, Col} from 'react-bootstrap';
 
 import FoodListComponent from '../components/FoodList';
 import {logoLG1,logoapc,logogrb,logomilano} from '../constants/ImageHandler';
+import {restaurantList} from '../constants/StaticData';
 
 import {
     getCanteenData
@@ -17,39 +18,35 @@ class CanteenPage extends Component {
     }
 
     determineCanteenName(canteenType){
-        const height = 50;
-        switch (canteenType){
-            case 1:
-                return <span><img src={logoLG1} height={height}/> LG1</span>;
-            case 2:
-                return <span><img src={logogrb} height={height}/> GRB</span>;
-            case 3:
-                return <span><img src={logoapc} height={height}/> APC</span>;
-            case 4:
-                return <span><img src={logomilano} height={height}/> Milano</span>;
-
-        }
+        return <span><img src={logoLG1} height='50'/> {restaurantList[canteenType]} </span>;
     }
 
     render () {
         const {
+            isFetching,
             foodArray,
             canteenType
         } = this.props;
 
         return (
-            <div>
-                <Row>
-                    <Col mdOffset={5} md={4}>
-                        <h1>
-                            {this.determineCanteenName(canteenType)}
-                        </h1>
-                    </Col>
-                    <Col md={12} style={{paddingTop: 10}}>
-                        <FoodListComponent foodArray={foodArray}/>
-                    </Col>
-                </Row>
-            </div>
+            isFetching?
+                <div>
+                    <p>Fetching....</p>
+                </div>
+                    :
+                <div>
+                    <Row>
+                        <Col mdOffset={5} md={4}>
+                            <h1>
+                                {this.determineCanteenName(canteenType)}
+                            </h1>
+                        </Col>
+                        <Col md={12} style={{paddingTop: 10}}>
+
+                            <FoodListComponent foodArray={foodArray}/>
+                        </Col>
+                    </Row>
+                </div>
         );
     }
 }
@@ -65,7 +62,8 @@ CanteenPage.propTypes = {
 
 export default connect(
     state => ({
-        foodArray: state.canteens.foodArray
+        foodArray: state.canteens.foodArray,
+        isFetching: state.canteens.isFetching
     }),
     {
         getCanteenData

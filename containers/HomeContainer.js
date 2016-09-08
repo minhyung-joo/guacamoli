@@ -2,6 +2,10 @@ import React, {PropTypes} from 'react';
 import {render} from 'react-dom';
 import {connect} from 'react-redux';
 
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import RaisedButton from 'material-ui/RaisedButton'
+
 import {Row, Col, Glyphicon, Button, Modal} from 'react-bootstrap';
 import {homeBackgroundImage} from '../constants/ImageHandler';
 import NavigationComponent from '../components/NavigationBar';
@@ -12,8 +16,6 @@ import {showModalFilter, hideModalFilter, clickAdvancedFilter} from '../actions/
 var axios = require('axios');
 
 class HomePage extends React.Component {
-    componentDidMount(){
-    }
     render() {
         const {isShowFilterModal, isAdvancedFilter, showModalFilter, hideModalFilter, clickAdvancedFilter} = this.props;
         return (
@@ -29,6 +31,7 @@ class HomePage extends React.Component {
                         </Col>
                         <Col mdOffset={5} md={1}>
                             <Button style={filterButtonStyle} onClick={showModalFilter}>Filter</Button>
+
                         </Col>
                     </Row>
                     <ModalFilter isShow={isShowFilterModal} onHide={hideModalFilter} isAdvancedFilter={isAdvancedFilter} onClickAdvanced={clickAdvancedFilter}/>

@@ -1,8 +1,8 @@
 
-export const restaurantList =['Default', 'LG1','GRB', 'APC', 'Milano' /*,'Chinese Garden', 'MCDonald', 'Einstein Cafe', 'Ebeenezer', 'LSK'*/];
-const deliverySpeed = ['Default','Pickup','Wait Ticket No.'];
-const offeredTime = ['Default','Morning','Lunch','Tea Time','Dinner'];
-const cuisineType = ['Default','Chinese','Japanese','Italian','Thai','Vietnamese','Indian/Turkey'];
+export const restaurantList =['Default', 'LG1','MCDonald','GRB', 'APC', 'Milano','Einstein Cafe', 'Ebeenezer', 'LSK'];
+export const deliverySpeed = ['Default','Pickup','Wait Ticket No.'];
+export const offeredTime = ['Default','Morning','Lunch','Tea Time','Dinner'];
+export const cuisineType = ['Default','Chinese','Japanese','Italian','Thai','Vietnamese','Indian/Turkey'];
 export const defaultFilterOptions = {
     'Restaurant':restaurantList, 'Delivery Speed':deliverySpeed, 'Offered Time':offeredTime, 'Cuisine Type':cuisineType
 };
