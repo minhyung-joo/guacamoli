@@ -2,15 +2,14 @@ import React, {PropTypes} from 'react';
 import {render} from 'react-dom';
 import {connect} from 'react-redux';
 
-import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import {Row, Col, Glyphicon, Button, Modal} from 'react-bootstrap';
 import {homeBackgroundImage} from '../constants/ImageHandler';
-import NavigationComponent from '../components/NavigationBar';
+import AppBarExampleIcon from '../components/NavigationBar';
 import ModalFilter from '../components/ModalFilter';
-import {showModalFilter, hideModalFilter, clickAdvancedFilter} from '../actions/modalActions';
+import {showModalFilter, hideModalFilter, clickAdvancedFilter} from  '../actions/modalActions';
 
 
 var axios = require('axios');
@@ -19,8 +18,9 @@ class HomePage extends React.Component {
     render() {
         const {isShowFilterModal, isAdvancedFilter, showModalFilter, hideModalFilter, clickAdvancedFilter} = this.props;
         return (
+            <MuiThemeProvider>
                 <div style={homeDivStyle}>
-                    <NavigationComponent />
+                    <AppBarExampleIcon />
                     <Row>
                         <Col md={12} style={greetingStyle}>
                             <p style={greetingMessage}>Nutritionalize HKUST</p>
@@ -31,11 +31,12 @@ class HomePage extends React.Component {
                         </Col>
                         <Col mdOffset={5} md={1}>
                             <Button style={filterButtonStyle} onClick={showModalFilter}>Filter</Button>
-
+                            <RaisedButton label="Filter" />
                         </Col>
                     </Row>
                     <ModalFilter isShow={isShowFilterModal} onHide={hideModalFilter} isAdvancedFilter={isAdvancedFilter} onClickAdvanced={clickAdvancedFilter}/>
                 </div>
+            </MuiThemeProvider>
         );
     }
 }

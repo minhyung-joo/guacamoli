@@ -4,8 +4,38 @@ import { Link } from 'react-router';
 import {LinkContainer} from 'react-router-bootstrap';
 import {logoImage} from '../constants/ImageHandler';
 
+import AppBar from 'material-ui/AppBar';
+import IconButton from 'material-ui/IconButton';
+import NavigationClose from 'material-ui/svg-icons/navigation/close';
+import FlatButton from 'material-ui/FlatButton';
+// import Drawer from 'material-ui/Drawer';
+// import MenuItem from 'material-ui/MenuItem';
+
+
 
 export default class NavigationComponent extends React.Component{
+    // handleTouchTap() {
+    //     alert('onTouchTap triggered on the title component');
+    // }
+    //
+    // render(){
+    //     return(
+    //         <div>
+    //             <AppBar
+    //             title={<span>Title</span>}
+    //             onTitleTouchTap={this.handleTouchTap}
+    //             iconElementLeft={<IconButton><NavigationClose /></IconButton>}
+    //             iconElementRight={<FlatButton label="Save" />}
+    //             />
+    //             <Drawer open={this.state.open}>
+    //                 <MenuItem>Menu Item</MenuItem>
+    //                 <MenuItem>Menu Item 2</MenuItem>
+    //             </Drawer>
+    //         </div>
+    //
+    //     )
+    // }
+
     render() {
         return (
             <Navbar inverse>
