@@ -1,3 +1,4 @@
+
 //////////////////////////////////////////////////////////
 // configurations
 //////////////////////////////////////////////////////////
@@ -173,7 +174,7 @@ app.get('/api/menu/:menuId', function (req, res) {
       {
         console.log("menu select result");
         console.log(result.rows);
-        res.json('pages/menu', result.rows[0]);
+        res.status(200).send(result.rows[0]);
       }
     });
     done();
@@ -193,7 +194,7 @@ app.get('/api/getCanteenList', function(req,res) {
       }
       else{
         console.log(result.rows);
-        res.json(result.rows);
+        res.status(200).send(result.rows);
       }
     });
     done();
@@ -220,7 +221,7 @@ app.get('/api/query_search', function (req,res) {
           }
         }
         console.log(finalResult);
-        res.json(finalResult);
+        res.status(200).send(finalResult);
       }
     });
     done();
@@ -284,7 +285,7 @@ app.post('/api/filter_search', function (req,res) {
           }
         }
         console.log(finalResult);
-        res.json(finalResult);
+        res.status(200).send(finalResult);
       }
     });
     done();
@@ -304,7 +305,7 @@ app.get('/meal/all', function (request, response) {
       if (err)
        { console.error(err); response.send("Error " + err); }
       else
-       { response.json({"status":"SUCCESS", "result":result.rows}); }
+       { response.status(200).send({"status":"SUCCESS", "result":result.rows}); }
     });
   });
 });
@@ -319,7 +320,7 @@ app.post('/uploadMeal', function (request, response) {
   //console.log("offeredTimes = "+request.body.offeredTimes);
   if (!request.body.name || !request.body.picture_url) {
     console.log("upload meal failed: required fields null");
-    response.json({"status":"FAIL: required fields null"});
+    response.status(200).send({"status":"FAIL: required fields null"});
     return;
   }
   if (!request.body.price) {
@@ -341,7 +342,7 @@ app.post('/uploadMeal', function (request, response) {
       if (err)
        { console.error(err); response.send("Error " + err); }
       else
-       { response.json({"status":"SUCCESS"}); }
+       { response.status(200).send({"status":"SUCCESS"}); }
     });
     done();
   });
@@ -365,7 +366,7 @@ app.post('/admin_only_update_menu', function (req, res) {
       {
         console.log("menu update result");
         console.log(result.rows);
-        res.json({"status":"SUCCESS"});
+        res.status(200).send({"status":"SUCCESS"});
       }
     });
     done();
@@ -393,7 +394,7 @@ app.post('/deleteMeal', function (request, response) {
       if (err)
        { console.error(err); response.send("Error " + err); }
       else
-       { response.json({"status":"SUCCESSS"}); }
+       { response.status(200).send({"status":"SUCCESSS"}); }
     });
     done();
   });
