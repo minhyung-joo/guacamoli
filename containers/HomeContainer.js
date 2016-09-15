@@ -7,7 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 
 import {Row, Col, Glyphicon, Button, Modal} from 'react-bootstrap';
 import {homeBackgroundImage} from '../constants/ImageHandler';
-import AppBarExampleIcon from '../components/NavigationBar';
+import NavigationComponent from '../components/NavigationBar';
 import ModalFilter from '../components/ModalFilter';
 import {showModalFilter, hideModalFilter, clickAdvancedFilter} from  '../actions/modalActions';
 
@@ -20,7 +20,7 @@ class HomePage extends React.Component {
         return (
             <MuiThemeProvider>
                 <div style={homeDivStyle}>
-                    <AppBarExampleIcon />
+                    <NavigationComponent />
                     <Row>
                         <Col md={12} style={greetingStyle}>
                             <p style={greetingMessage}>Nutritionalize HKUST</p>
