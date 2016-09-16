@@ -10,8 +10,13 @@ import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
+
 import ExpandMore from 'material-ui/svg-icons/navigation/expand-more';
 import ExpandLess from 'material-ui/svg-icons/navigation/expand-less';
+import Ranking from 'material-ui/svg-icons/editor/format-list-numbered';
+import Restaurant from 'material-ui/svg-icons/maps/restaurant';
+import ArrowRight from 'material-ui/svg-icons/navigation/subdirectory-arrow-right';
+import Info from 'material-ui/svg-icons/action/info-outline';
 
 import {toggleNavDrawer,clickCanteenListButton} from '../actions/uiActions';
 
@@ -27,33 +32,33 @@ class NavigationComponent extends React.Component {
                 <AppBar onLeftIconButtonTouchTap={toggleNavDrawer}/>
                 <Drawer open={isShowDrawer} docked={false} onRequestChange={toggleNavDrawer}>
                     <LinkContainer to="/home">
-                        <MenuItem onTouchTap={toggleNavDrawer}>Home</MenuItem>
+                        <AppBar title="Guacamoli" iconElementLeft={<img src={logoImage} onTouchTap={toggleNavDrawer} style={logoStyle}/>} />
                     </LinkContainer>
                     <LinkContainer to="/ranking">
-                        <MenuItem onTouchTap={toggleNavDrawer}>Ranking</MenuItem>
+                        <MenuItem primaryText="Ranking" leftIcon={<Ranking/>} onTouchTap={toggleNavDrawer}/>
                     </LinkContainer>
-                    <MenuItem primaryText="Canteens" onTouchTap={clickCanteenListButton} rightIcon={isShowCanteenList? <ExpandLess /> : <ExpandMore/>}/>
+                    <MenuItem primaryText="Canteens" leftIcon={<Restaurant/>} onTouchTap={clickCanteenListButton} rightIcon={isShowCanteenList? <ExpandLess /> : <ExpandMore/>}/>
                     {
                         isShowCanteenList?
                             <Menu>
                                 <LinkContainer to="/canteens/lg1">
-                                    <MenuItem primaryText="LG1 - Maxims" insetChildren={true}/>
+                                    <MenuItem primaryText="LG1 - Maxims" leftIcon={<ArrowRight/>} onTouchTap={clickCanteenListButton} insetChildren={true}/>
                                 </LinkContainer>
                                 <LinkContainer to="/canteens/apc">
-                                    <MenuItem primaryText="LG7 - APC" insetChildren={true}/>
+                                    <MenuItem primaryText="LG7 - APC" leftIcon={<ArrowRight/>} onTouchTap={clickCanteenListButton} insetChildren={true}/>
                                 </LinkContainer>
                                 <LinkContainer to="/canteens/grb">
-                                    <MenuItem primaryText="LG7 - GRB" insetChildren={true}/>
+                                    <MenuItem primaryText="LG7 - GRB" leftIcon={<ArrowRight/>} onTouchTap={clickCanteenListButton} insetChildren={true}/>
                                 </LinkContainer>
                                 <LinkContainer to="/canteens/milano">
-                                    <MenuItem primaryText="LG7 - Milano" insetChildren={true}/>
+                                    <MenuItem primaryText="LG7 - Milano" leftIcon={<ArrowRight/>} onTouchTap={clickCanteenListButton} insetChildren={true}/>
                                 </LinkContainer>
                             </Menu>
                             :null
                     }
 
                     <LinkContainer to="/about">
-                        <MenuItem onTouchTap={toggleNavDrawer}>About Us</MenuItem>
+                        <MenuItem primaryText="About Us" leftIcon={<Info/>} onTouchTap={toggleNavDrawer}/>
                     </LinkContainer>
                 </Drawer>
             </div>
@@ -71,43 +76,4 @@ export default connect(
     }
 )(NavigationComponent)
 
-const logoStyle = {display: 'inline-block', height: 20};
-/*
-
- render() {
- return (
- <Navbar inverse>
- <Navbar.Header>
- <LinkContainer to="/">
- <Navbar.Brand><img src={logoImage} style={logoStyle}/> Guacamoli</Navbar.Brand>
- </LinkContainer>
- </Navbar.Header>
-
- <Nav pullRight>
- <LinkContainer to="/home">
- <NavItem eventKey={1}>Home</NavItem>
- </LinkContainer>
- <LinkContainer to="/ranking">
- <NavItem eventKey={2}>Ranking</NavItem>
- </LinkContainer>
- <NavDropdown eventKey={3} title="Canteens" id="basic-nav-dropdown">
- <LinkContainer to="/canteens/lg1">
- <MenuItem eventKey={3.1}>LG1</MenuItem>
- </LinkContainer>
- <LinkContainer to="/canteens/apc">
- <MenuItem eventKey={3.2}>LG7 - APC</MenuItem>
- </LinkContainer>
- <LinkContainer to="/canteens/grb">
- <MenuItem eventKey={3.3}>LG7 - GRB</MenuItem>
- </LinkContainer>
- <LinkContainer to="/canteens/milano">
- <MenuItem eventKey={3.4}>LG7 - Milano</MenuItem>
- </LinkContainer>
- </NavDropdown>
- <LinkContainer to="/about">
- <MenuItem eventKey={4}>About Us</MenuItem>
- </LinkContainer>
- </Nav>
- </Navbar>
- );
- }*/
+const logoStyle = {display: 'inline-block', height: 40};
