@@ -25,25 +25,25 @@ class HomePage extends React.Component {
         const {isShowFilterModal, isAdvancedFilter, showModalFilter, hideModalFilter, clickAdvancedFilter} = this.props;
         return (
             <MuiThemeProvider muiTheme={muiTheme}>
-                <div style={homeDivStyle}>
+                <div style={styles.homeDiv}>
                     <NavigationComponent />
                     <Row>
-                        <Col md={12} style={greetingStyle}>
-                            <p style={greetingMessage}>Nutritionalize HKUST</p>
-                            <p style={sloganMessage}>Use Guacamoli, Become Healthy</p>
+                        <Col md={12} style={styles.greeting}>
+                            <p style={styles.greetingMessage}>Nutritionalize HKUST</p>
+                            <p style={styles.sloganMessage}>Use Guacamoli | Become Healthy</p>
                         </Col>
                         {
                             this.props.isSearch?
                                 <Col mdOffset={2} md={8}>
-                                    <input type="text" className="form-control" style={queryInputStyle} placeholder="Search"/>
+                                    <input type="text" className="form-control" style={styles.queryInput} placeholder="Search"/>
                                 </Col>
                                 :null
                         }
                         <Col mdOffset={5} xsOffset={4}>
-                            <FloatingActionButton secondary={true} style={filterButtonStyle} onClick={showModalFilter}>
+                            <FloatingActionButton secondary={true} style={styles.filterButton} onClick={showModalFilter}>
                                 <FilterList />
                             </FloatingActionButton>
-                            <FloatingActionButton secondary={true} style={filterButtonStyle} onClick={this.props.toggleSearchButton}>
+                            <FloatingActionButton secondary={true} style={styles.filterButton} onClick={this.props.toggleSearchButton}>
                                 <Search />
                             </FloatingActionButton>
                         </Col>
@@ -71,29 +71,34 @@ export default connect(
 /**
  * styles
  */
-const homeDivStyle = {
-    backgroundImage: 'url(' + homeBackgroundImage + ')',
-    backgroundSize: 'cover',
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0
-};
 
-const greetingStyle = {
-    textAlign: 'center',
-    color: 'white',
-    marginTop:80
-};
-
-const greetingMessage = {fontSize: 60, fontWeight: 'bold', marginTop:20};
-const sloganMessage = {fontSize: 20, fontWeight: 'bold', marginTop:20};
-
-const queryInputStyle = {
-    height: 40, marginTop:20
-};
-const filterButtonStyle = {
-    margin: 10,
-    marginTop:20
-};
+const styles = {
+    homeDiv:{
+        backgroundImage: 'url(' + homeBackgroundImage + ')',
+        backgroundSize: 'cover',
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0
+    },
+    greeting:{
+        textAlign: 'center',
+        color: 'white',
+        marginTop:80
+    },
+    greetingMessage:{
+        fontSize: 60, fontWeight: 'bold', marginTop:20
+    },
+    sloganMessage:{
+        fontSize: 20, fontWeight: 'bold', marginTop:20
+    },
+    queryInput:{
+        height: 40, marginTop:20
+    },
+    filterButton:{
+        margin: 10,
+        marginTop:20,
+        backgroundColor:'#1B5E20'
+    }
+}

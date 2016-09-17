@@ -7,6 +7,7 @@ import CanteenPage from './containers/CanteenContainer';
 import RankingContainer from './containers/RankingContainer';
 import AboutUsContainer from './containers/AboutUsContainer';
 import FoodDetailContainer from './containers/FoodDetailContainer';
+import SearchResultContainer from './containers/SearchResultContainer';
 
 import {restaurantList} from './constants/StaticData';
 
@@ -44,6 +45,7 @@ export default (
             </Route>
             <Route path='about' component={AboutUsContainer} />
             <Route path='food/:foodid' component={FoodDetailContainer}/>
+            <Route path='searchResult' component={SearchResultContainer} />
             <Route path='*' component={NotFound} />
         </Route>
     </Route>

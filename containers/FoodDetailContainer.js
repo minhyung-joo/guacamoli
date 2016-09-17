@@ -7,7 +7,9 @@ import FoodListComponent from '../components/FoodList'
 import {getFoodDetail} from '../actions/canteenActions';
 import {availabilityMapper, tasteMapper, imageUrlMapper} from '../constants/Utility';
 import {restaurantList, deliverySpeed, cuisineType} from '../constants/StaticData';
-
+import StarRating from 'react-star-rating';
+import RefreshIndicator from 'material-ui/RefreshIndicator';
+import Paper from 'material-ui/Paper';
 
 class FoodDetailContainer extends React.Component {
     componentDidMount() {
@@ -23,39 +25,56 @@ class FoodDetailContainer extends React.Component {
         const {foodDetail, isFetching} = this.props;
         return (
         isFetching?
-            <div>Fetching...</div>
+            <div>
+                <Row>
+                    <Col md={12}>
+                        <RefreshIndicator
+                            size={50}
+                            left={70}
+                            top={0}
+                            primary={true}
+                            status="loading"
+                        />
+                    </Col>
+                </Row>
+            </div>
                 :
             <div style={foodDetailStyle}>
                 <Row>
                     <Col mdOffset={1} md={10}>
-                        <Panel header="FOOD DETAIL">
-                            <Col md={6}>
-                                <img width="100%" src={imageUrlMapper(foodDetail.picture_url)}/>
-                            </Col>
-                            <Col md={6}>
-                                <Col md={12}>
-                                    <h3>{foodDetail.name}</h3>
-                                    <h5>{foodDetail.chinesename}</h5>
+                        <Paper zDepth={1}>
+                            <Panel header="FOOD DETAIL">
+                                <Col md={6}>
+                                    <img width="100%" src={imageUrlMapper(foodDetail.picture_url)}/>
                                 </Col>
-                                <Col md={12}><span><p> </p></span></Col>
+                                <Col md={6}>
+                                    <Col md={12}>
+                                        <h3>{foodDetail.name}</h3>
+                                        <h5>{foodDetail.chinesename}</h5>
+                                    </Col>
+                                    <Col md={12}><span><p> </p></span></Col>
 
-                                <Col md={6}><b>Price</b>: {foodDetail.price} HKD</Col>
-                                <Col md={6}><b>Availability</b>: {availabilityMapper(foodDetail.offeredtimesid)}</Col>
-                                <Col md={6}><b>Restaurant</b>: {restaurantList[foodDetail.restaurantid]}</Col>
-                                <Col md={6}><b>Delivery Speed</b>: {deliverySpeed[foodDetail.deliveryspeedid]}</Col>
-                                <Col md={6}><b>Cuisine Type</b>: {cuisineType[foodDetail.cuisinetypeid]}</Col>
-                                <Col md={6}><b>Taste Type</b>: {tasteMapper(foodDetail.tastetypesid)}</Col>
-                                <Col md={6}><b>Ingredient Description</b>: {foodDetail.ingredientsdescription}</Col>
-                            </Col>
-                            <Col md={6}>
-                                <Panel style={{marginTop:30}} header='Nutrition Information' bsStyle="success">
-                                    Nutrition information
-                                </Panel>
-                            </Col>
-                        </Panel>
-                        <Panel header="FOOD RECOMMENDATION">
-                            <FoodListComponent foodArray={foodArray}/>
-                        </Panel>
+                                    <Col md={6}><b>Price</b>: {foodDetail.price} HKD</Col>
+                                    <Col md={6}><b>Availability</b>: {availabilityMapper(foodDetail.offeredtimesid)}</Col>
+                                    <Col md={6}><b>Restaurant</b>: {restaurantList[foodDetail.restaurantid]}</Col>
+                                    <Col md={6}><b>Delivery Speed</b>: {deliverySpeed[foodDetail.deliveryspeedid]}</Col>
+                                    <Col md={6}><b>Cuisine Type</b>: {cuisineType[foodDetail.cuisinetypeid]}</Col>
+                                    <Col md={6}><b>Taste Type</b>: {tasteMapper(foodDetail.tastetypesid)}</Col>
+                                    <Col md={6}><b>Ingredient Description</b>: {foodDetail.ingredientsdescription}</Col>
+                                    <Col md={12}><b>Rating</b>: <StarRating name="airbnb-rating" totalStars={5} rating={3} size={25}/></Col>
+                                </Col>
+                                <Col md={6}>
+                                    <Panel style={{marginTop:30}} header='Nutrition Information' bsStyle="success">
+                                        Nutrition information
+                                    </Panel>
+                                </Col>
+                            </Panel>
+                        </Paper>
+                        <Paper>
+                            <Panel header="FOOD RECOMMENDATION">
+                                <FoodListComponent foodArray={foodArray}/>
+                            </Panel>
+                        </Paper>
                     </Col>
                 </Row>
             </div>
