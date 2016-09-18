@@ -201,6 +201,58 @@ app.get('/api/getCanteenList', function(req,res) {
   });
 });
 
+app.get('/api/getAllRankings', function(req, res) {
+  console.log("/getRankings");
+
+
+  pg.connect(DATABASE_URL, function(err, client, done) {
+    client.query("SELECT id, name, picture_url, rank, price FROM meal",
+    function(err, result) {
+      if (err){
+        console.error(err); res.send("Error " + err);
+      }
+      else{
+        console.log(result.rows);
+
+        var lg1Result = new Array();
+        var grbResult = new Array();
+        var apcResult = new Array();
+        var millanoResult = new Array();
+
+        for (var i=0; i<result.rows.length; ++i) {
+          if ((result.rows[i].restaurantid) == 1) { // restaurant id == lg1
+            lg1Result.push(result.rows[i]);
+          }
+          else if ((result.rows[i].restaurantid) == 3) { // restaurant id == GRB
+            grbResult.push(result.rows[i]);
+          }
+          else if ((result.rows[i].restaurantid) == 4) { // restaurant id == APC
+            apcResult.push(result.rows[i]);
+          }
+          else if ((result.rows[i].restaurantid) == 5) { // restaurant id == APC
+            millanoResult.push(result.rows[i]);
+          }
+        }
+
+        lg1Result.sort(function(a,b){return b-a;}).slice(0,5);
+        grbResult.sort(function(a,b){return b-a;}).slice(0,5);
+        apcResult.sort(function(a,b){return b-a;}).slice(0,5);
+        millanoResult.sort(function(a,b){return b-a;}).slice(0,5);
+
+        var finalResult = [{restaurant_id: 1, title:'lg1 ranking', rankingArray:lg1Result},
+                            {restaurant_id: 3, title:'grb ranking', rankingArray:grbResult},
+                            {restaurant_id: 4, title:'apc ranking', rankingArray:apcResult},
+                            {restaurant_id: 5, title:'millano ranking', rankingArray:millanoResult}
+                          ];
+
+        res.status(200).send(finalResult);
+      }
+    });
+    done();
+  });
+
+});
+
 app.get('/api/query_search', function (req,res) {
   var keyword = req.query.query.toLowerCase();
   console.log("getMenusBySearchTerm: keyword = "+keyword);
@@ -264,9 +316,8 @@ app.post('/api/filter_search', function (req,res) {
             validMenuFlag = false;
           }
 
-          // [2]  == [2,4]
+          // filter array fields: tasteType [2]  == [2,4]
           var db_tasteType = result.rows[i].tastetypesid;
-          //console.log("db_tasteType "+db_tasteType);
           for (var j=0; j< _tasteType.length; ++j) {
             var matchExists=false;
             if (db_tasteType) {
@@ -280,6 +331,37 @@ app.post('/api/filter_search', function (req,res) {
               validMenuFlag=false;
             }
           }
+          // filter array fields: ingredientTypesId
+          var db_ingredienttypes = result.rows[i].ingredienttypesid;
+          for (var j=0; j< _tasteType.length; ++j) {
+            var matchExists=false;
+            if (db_ingredienttypes) {
+              for (var k=0; k< db_ingredienttypes.length; ++k) {
+                if (_tasteType[j] == db_ingredienttypes[k]) {
+                  matchExists=true;
+                }
+              }
+            }
+            if (!matchExists) {
+              validMenuFlag=false;
+            }
+          }
+          // filter array fields: sauceTypesId
+          var db_suaceType = result.rows[i].saucetypesid;
+          for (var j=0; j< _tasteType.length; ++j) {
+            var matchExists=false;
+            if (db_suaceType) {
+              for (var k=0; k< db_suaceType.length; ++k) {
+                if (_tasteType[j] == db_suaceType[k]) {
+                  matchExists=true;
+                }
+              }
+            }
+            if (!matchExists) {
+              validMenuFlag=false;
+            }
+          }
+
           if (validMenuFlag) {
             finalResult.push(result.rows[i]);
           }
