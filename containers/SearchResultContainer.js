@@ -4,31 +4,37 @@ import {connect} from 'react-redux';
 import {Button, Row, Col} from 'react-bootstrap';
 
 import FoodListComponent from '../components/FoodList';
-import {logoLG1,logoAPC,logoGRB,logoMilano} from '../constants/ImageHandler';
-import {restaurantList} from '../constants/StaticData';
-
+import SearchStatusBar from '../components/SearchStatusBar';
 import RefreshIndicator from 'material-ui/RefreshIndicator';
+
 
 import {
     getCanteenData
 }from '../actions/canteenActions';
 
-class CanteenPage extends Component {
+class SearchResultContainer extends Component {
     componentWillMount(){
-        this.props.getCanteenData(this.props.canteenType);
-    }
-
-    determineCanteenName(canteenType){
-        const canteenName = restaurantList[canteenType];
-        return <span><img src={canteenName=='LG1'?logoLG1:canteenName=='APC'?logoAPC: canteenName=='logoGRB'?logoGRB:logoMilano} height='50'/> {canteenName} </span>;
+        this.props.getCanteenData(1);
     }
 
     render () {
         const {
             isFetching,
             foodArray,
-            canteenType
         } = this.props;
+
+        const filterOptions = {
+            restaurant:1,
+            deliveryTime:2,
+            offeredTime:3,
+            cuisine:4,
+            tasteType:[2, 3],
+            offeredTime:[],
+            ingredient:[],
+            sauceType:[],
+            without:[],
+            filterArray:['LG1','Pickup','Lunch','spicy','pork','vegetable']
+        };
 
         return (
             isFetching?
@@ -45,13 +51,11 @@ class CanteenPage extends Component {
                         </Col>
                     </Row>
                 </div>
-                    :
+                :
                 <div>
                     <Row>
-                        <Col mdOffset={5} md={4}>
-                            <h1>
-                                {this.determineCanteenName(canteenType)}
-                            </h1>
+                        <Col md={12}>
+                            <SearchStatusBar filterOptions={filterOptions.filterArray}/>
                         </Col>
                         <Col md={12} style={{paddingTop: 10}}>
 
@@ -63,11 +67,7 @@ class CanteenPage extends Component {
     }
 }
 
-const canteenTitleStyle={
-    color:'#5f7b1b'
-}
-
-CanteenPage.propTypes = {
+SearchResultContainer.propTypes = {
     foodArray: PropTypes.array.isRequired
 };
 
@@ -80,4 +80,4 @@ export default connect(
     {
         getCanteenData
     }
-)(CanteenPage)
+)(SearchResultContainer)
