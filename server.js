@@ -46,8 +46,8 @@ if (RUNNING_ON_ITSC_SERVER) {
   });
 }
 else {
-  DATABASE_URL = process.env.DATABASE_URL;
-  || "postgres://bibcnlyezwlkhl:gdhvCdkdw5znI-LjSspT6wKOfR@ec2-54-225-223-40.compute-1.amazonaws.com:5432/davktp8lndlj83"+'?ssl=true';
+  DATABASE_URL = process.env.DATABASE_URL
+                || "postgres://bibcnlyezwlkhl:gdhvCdkdw5znI-LjSspT6wKOfR@ec2-54-225-223-40.compute-1.amazonaws.com:5432/davktp8lndlj83"+'?ssl=true';
 
   app.set('port', (process.env.PORT || 5000));
   app.listen(app.get('port'), function() {
