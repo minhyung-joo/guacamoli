@@ -7,7 +7,10 @@ import FoodListComponent from '../components/FoodList'
 import {getFoodDetail} from '../actions/canteenActions';
 import {availabilityMapper, tasteMapper, imageUrlMapper} from '../constants/Utility';
 import {restaurantList, deliverySpeed, cuisineType} from '../constants/StaticData';
-import StarRating from 'react-star-rating';
+// import StarRating from 'react-star-rating';
+import StarRatingComponent from 'react-star-rating-component';
+
+
 import RefreshIndicator from 'material-ui/RefreshIndicator';
 import Paper from 'material-ui/Paper';
 
@@ -61,7 +64,7 @@ class FoodDetailContainer extends React.Component {
                                     <Col md={6}><b>Cuisine Type</b>: {cuisineType[foodDetail.cuisinetypeid]}</Col>
                                     <Col md={6}><b>Taste Type</b>: {tasteMapper(foodDetail.tastetypesid)}</Col>
                                     <Col md={6}><b>Ingredient Description</b>: {foodDetail.ingredientsdescription}</Col>
-                                    <Col md={12}><b>Rating</b>: <StarRating name="airbnb-rating" totalStars={5} rating={3} size={25}/></Col>
+                                    <Col md={6}><StarRatingComponent name="starRating" starCount={5} value={foodDetail.rating} /></Col>
                                 </Col>
                                 <Col md={6}>
                                     <Panel style={{marginTop:30}} header='Nutrition Information' bsStyle="success">

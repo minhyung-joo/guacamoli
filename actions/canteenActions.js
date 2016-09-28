@@ -9,7 +9,6 @@ function fetchingData(){
 }
 
 function recieveFoodDetailData(json){
-    console.log(json);
     return{
         type: 'RECIEVED_FOOD_DETAIL_DATA',
         data: json.data
@@ -30,7 +29,6 @@ function requestFail(error){
 
 export function getFoodDetail(foodid) {
     const api = getFoodDetailRoute.replace('(foodid)',foodid);
-    console.log(api);
     return dispatch=>{
         dispatch(fetchingData());
         return axios.get(api).then(json=>dispatch(recieveFoodDetailData(json))).catch(err=>dispatch(requestFail(err)))
@@ -39,7 +37,6 @@ export function getFoodDetail(foodid) {
 
 export function getCanteenData(canteenid){
     const api = getCanteenDataRoute.replace('(p1)',canteenid);
-    console.log(api);
     return dispatch=>{
         dispatch(fetchingData());
         return axios.get(api).then(json=>dispatch(recieveCanteenData(json))).catch(err=>dispatch(requestFail(err)))
