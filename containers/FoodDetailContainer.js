@@ -63,8 +63,11 @@ class FoodDetailContainer extends React.Component {
                                     <Col md={6}><b>Delivery Speed</b>: {deliverySpeed[foodDetail.deliveryspeedid]}</Col>
                                     <Col md={6}><b>Cuisine Type</b>: {cuisineType[foodDetail.cuisinetypeid]}</Col>
                                     <Col md={6}><b>Taste Type</b>: {tasteMapper(foodDetail.tastetypesid)}</Col>
-                                    <Col md={6}><b>Ingredient Description</b>: {foodDetail.ingredientsdescription}</Col>
-                                    <Col md={6}><StarRatingComponent name="starRating" starCount={5} value={foodDetail.rating} /></Col>
+                                    <Col md={12}><b>Ingredient Description</b>: {foodDetail.ingredientsdescription}</Col>
+                                    <Col md={12}>
+                                        <p><b>Rating:</b></p>
+                                        <StarRatingComponent sname="starRating" starCount={5} value={foodDetail.rating} />
+                                    </Col>
                                 </Col>
                                 <Col md={6}>
                                     <Panel style={{marginTop:30}} header='Nutrition Information' bsStyle="success">

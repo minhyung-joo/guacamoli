@@ -15,14 +15,22 @@ import {homeBackgroundImage} from '../constants/ImageHandler';
 import NavigationComponent from '../components/NavigationBar';
 import DialogFilter from '../components/DialogFilter';
 import {showModalFilter, hideModalFilter, clickAdvancedFilter,
-    toggleSearchButton} from '../actions/uiActions';
+    toggleSearchButton,
+    inputSearchQuery, submitSearchQuery
+} from '../actions/uiActions';
 
 var axios = require('axios');
 const muiTheme = getMuiTheme(guacamoliTheme);
 
 class HomePage extends React.Component {
     render() {
-        const {isShowFilterModal, isAdvancedFilter, showModalFilter, hideModalFilter, clickAdvancedFilter} = this.props;
+        const {isShowFilterModal, isAdvancedFilter, showModalFilter, hideModalFilter, clickAdvancedFilter, inputSearchQuery, submitSearchQuery} = this.props;
+        function _handleKeyPress(e) {
+            if (e.key === 'Enter') {
+                submitSearchQuery();
+            }
+        }
+
         return (
             <MuiThemeProvider muiTheme={muiTheme}>
                 <div style={styles.homeDiv}>
@@ -35,7 +43,7 @@ class HomePage extends React.Component {
                         {
                             this.props.isSearch?
                                 <Col mdOffset={2} md={8}>
-                                    <input type="text" className="form-control" style={styles.queryInput} placeholder="Search"/>
+                                    <input type="text" className="form-control" onChange={(event)=>inputSearchQuery(event.target.value)} onKeyPress={(event)=>_handleKeyPress(event)} style={styles.queryInput} placeholder="Search"/>
                                 </Col>
                                 :null
                         }
@@ -64,7 +72,8 @@ export default connect(
     }),
     {
         showModalFilter, hideModalFilter, clickAdvancedFilter,
-        toggleSearchButton
+        toggleSearchButton,
+        inputSearchQuery, submitSearchQuery
     }
 )(HomePage)
 

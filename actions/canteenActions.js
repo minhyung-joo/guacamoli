@@ -1,6 +1,7 @@
 var axios = require('axios');
 const getFoodDetailRoute = '/api/menu/(foodid)';
 const getCanteenDataRoute = 'api/getCanteenList?restaurantId=(p1)';
+const getSearchReultRoute = '/api/query_search?query=(queryString)';
 
 function fetchingData(){
     return{
@@ -20,6 +21,13 @@ function recieveCanteenData(json){
         data: json.data
     }
 }
+function recieveSearchData(json){
+    return{
+        type: 'RECIEVED_SEARCH_DATA',
+        data: json.data
+    }
+}
+
 function requestFail(error){
     return{
         type: 'REQUEST_ERROR',
@@ -40,5 +48,14 @@ export function getCanteenData(canteenid){
     return dispatch=>{
         dispatch(fetchingData());
         return axios.get(api).then(json=>dispatch(recieveCanteenData(json))).catch(err=>dispatch(requestFail(err)))
+    }
+}
+
+export function getSearchReult(query){
+    const api = getSearchReultRoute.replace('(queryString)',query);
+    console.log(api);
+    return dispatch=>{
+        dispatch(fetchingData());
+        return axios.get(api).then(json=>dispatch(recieveSearchData(json))).catch(err=>dispatch(requestFail(err)))
     }
 }

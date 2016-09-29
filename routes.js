@@ -45,7 +45,7 @@ export default (
             </Route>
             <Route path='about' component={AboutUsContainer} />
             <Route path='food/:foodid' component={FoodDetailContainer}/>
-            <Route path='searchResult' component={SearchResultContainer} />
+            <Route path='searchResult/:query' component={SearchResultContainer} />
             <Route path='*' component={NotFound} />
         </Route>
     </Route>

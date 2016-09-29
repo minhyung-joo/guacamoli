@@ -17,12 +17,6 @@ export function toggleSearchButton() {
     }
 }
 
-// export function toggleFilterButton() {
-//     return{
-//         type: 'TOGGLE_FILTER_BUTTON'
-//     }
-// }
-
 export function showModalFilter() {
     return {
         type: 'SHOW_MODAL_FILTER'
@@ -38,5 +32,18 @@ export function hideModalFilter() {
 export function clickAdvancedFilter(){
     return{
         type: 'CLICK_ADVANCED_FILTER'
+    }
+}
+
+export function inputSearchQuery(newQuery){
+    return{
+        type: 'INPUT_SEARCH_QUERY',
+        query: newQuery
+    }
+}
+
+export function submitSearchQuery(){
+    return{
+        type: 'SUBMIT_SEARCH_QUERY'
     }
 }

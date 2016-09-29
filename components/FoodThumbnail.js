@@ -18,17 +18,24 @@ export default class FoodThumbnailComponent extends React.Component {
     //     );
     // }
 
-    //http://guacamolistorage-hkust25.appcloud.ust.hk/uploads/DSC03505.jpg
-
     render() {
         const food = this.props.foodDetail;
+        function titleHandler(foodTitle){
+            console.log(foodTitle.length);
+            const maxLength = 35;
+            if(foodTitle.length > maxLength){
+                return foodTitle.substring(0,maxLength).concat("...");
+            }else{
+                return foodTitle;
+            }
+        }
+
         return (
             <Card>
                 <CardMedia>
-                    {/*overlay={<CardTitle title={food.name} subtitle={food.price + " HKD"} />}*/}
                     <img src={imageUrlMapper(food.picture_url)} height="175" width="100%"/>
                 </CardMedia>
-                <CardTitle title={food.name} subtitle={food.price + " HKD"} />
+                <CardTitle style={{}} title={titleHandler(food.name)} subtitle={food.price + " HKD"} />
             </Card>
         );
     }

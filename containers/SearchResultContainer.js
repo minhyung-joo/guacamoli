@@ -9,18 +9,19 @@ import RefreshIndicator from 'material-ui/RefreshIndicator';
 
 
 import {
-    getCanteenData
+    getSearchReult
 }from '../actions/canteenActions';
 
 class SearchResultContainer extends Component {
     componentWillMount(){
-        this.props.getCanteenData(1);
+        this.props.getSearchReult(this.props.params.query);
     }
 
     render () {
         const {
             isFetching,
-            foodArray,
+            searchResultArray,
+            isSearch
         } = this.props;
 
         const filterOptions = {
@@ -55,11 +56,12 @@ class SearchResultContainer extends Component {
                 <div>
                     <Row>
                         <Col md={12}>
-                            <SearchStatusBar filterOptions={filterOptions.filterArray}/>
+                            {
+                                isSearch?<p>search</p>:<SearchStatusBar filterOptions={filterOptions.filterArray}/>
+                            }
                         </Col>
                         <Col md={12} style={{paddingTop: 10}}>
-
-                            <FoodListComponent foodArray={foodArray}/>
+                            <FoodListComponent foodArray={searchResultArray}/>
                         </Col>
                     </Row>
                 </div>
@@ -67,17 +69,14 @@ class SearchResultContainer extends Component {
     }
 }
 
-SearchResultContainer.propTypes = {
-    foodArray: PropTypes.array.isRequired
-};
-
 
 export default connect(
     state => ({
-        foodArray: state.canteens.foodArray,
-        isFetching: state.canteens.isFetching
+        isFetching: state.canteens.isFetching,
+        searchResultArray: state.canteens.searchResultArray,
+        isSearch: state.uiStates.isSearch,
     }),
     {
-        getCanteenData
+        getSearchReult
     }
 )(SearchResultContainer)
