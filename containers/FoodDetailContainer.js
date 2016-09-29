@@ -66,7 +66,7 @@ class FoodDetailContainer extends React.Component {
                                     <Col md={12}><b>Ingredient Description</b>: {foodDetail.ingredientsdescription}</Col>
                                     <Col md={12}>
                                         <p><b>Rating:</b></p>
-                                        <StarRatingComponent sname="starRating" starCount={5} value={foodDetail.rating} />
+                                        <StarRatingComponent sname="starRating" starCount={foodDetail.rating==null?0:foodDetail.rating} value={foodDetail.rating} />
                                     </Col>
                                 </Col>
                                 <Col md={6}>
