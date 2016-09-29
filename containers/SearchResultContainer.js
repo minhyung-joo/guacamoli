@@ -57,7 +57,7 @@ class SearchResultContainer extends Component {
                     <Row>
                         <Col md={12}>
                             {
-                                isSearch?<p>search</p>:<SearchStatusBar filterOptions={filterOptions.filterArray}/>
+                                isSearch?<p>Your Search Query: {this.props.params.query} </p>:<SearchStatusBar filterOptions={filterOptions.filterArray}/>
                             }
                         </Col>
                         <Col md={12} style={{paddingTop: 10}}>

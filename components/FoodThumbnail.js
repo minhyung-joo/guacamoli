@@ -9,7 +9,7 @@ export default class FoodThumbnailComponent extends React.Component {
         const food = this.props.foodDetail;
         function titleHandler(foodTitle){
             if(foodTitle!=undefined && foodTitle!=null){
-                const maxLength = 35;
+                const maxLength = 15;
                 if(foodTitle.length > maxLength){
                     return foodTitle.substring(0,maxLength).concat("...");
                 }else{
