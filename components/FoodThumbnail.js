@@ -5,28 +5,16 @@ import {imageUrlMapper} from '../constants/Utility';
 
 
 export default class FoodThumbnailComponent extends React.Component {
-    // render() {
-    //     const food = this.props.foodDetail;
-    //     return (
-    //         <Thumbnail>
-    //             <div>
-    //                 <img src={food.image_url} height="175" width="100%"/>
-    //                 <h4>{food.name}</h4>
-    //                 <p>{food.price} HKD</p>
-    //             </div>
-    //         </Thumbnail>
-    //     );
-    // }
-
     render() {
         const food = this.props.foodDetail;
         function titleHandler(foodTitle){
-            console.log(foodTitle.length);
-            const maxLength = 35;
-            if(foodTitle.length > maxLength){
-                return foodTitle.substring(0,maxLength).concat("...");
-            }else{
-                return foodTitle;
+            if(foodTitle!=undefined && foodTitle!=null){
+                const maxLength = 35;
+                if(foodTitle.length > maxLength){
+                    return foodTitle.substring(0,maxLength).concat("...");
+                }else{
+                    return foodTitle;
+                }
             }
         }
 
