@@ -34,6 +34,7 @@
               <div class="star" style="margin-top:10px;">
                 <input id="star_rating" value=<%= result.rating %> type="number" class="rating" min=0 max=5 step=0.5 data-size="xs" data-show-clear="false" readonly="true">
               </div>
+              <input id="rating" type="text" placeholder="range [1,5]" value=<%= result.rating %>></input><span>(UNSAFE) input number of range [1,5]</span>
             </ul>
           </div>
           <textarea id="menuId" style="visibility:hidden"><%=result.id%></textarea>
@@ -54,6 +55,7 @@
       $.post("/admin_only_update_menu", {   // post body
         "menuId": $("#menuId").val(),
         "ingredientsDescription": $("#ingredientsDescription").val(),
+        "rating": $("#rating").val()
 
       }, function (result) {  // callback
         alert(result.status);
