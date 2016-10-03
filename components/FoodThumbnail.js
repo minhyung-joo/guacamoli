@@ -19,7 +19,7 @@ export default class FoodThumbnailComponent extends React.Component {
         }
 
         return (
-            <Card style={{marginBottom:10}}>
+            <Card style={{marginBottom:25}}>
                 <CardMedia>
                     <img src={imageUrlMapper(food.picture_url)} height="175" width="100%"/>
                 </CardMedia>

@@ -5,12 +5,10 @@ import {Pagination,Col} from 'react-bootstrap';
 
 export default class PaginationBar extends React.Component {
     render() {
-        const activePage = 1;
+        const {activePage, lastPage, onClickHandler}= this.props;
 
-        function handleSelect(eventKey) {
-            // this.setState({
-            //     activePage: eventKey
-            // });
+        function handleSelect(eventKey, callback) {
+            callback(eventKey);
         }
 
         return (
@@ -22,10 +20,10 @@ export default class PaginationBar extends React.Component {
                     last
                     ellipsis
                     boundaryLinks
-                    items={20}
+                    items={lastPage}
                     maxButtons={5}
                     activePage={activePage}
-                    onSelect={()=>handleSelect()} />
+                    onSelect={(eventKey)=>handleSelect(eventKey, onClickHandler)} />
             </Col>
         );
     }
