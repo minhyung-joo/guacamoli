@@ -4,12 +4,14 @@ import {connect} from 'react-redux';
 import {Row, Col, Panel} from 'react-bootstrap';
 
 import DropDownMenu from 'material-ui/DropDownMenu';
+import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Paper from 'material-ui/Paper';
 import Checkbox from 'material-ui/Checkbox';
 import Divider from 'material-ui/Divider';
 
 import {defaultFilterOptions, advancedFilterOptions} from '../constants/StaticData';
+import FilterDropdown from './FilterDropdown';
 
 /**
  * Default Search Option
@@ -27,27 +29,6 @@ export class DefaultSearchOption extends React.Component {
                 }
             </div>
         );
-    }
-}
-
-class FilterDropdown extends React.Component {
-    render() {
-        return (
-            <div>
-                <Col md={3}><label style={style.label}>{this.props.filterName} :</label></Col>
-                <Col md={3}>
-                    <DropDownMenu value={"Default"}>
-                        {
-                            this.props.selectOptionList.map(function (option) {
-                                return (
-                                    <MenuItem value={option} primaryText={option} />
-                                )
-                            })
-                        }
-                    </DropDownMenu>
-                </Col>
-            </div>
-        )
     }
 }
 
@@ -109,9 +90,6 @@ const style = {
     },
     checkbox: {
         marginBottom: 16, width:20
-    },
-    label: {
-        paddingTop:20
     },
     filterDropdown:{
         marginBottom:10

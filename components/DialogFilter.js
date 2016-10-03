@@ -8,10 +8,17 @@ import Toggle from 'material-ui/Toggle';
 
 
 import {DefaultSearchOption, AdvancedSearchOption} from './DialogFilterOptions';
+import {submitFilterSearch} from '../actions/uiActions';
 
-export default class DialogFilter extends React.Component {
+class DialogFilter extends React.Component {
     render() {
+
+        function onClickHandler(submitCallback){
+            submitCallback();
+        }
+
         const {isShow, onHide, isAdvancedFilter, onClickAdvanced} = this.props;
+
 
         const actions = [
             <FlatButton
@@ -23,10 +30,12 @@ export default class DialogFilter extends React.Component {
                 label="Search"
                 primary={true}
                 onTouchTap={onHide}
+                onClick={()=>onClickHandler(this.props.submitFilterSearch)}
             />,
         ];
 
         return (
+
             <div>
                 <Dialog
                     title="Filter Search"
@@ -37,7 +46,7 @@ export default class DialogFilter extends React.Component {
                     autoScrollBodyContent={true}
                 >
                     <Row>
-                        <DefaultSearchOption />
+                        <DefaultSearchOption/>
                         <Col mdOffset={9}>
                             <Toggle
                                 label="Advanced Filter"
@@ -53,8 +62,18 @@ export default class DialogFilter extends React.Component {
                 </Dialog>
             </div>
         );
+
     }
 }
+
+export default connect(
+    state=>({
+
+    }),
+    {
+        submitFilterSearch
+    }
+)(DialogFilter)
 
 const styles = {
     toggle:{

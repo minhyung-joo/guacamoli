@@ -4,6 +4,8 @@ import {connect} from 'react-redux';
 import {Button, Row, Col} from 'react-bootstrap';
 
 import FoodListComponent from '../components/FoodList';
+import PaginationBar from '../components/PaginationBar';
+
 import {logoLG1,logoAPC,logoGRB,logoMilano} from '../constants/ImageHandler';
 import {restaurantList} from '../constants/StaticData';
 
@@ -27,8 +29,11 @@ class CanteenPage extends Component {
         const {
             isFetching,
             foodArray,
-            canteenType
+            canteenType,
+            activePage
         } = this.props;
+
+        var slicedData = foodArray.slice((activePage-1)*20,activePage*20-1);
 
         return (
             isFetching?
@@ -55,7 +60,12 @@ class CanteenPage extends Component {
                         </Col>
                         <Col md={12} style={{paddingTop: 10}}>
 
-                            <FoodListComponent foodArray={foodArray}/>
+                            <FoodListComponent foodArray={slicedData}/>
+
+                            {
+                                foodArray.length < 20?
+                                    <PaginationBar />: null
+                            }
                         </Col>
                     </Row>
                 </div>
@@ -75,7 +85,8 @@ CanteenPage.propTypes = {
 export default connect(
     state => ({
         foodArray: state.canteens.foodArray,
-        isFetching: state.canteens.isFetching
+        isFetching: state.canteens.isFetching,
+        activePage: state.canteens.activePage,
     }),
     {
         getCanteenData

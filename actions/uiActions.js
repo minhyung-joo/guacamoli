@@ -47,3 +47,17 @@ export function submitSearchQuery(){
         type: 'SUBMIT_SEARCH_QUERY'
     }
 }
+
+export function inputFilterOptions(filterTitle, filterValue){
+    return{
+        type: 'INPUT_FILTER_OPTIONS',
+        filterTitle: filterTitle,
+        filterValue: filterValue
+    }
+}
+
+export function submitFilterSearch(){
+    return{
+        type: 'SUBMIT_FILTER_SEARCH'
+    }
+}

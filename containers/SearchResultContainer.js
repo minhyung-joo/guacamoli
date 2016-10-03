@@ -6,15 +6,23 @@ import {Button, Row, Col} from 'react-bootstrap';
 import FoodListComponent from '../components/FoodList';
 import SearchStatusBar from '../components/SearchStatusBar';
 import RefreshIndicator from 'material-ui/RefreshIndicator';
+import DialogFilter from '../components/DialogFilter';
 
+import {showModalFilter, hideModalFilter, clickAdvancedFilter,
+    toggleSearchButton,
+} from '../actions/uiActions';
 
 import {
-    getSearchReult
+    getSearchReult, getFilterResult
 }from '../actions/canteenActions';
 
 class SearchResultContainer extends Component {
     componentWillMount(){
-        this.props.getSearchReult(this.props.params.query);
+        if(this.props.isSearch){
+            this.props.getSearchReult(this.props.params.query);
+        }else{
+            //todo this.props.getFilterResult(this.props.filterOptions);
+        }
     }
 
     render () {
@@ -30,7 +38,6 @@ class SearchResultContainer extends Component {
             offeredTime:3,
             cuisine:4,
             tasteType:[2, 3],
-            offeredTime:[],
             ingredient:[],
             sauceType:[],
             without:[],
@@ -57,26 +64,29 @@ class SearchResultContainer extends Component {
                     <Row>
                         <Col md={12}>
                             {
-                                isSearch?<p>Your Search Query: {this.props.params.query} </p>:<SearchStatusBar filterOptions={filterOptions.filterArray}/>
+                                isSearch?<p>Your Search Query: {this.props.params.query} </p>:<SearchStatusBar filterOptions={this.props.filterOptions}/>
                             }
                         </Col>
                         <Col md={12} style={{paddingTop: 10}}>
                             <FoodListComponent foodArray={searchResultArray}/>
                         </Col>
+                        {/*<DialogFilter isShow={isShowFilterModal} onHide={hideModalFilter} isAdvancedFilter={isAdvancedFilter} onClickAdvanced={clickAdvancedFilter}/>*/}
                     </Row>
                 </div>
+
+
         );
     }
 }
-
 
 export default connect(
     state => ({
         isFetching: state.canteens.isFetching,
         searchResultArray: state.canteens.searchResultArray,
         isSearch: state.uiStates.isSearch,
+        filterOptions: state.uiStates.filterOptions,
     }),
     {
-        getSearchReult
+        getSearchReult, getFilterResult
     }
 )(SearchResultContainer)

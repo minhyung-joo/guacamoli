@@ -1,14 +1,26 @@
 // import { push } from 'react-router-redux';
 import { hashHistory } from 'react-router'
+var _ = require('underscore');
+
 
 const initialState = {
     isShowDrawer:false,
     isShowCanteenList:true,
     isSearch:false,
-    // isFilter:false,
     isShowFilterModal: false,
     isAdvancedFilter: false,
     searchQuery:'',
+    filterOptions:
+        {
+            'Restaurant':'Default',
+            'Delivery Speed':'Default',
+            'Offered Time':'Default',
+            'Cuisine Type':'Default',
+            'Taste Type':[],
+            'Ingredient':[],
+            'Sauce Type':[],
+            'Without':[],
+        },
 };
 
 export default function uiStates(state = initialState, action) {
@@ -31,9 +43,16 @@ export default function uiStates(state = initialState, action) {
             // this.props.dispatch(push('/searchResult'));
             // http://stackoverflow.com/questions/31079081/programmatically-navigate-using-react-router
             hashHistory.push('/searchResult/'+state.searchQuery);
-
-            //  TODO need to reset Search Query & status somewhere
             return {...state, isSearch:true};
+        case 'INPUT_FILTER_OPTIONS':
+            var newFilterOption = _.extend({},state.filterOptions);
+            newFilterOption[action.filterTitle] = action.filterValue;
+            return {...state, filterOptions: newFilterOption};
+        case 'SUBMIT_FILTER_SEARCH':
+            //TODO change the url
+            hashHistory.push('/filterResult/');
+
+            return {...state, isSearch:false};
         default:
             return state;
     }

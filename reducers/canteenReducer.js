@@ -4,11 +4,11 @@ const initialState = {
     foodArray: [],
     foodDetail:{},
     searchResultArray:[],
+    activePage:1,
 };
 
 export default function canteens(state = initialState, action) {
     switch(action.type){
-
         case 'FETCHING_DATA':
             return {...state, isFetching: true};
         case 'RECIEVED_CANTEEN_DATA':
@@ -17,6 +17,8 @@ export default function canteens(state = initialState, action) {
             return {...state, foodArray: [], foodDetail: action.data, isFetching: false};
         case 'RECIEVED_SEARCH_DATA':
             return {...state, searchResultArray: action.data, isFetching: false};
+        case 'RECEIVED_FILTER_DATA':
+            return {...state, searchResultArray: action.data, isFetching: true};
         case 'REQUEST_ERROR':
             return {...state};
         default:
