@@ -34,6 +34,7 @@ class CanteenPage extends Component {
         } = this.props;
 
         var slicedData = foodArray.slice((activePage-1)*20,activePage*20-1);
+        console.log(slicedData);
 
         return (
             isFetching?
@@ -63,7 +64,7 @@ class CanteenPage extends Component {
                             <FoodListComponent foodArray={slicedData}/>
 
                             {
-                                foodArray.length < 20?
+                                foodArray.length > 20?
                                     <PaginationBar />: null
                             }
                         </Col>
