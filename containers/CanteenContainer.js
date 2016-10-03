@@ -35,9 +35,7 @@ class CanteenPage extends Component {
         } = this.props;
 
         var slicedData = foodArray.slice((activePage-1)*20,activePage*20);
-        var lastPage = Math.ceil(this.props.foodArray/20);
-        var test = this.props.foodArray/20;
-        console.log(lastPage + " " + test);
+        var lastPage = Math.ceil(this.props.foodArray.length/20);
 
         return (
             isFetching?
