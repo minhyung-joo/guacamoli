@@ -81,3 +81,10 @@ export function getFilterResult(filterOptions){
         }).then(json=>dispatch(receiveFilterData(json))).catch(err=>dispatch(requestFail(err)))
     }
 }
+
+export function changePaginationActivePage(newPageNo){
+    return{
+        type: 'CHANGE_PAGINATION_ACTIVE_PAGE',
+        pageNo: newPageNo
+    }
+}
