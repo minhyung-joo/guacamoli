@@ -64,7 +64,7 @@ class CanteenPage extends Component {
                             <FoodListComponent foodArray={slicedData}/>
 
                             {
-                                foodArray.length > 20?
+                                foodArray.length < 20?
                                     <PaginationBar />: null
                             }
                         </Col>
