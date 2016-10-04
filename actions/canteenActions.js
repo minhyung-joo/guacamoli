@@ -41,7 +41,7 @@ function receiveFilterData(json){
 }
 
 function receiveRankingData(json){
-    rankingData = json.data;
+    rankingData = json.data;    //TODO
 
     return{
         type: 'RECEIVED_RANKING_DATA',
@@ -81,7 +81,6 @@ export function getSearchReult(query){
 }
 
 export function getFilterResult(filterOptions){
-    console.log("getFilterResult");
     console.log(filterOptions);
 
     return dispatch=>{
