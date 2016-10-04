@@ -11,7 +11,7 @@ export default class RankingList extends React.Component {
         const rankingObject = this.props.rankingObject;
         return (
             <Paper>
-                <Panel header={rankingObject.rankingTitle}>
+                <Panel header={rankingObject.title}>
                     {
                         rankingObject.rankingArray.map(function(food){
                             return(

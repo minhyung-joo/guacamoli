@@ -30,7 +30,7 @@ class FoodDetailContainer extends React.Component {
         isFetching?
             <div>
                 <Row>
-                    <Col md={12}>
+                    <Col mdOffset={5} md={7}>
                         <RefreshIndicator
                             size={50}
                             left={70}

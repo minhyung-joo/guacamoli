@@ -5,6 +5,7 @@ const initialState = {
     foodDetail:{},
     searchResultArray:[],
     activePage:1,
+    rankingResults:[]
 };
 
 export default function canteens(state = initialState, action) {
@@ -18,7 +19,9 @@ export default function canteens(state = initialState, action) {
         case 'RECIEVED_SEARCH_DATA':
             return {...state, searchResultArray: action.data, isFetching: false};
         case 'RECEIVED_FILTER_DATA':
-            return {...state, searchResultArray: action.data, isFetching: true};
+            return {...state, searchResultArray: action.data, isFetching: false};
+        case 'RECEIVED_RANKING_DATA':
+            return {...state, rankingResults: action.data, isFetching: false};
         case 'CHANGE_PAGINATION_ACTIVE_PAGE':
             return {...state, activePage: action.pageNo};
         case 'RESET_PAGINATION_ACTIVE_PAGE':

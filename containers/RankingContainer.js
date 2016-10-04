@@ -1,31 +1,68 @@
 import React from 'react';
 import {render} from 'react-dom';
+import {connect} from 'react-redux';
 import {Row, Col, Glyphicon, Button, Panel} from 'react-bootstrap';
+import RefreshIndicator from 'material-ui/RefreshIndicator';
 
 import RankingList from '../components/RankingList';
 
-export default class RankingContainer extends React.Component {
+import {getRankingResult} from '../actions/canteenActions';
+
+class RankingContainer extends React.Component {
+    componentWillMount(){
+        this.props.getRankingResult();
+    }
+
     render () {
+        const { isFetching, rankingResults, getRankingResult } = this.props;
+
+        console.log(rankingResults);
         return (
-            <Row>
-                <Col mdOffset={5} md={4}>
-                    <h2>Rankings</h2>
-                </Col>
-                <div style={rankingDisplayDivStyle}>
-                    <Col md={4}>
-                        <RankingList rankingObject={rankingObject}/>
-                    </Col>
-                    <Col md={4}>
-                        <RankingList rankingObject={rankingObject2}/>
-                    </Col>
-                    <Col md={4}>
-                        <RankingList rankingObject={rankingObject2}/>
-                    </Col>
+            isFetching?
+                <div>
+                    <Row>
+                        <Col mdOffset={5} md={7}>
+                            <RefreshIndicator
+                                size={50}
+                                left={70}
+                                top={0}
+                                primary={true}
+                                status="loading"
+                            />
+                        </Col>
+                    </Row>
                 </div>
-            </Row>
+                :
+                <Row>
+                    <Col mdOffset={5} md={4}>
+                        <h2>Rankings</h2>
+                    </Col>
+                    <div style={rankingDisplayDivStyle}>
+                        {
+                            rankingResults.map(function(rankingResultObj){
+                                return(
+                                        <Col md={4}>
+                                            <RankingList rankingObject={rankingResultObj}/>
+                                        </Col>
+                                    )
+                            })
+                        }
+
+                    </div>
+                </Row>
         );
     }
 }
+
+export default connect(
+    state => ({
+        rankingResults: state.canteens.rankingResults,
+        isFetching: state.canteens.isFetching,
+    }),
+    {
+        getRankingResult
+    }
+)(RankingContainer)
 
 const rankingDisplayDivStyle = {
     marginTop:90

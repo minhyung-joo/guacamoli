@@ -3,6 +3,11 @@ const getFoodDetailRoute = '/api/menu/(foodid)';
 const getCanteenDataRoute = 'api/getCanteenList?restaurantId=(p1)';
 const getSearchResultRoute = '/api/query_search?query=(queryString)';
 const getFilterResultRoute = '/api/filter_search';
+const getRankingResultRoute = '/api/getAllRankings';
+
+//data cache
+
+var rankingData = [];
 
 function fetchingData(){
     return{
@@ -35,6 +40,15 @@ function receiveFilterData(json){
     }
 }
 
+function receiveRankingData(json){
+    rankingData = json.data;
+
+    return{
+        type: 'RECEIVED_RANKING_DATA',
+        data: json.data
+    }
+}
+
 function requestFail(error){
     return{
         type: 'REQUEST_ERROR',
@@ -60,12 +74,12 @@ export function getCanteenData(canteenid){
 
 export function getSearchReult(query){
     const api = getSearchResultRoute.replace('(queryString)',query);
-    console.log(api);
     return dispatch=>{
         dispatch(fetchingData());
         return axios.get(api).then(json=>dispatch(receiveSearchData(json))).catch(err=>dispatch(requestFail(err)))
     }
 }
+
 export function getFilterResult(filterOptions){
     console.log("getFilterResult");
     console.log(filterOptions);
@@ -82,12 +96,25 @@ export function getFilterResult(filterOptions){
     }
 }
 
+export function getRankingResult(){
+    if(rankingData.length >0)
+        return rankingData;
+    else{
+        const api = getRankingResultRoute;
+        return dispatch=>{
+            dispatch(fetchingData());
+            return axios.get(api).then(json=>dispatch(receiveRankingData(json))).catch(err=>dispatch(requestFail(err)))
+        }
+    }
+}
+
 export function changePaginationActivePage(newPageNo){
     return{
         type: 'CHANGE_PAGINATION_ACTIVE_PAGE',
         pageNo: newPageNo
     }
 }
+
 export function resetPaginationActivePage(){
     return{
         type: 'RESET_PAGINATION_ACTIVE_PAGE',
