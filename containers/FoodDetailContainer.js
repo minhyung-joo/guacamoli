@@ -66,12 +66,12 @@ class FoodDetailContainer extends React.Component {
                                     <Col md={12}><b>Ingredient Description</b>: {foodDetail.ingredientsdescription}</Col>
                                     <Col md={12}>
                                         <p><b>Rating:</b></p>
-                                        <StarRatingComponent sname="starRating" starCount={foodDetail.rating==null?0:foodDetail.rating} value={foodDetail.rating} />
+                                        <StarRatingComponent name="starRating" starCount={5} value={foodDetail.rating} />
                                     </Col>
                                 </Col>
                                 <Col md={6}>
                                     <Panel style={{marginTop:30}} header='Nutrition Information' bsStyle="success">
-                                        Nutrition information
+                                        Coming Soon
                                     </Panel>
                                 </Col>
                             </Panel>

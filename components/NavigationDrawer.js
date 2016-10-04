@@ -26,6 +26,10 @@ class NavigationDrawer extends React.Component {
             toggleNavDrawer, clickCanteenListButton
         } = this.props;
 
+        function testing(){
+            console.log("testing");
+        }
+
         return (
             <Drawer open={isShowDrawer} docked={false} onRequestChange={toggleNavDrawer}>
                 <LinkContainer to="/home">
@@ -39,16 +43,16 @@ class NavigationDrawer extends React.Component {
                     isShowCanteenList?
                         <Menu>
                             <LinkContainer to="/canteens/lg1">
-                                <MenuItem primaryText="LG1 - Maxims" leftIcon={<ArrowRight/>} onTouchTap={toggleNavDrawer} insetChildren={true}/>
+                                <MenuItem primaryText="LG1 - Maxims" leftIcon={<ArrowRight/>} onClick={toggleNavDrawer} insetChildren={true}/>
                             </LinkContainer>
                             <LinkContainer to="/canteens/apc">
-                                <MenuItem primaryText="LG7 - APC" leftIcon={<ArrowRight/>} onTouchTap={toggleNavDrawer} insetChildren={true}/>
+                                <MenuItem primaryText="LG7 - APC" leftIcon={<ArrowRight/>} onClick={toggleNavDrawer} insetChildren={true}/>
                             </LinkContainer>
                             <LinkContainer to="/canteens/grb">
-                                <MenuItem primaryText="LG7 - GRB" leftIcon={<ArrowRight/>} onTouchTap={toggleNavDrawer} insetChildren={true}/>
+                                <MenuItem primaryText="LG7 - GRB" leftIcon={<ArrowRight/>} onClick={toggleNavDrawer} insetChildren={true}/>
                             </LinkContainer>
                             <LinkContainer to="/canteens/milano">
-                                <MenuItem primaryText="LG7 - Milano" leftIcon={<ArrowRight/>} onTouchTap={toggleNavDrawer} insetChildren={true}/>
+                                <MenuItem primaryText="LG7 - Milano" leftIcon={<ArrowRight/>} onClick={toggleNavDrawer} insetChildren={true}/>
                             </LinkContainer>
                         </Menu>
                         :null
