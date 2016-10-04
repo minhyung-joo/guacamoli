@@ -61,3 +61,19 @@ export function submitFilterSearch(){
         type: 'SUBMIT_FILTER_SEARCH'
     }
 }
+export function stepperChangeIndex(newIndex){
+    return{
+        type: 'STEPPER_CHANGE_INDEX',
+        newIndex: newIndex,
+    }
+}
+export function stepperHandleNext(){
+    return{
+        type: 'STEPPER_HANDLE_NEXT'
+    }
+}
+export function stepperHandlePrev(){
+    return{
+        type: 'STEPPER_HANDLE_PREV'
+    }
+}
