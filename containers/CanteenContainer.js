@@ -12,12 +12,16 @@ import {restaurantList} from '../constants/StaticData';
 import RefreshIndicator from 'material-ui/RefreshIndicator';
 
 import {
-    getCanteenData, changePaginationActivePage
+    getCanteenData, changePaginationActivePage, resetPaginationActivePage
 }from '../actions/canteenActions';
 
 class CanteenPage extends Component {
     componentWillMount(){
         this.props.getCanteenData(this.props.canteenType);
+    }
+
+    componentWillUnmount(){
+        this.props.resetPaginationActivePage();
     }
 
     determineCanteenName(canteenType){
@@ -33,9 +37,9 @@ class CanteenPage extends Component {
             activePage,
             changePaginationActivePage
         } = this.props;
-
-        var slicedData = foodArray.slice((activePage-1)*20,activePage*20);
-        var lastPage = Math.ceil(this.props.foodArray.length/20);
+        const dataLimit = 16;
+        var slicedData = foodArray.slice((activePage-1)*dataLimit,activePage*dataLimit);
+        var lastPage = Math.ceil(this.props.foodArray.length/dataLimit);
 
         return (
             isFetching?
@@ -64,7 +68,7 @@ class CanteenPage extends Component {
 
                             <FoodListComponent foodArray={slicedData}/>
                             {
-                                foodArray.length > 20?
+                                foodArray.length > dataLimit?
                                     <PaginationBar activePage={activePage} lastPage={lastPage} onClickHandler={changePaginationActivePage}/>: null
                             }
                         </Col>
@@ -90,6 +94,6 @@ export default connect(
         activePage: state.canteens.activePage,
     }),
     {
-        getCanteenData, changePaginationActivePage
+        getCanteenData, changePaginationActivePage, resetPaginationActivePage
     }
 )(CanteenPage)

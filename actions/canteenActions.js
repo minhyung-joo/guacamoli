@@ -88,3 +88,8 @@ export function changePaginationActivePage(newPageNo){
         pageNo: newPageNo
     }
 }
+export function resetPaginationActivePage(){
+    return{
+        type: 'RESET_PAGINATION_ACTIVE_PAGE',
+    }
+}

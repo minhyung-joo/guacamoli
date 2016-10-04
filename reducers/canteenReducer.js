@@ -21,6 +21,8 @@ export default function canteens(state = initialState, action) {
             return {...state, searchResultArray: action.data, isFetching: true};
         case 'CHANGE_PAGINATION_ACTIVE_PAGE':
             return {...state, activePage: action.pageNo};
+        case 'RESET_PAGINATION_ACTIVE_PAGE':
+            return {...state, activePage: 1};
         case 'REQUEST_ERROR':
             return {...state};
         default:
