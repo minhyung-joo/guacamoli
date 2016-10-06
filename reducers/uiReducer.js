@@ -21,6 +21,7 @@ const initialState = {
             'Sauce Type':[],
             'Without':[],
         },
+    stepIndex:0,
 };
 
 export default function uiStates(state = initialState, action) {
@@ -53,6 +54,18 @@ export default function uiStates(state = initialState, action) {
             hashHistory.push('/filterResult/');
 
             return {...state, isSearch:false};
+        case 'STEPPER_CHANGE_INDEX':
+            return {...state, stepIndex: action.newIndex};
+        case 'STEPPER_HANDLE_NEXT':
+            if(state.stepIndex<4)
+                return {...state, stepIndex: state.stepIndex+1};
+            else
+                return {...state};
+        case 'STEPPER_HANDLE_PREV':
+            if(state.stepIndex>0)
+                return {...state, stepIndex: state.stepIndex-1};
+            else
+                return {...state};
         default:
             return state;
     }

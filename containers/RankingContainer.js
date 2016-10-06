@@ -41,7 +41,7 @@ class RankingContainer extends React.Component {
                         {
                             rankingResults.map(function(rankingResultObj){
                                 return(
-                                        <Col md={4}>
+                                        <Col md={3}>
                                             <RankingList rankingObject={rankingResultObj}/>
                                         </Col>
                                     )
