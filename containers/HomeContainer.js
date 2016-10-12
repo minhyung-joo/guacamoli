@@ -47,7 +47,7 @@ class HomePage extends React.Component {
                                 </Col>
                                 :null
                         }
-                        <Col mdOffset={5} xsOffset={4}>
+                        <Col mdOffset={5} xsOffset={5}>
                             <FloatingActionButton secondary={true} style={styles.filterButton} onClick={showModalFilter}>
                                 <FilterList />
                             </FloatingActionButton>

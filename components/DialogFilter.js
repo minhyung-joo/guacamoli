@@ -8,18 +8,19 @@ import Toggle from 'material-ui/Toggle';
 
 
 import {DefaultSearchOption, AdvancedSearchOption} from './DialogFilterOptions';
-import {submitFilterSearch} from '../actions/uiActions';
+import {submitFilterSearch, resetFilterOptions} from '../actions/uiActions';
 
 class DialogFilter extends React.Component {
-    render() {
+    componentWillMount(){
+        this.props.resetFilterOptions();
+    }
 
+    render() {
         function onClickHandler(submitCallback){
             submitCallback();
         }
 
         const {isShow, onHide, isAdvancedFilter, onClickAdvanced} = this.props;
-
-
         const actions = [
             <FlatButton
                 label="Cancel"
@@ -35,7 +36,6 @@ class DialogFilter extends React.Component {
         ];
 
         return (
-
             <div>
                 <Dialog
                     title="Filter Search"
@@ -47,7 +47,7 @@ class DialogFilter extends React.Component {
                 >
                     <Row>
                         <DefaultSearchOption/>
-                        <Col mdOffset={9}>
+                        <Col mdOffset={9} xsOffset={9}>
                             <Toggle
                                 label="Advanced Filter"
                                 labelPosition="right"
@@ -67,11 +67,9 @@ class DialogFilter extends React.Component {
 }
 
 export default connect(
-    state=>({
-
-    }),
+    state=>({ }),
     {
-        submitFilterSearch
+        submitFilterSearch, resetFilterOptions
     }
 )(DialogFilter)
 

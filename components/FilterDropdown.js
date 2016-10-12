@@ -15,8 +15,8 @@ class FilterDropdown extends React.Component {
 
         return (
             <div>
-                <Col md={3}><label style={styles.label}>{this.props.filterName} :</label></Col>
-                <Col md={3}>
+                <Col md={3} xs={3}><label style={styles.label}>{this.props.filterName} :</label></Col>
+                <Col md={3} xs={3}>
                     <SelectField value={selectFieldValue} onChange={(event, index, value)=>handleChange(value, filtername, this.props.inputFilterOptions)} style={styles.selectField}>
                         {
                             this.props.selectOptionList.map(function (option) {
@@ -32,8 +32,6 @@ class FilterDropdown extends React.Component {
 
         function handleChange(value,title, callback) {
             callback(title, value);
-            console.log(value);
-            console.log(title);
         }
     }
 }
@@ -52,6 +50,6 @@ const styles = {
         paddingTop:20
     },
     selectField: {
-        width:160
+        width:150
     }
 }

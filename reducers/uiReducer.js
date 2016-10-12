@@ -2,6 +2,16 @@
 import { hashHistory } from 'react-router'
 var _ = require('underscore');
 
+const DEFAULT_OPTIONS = {
+    'Restaurant':'Default',
+    'Delivery Speed':'Default',
+    'Offered Time':'Default',
+    'Cuisine Type':'Default',
+    'Taste Type':[],
+    'Ingredients':[],
+    'Sauce Type':[],
+    'Without':[],
+};
 
 const initialState = {
     isShowDrawer:false,
@@ -10,17 +20,7 @@ const initialState = {
     isShowFilterModal: false,
     isAdvancedFilter: false,
     searchQuery:'',
-    filterOptions:
-        {
-            'Restaurant':'Default',
-            'Delivery Speed':'Default',
-            'Offered Time':'Default',
-            'Cuisine Type':'Default',
-            'Taste Type':[],
-            'Ingredient':[],
-            'Sauce Type':[],
-            'Without':[],
-        },
+    filterOptions:_.extend({},DEFAULT_OPTIONS),
     stepIndex:0,
 };
 
@@ -49,10 +49,13 @@ export default function uiStates(state = initialState, action) {
             var newFilterOption = _.extend({},state.filterOptions);
             newFilterOption[action.filterTitle] = action.filterValue;
             return {...state, filterOptions: newFilterOption};
+        case 'INPUT_FILTER_CHECKBOX_OPTIONS':
+            var newFilterOption = updateFilterOption(state.filterOptions, action.isChecked, action.filterTitle, action.filterValue);
+            return {...state, filterOptions: newFilterOption};
+        case 'RESET_FILTER_OPTIONS':
+            return {...state, filterOptions: _.extend({},DEFAULT_OPTIONS)};
         case 'SUBMIT_FILTER_SEARCH':
-            //TODO change the url
             hashHistory.push('/filterResult/');
-
             return {...state, isSearch:false};
         case 'STEPPER_CHANGE_INDEX':
             return {...state, stepIndex: action.newIndex};
@@ -69,4 +72,18 @@ export default function uiStates(state = initialState, action) {
         default:
             return state;
     }
+}
+
+function updateFilterOption(filterOptions, isChecked, title, value){
+    var newFilterOptionObject = _.extend({},filterOptions);
+    var newOptionArray = filterOptions[title].slice();
+
+    if(isChecked){  //add new filter option
+        newOptionArray.push(value);
+    }else{  //remove filter option
+        _.without(newOptionArray, value);
+    }
+
+    newFilterOptionObject[title] = newOptionArray;
+    return newFilterOptionObject;
 }

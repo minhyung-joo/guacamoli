@@ -80,8 +80,8 @@ export function getSearchReult(query){
     }
 }
 
-export function getFilterResult(filterOptions){
-    console.log(filterOptions);
+export function getFilterResult(filterOptionsBody){
+    console.log(filterOptionsBody);
 
     return dispatch=>{
         dispatch(fetchingData());
@@ -89,7 +89,7 @@ export function getFilterResult(filterOptions){
             method: 'post',
             url:getFilterResultRoute,
             data: {
-                filterOptions
+                filterOptionsBody
             }
         }).then(json=>dispatch(receiveFilterData(json))).catch(err=>dispatch(requestFail(err)))
     }

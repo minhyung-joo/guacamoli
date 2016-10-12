@@ -111,7 +111,7 @@ class AboutUsContainer extends React.Component {
                             <p>Guacamoli was made possible by three founding members who dedicated a lot of time and effort in making of the website: </p>
 
                             <ul>
-                                <li><b>Jaeook Lee</b> (GBUS) - Project Manager</li>
+                                <li><b>Jaeook Lee</b> (GBUS) - Project Lead</li>
                                 <li><b>Nayeon Lee</b> (CSE) - Front-end Developer</li>
                                 <li><b>Hongjoon Choi</b> (CSE) - Back-end Developer</li>
                             </ul>
@@ -122,7 +122,7 @@ class AboutUsContainer extends React.Component {
                                 <li><b>Hyunjong Min</b> (ECOF)</li>
                                 <li><b>Jiyong Kim</b> (ECON)</li>
                                 <li><b>Katy Park</b> (BBA)</li>
-                                <li><b>See Gyeong Moon</b> (BBA)</li>
+                                <li><b>Seo Gyeong Moon</b> (BBA)</li>
                                 <li><b>Yunhee Ji</b> (CBME)</li>
                                 <li><b>So Yeon Kang</b> (GCS)</li>
                             </ul>

@@ -55,12 +55,26 @@ export function inputFilterOptions(filterTitle, filterValue){
         filterValue: filterValue
     }
 }
+export function inputFilterCheckboxOptions(filterTitle, filterValue, isChecked){
+    return{
+        type: 'INPUT_FILTER_CHECKBOX_OPTIONS',
+        filterTitle: filterTitle,
+        filterValue: filterValue,
+        isChecked: isChecked,
+    }
+}
+export function resetFilterOptions(){
+    return{
+        type: 'RESET_FILTER_OPTIONS'
+    }
+}
 
 export function submitFilterSearch(){
     return{
         type: 'SUBMIT_FILTER_SEARCH'
     }
 }
+
 export function stepperChangeIndex(newIndex){
     return{
         type: 'STEPPER_CHANGE_INDEX',

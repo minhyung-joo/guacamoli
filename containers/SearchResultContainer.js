@@ -8,6 +8,8 @@ import SearchStatusBar from '../components/SearchStatusBar';
 import RefreshIndicator from 'material-ui/RefreshIndicator';
 import DialogFilter from '../components/DialogFilter';
 
+import {mapFilterOptionToBodyOption} from '../constants/Utility';
+
 import {showModalFilter, hideModalFilter, clickAdvancedFilter,
     toggleSearchButton,
 } from '../actions/uiActions';
@@ -21,7 +23,8 @@ class SearchResultContainer extends Component {
         if(this.props.isSearch){
             this.props.getSearchReult(this.props.params.query);
         }else{
-            //todo this.props.getFilterResult(this.props.filterOptions);
+            const body = mapFilterOptionToBodyOption(this.props.filterOptions);
+            this.props.getFilterResult(body);
         }
     }
 
@@ -31,18 +34,6 @@ class SearchResultContainer extends Component {
             searchResultArray,
             isSearch
         } = this.props;
-
-        const filterOptions = {
-            restaurant:1,
-            deliveryTime:2,
-            offeredTime:3,
-            cuisine:4,
-            tasteType:[2, 3],
-            ingredient:[],
-            sauceType:[],
-            without:[],
-            filterArray:['LG1','Pickup','Lunch','spicy','pork','vegetable']
-        };
 
         return (
             isFetching?
@@ -87,6 +78,6 @@ export default connect(
         filterOptions: state.uiStates.filterOptions,
     }),
     {
-        getSearchReult, getFilterResult
+        getSearchReult, getFilterResult,
     }
 )(SearchResultContainer)
