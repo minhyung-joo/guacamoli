@@ -77,10 +77,10 @@ var init = function(app, DATABASE_URL) {
             }
           }
 
-          lg1Result.sort(function(a,b){return b.rating-a.rating;}).slice(0,10);
-          grbResult.sort(function(a,b){return b.rating-a.rating;}).slice(0,10);
-          apcResult.sort(function(a,b){return b.rating-a.rating;}).slice(0,10);
-          millanoResult.sort(function(a,b){return b.rating-a.rating;}).slice(0,10);
+          lg1Result = lg1Result.sort(function(a,b){return b.rating-a.rating;}).slice(0,10);
+          grbResult = grbResult.sort(function(a,b){return b.rating-a.rating;}).slice(0,10);
+          apcResult = apcResult.sort(function(a,b){return b.rating-a.rating;}).slice(0,10);
+          millanoResult = millanoResult.sort(function(a,b){return b.rating-a.rating;}).slice(0,10);
 
           var finalResult = [{restaurant_id: 1, title:'lg1 ranking', rankingArray:lg1Result},
                               {restaurant_id: 3, title:'grb ranking', rankingArray:grbResult},
