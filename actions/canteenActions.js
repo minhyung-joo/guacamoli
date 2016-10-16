@@ -86,9 +86,9 @@ export function getFilterResult(filterOptionsBody){
     return dispatch=>{
         dispatch(fetchingData());
         return axios({
-            // headers: {
-            //     'Content-Type': 'application/vnd.api+json'
-            // },
+            headers: {
+                'Content-Type': 'application/vnd.api+json'
+            },
             method: 'post',
             url:getFilterResultRoute,
             data: {
