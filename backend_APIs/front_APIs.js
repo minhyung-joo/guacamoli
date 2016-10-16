@@ -131,7 +131,8 @@ var init = function(app, DATABASE_URL) {
     var _cusine = req.body.cuisine;
     var _tasteType = req.body.tasteType;
     var _sauceType = req.body.sauceType;
-    var _ingredientsType = req.body._ingredientsType
+    var _ingredientsType = req.body.ingredientsType;
+    var _without = req.body.without;
 
     //console.log("getMenusByFilterTerm: ");
     //console.log("req.query.restaurantId="+_restaurantId);
@@ -227,9 +228,30 @@ var init = function(app, DATABASE_URL) {
                 }
               }
             }
+
+            // filter array fields: without
+            if (result.rows[i].ingredienttypesid && _without) {
+              var db_ingredienttypes = result.rows[i].ingredienttypesid;
+              for (var j=0; j< _without.length; ++j) {
+                var matchExists=false;
+                if (db_ingredienttypes) {
+                  for (var k=0; k< db_ingredienttypes.length; ++k) {
+                    if (_without[j] == db_ingredienttypes[k]) {
+                      matchExists=true;
+                    }
+                  }
+                }
+                if (matchExists) {
+                  validMenuFlag=false;
+                }
+              }
+            }
+            
             if (validMenuFlag) {
               finalResult.push(result.rows[i]);
             }
+
+
           }
           console.log(finalResult);
           res.status(200).send(finalResult);
