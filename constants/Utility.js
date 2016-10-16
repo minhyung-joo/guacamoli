@@ -93,6 +93,7 @@ export function mapFilterOptionToBodyOption(filterOption){
         });
     }
 
-    console.log(body);
-    return body;
+    var jsonBody = JSON.stringify(body);
+    console.log(jsonBody);
+    return jsonBody;
 }
