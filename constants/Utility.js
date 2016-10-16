@@ -61,7 +61,7 @@ export function imageUrlMapper(relativePath){
 }
 
 export function mapFilterOptionToBodyOption(filterOption){
-    var body = {restaurantId:0, deliveryTime:0, offeredTime:0, cuisine:0};
+    var body = {restaurantId:0, deliveryTime:0, offeredTime:0, cuisine:0, tasteType: [], sauceType: [], ingredientsType:[]};
 
     if(filterOption["Restaurant"] != 'Default')
         body.restaurantId = defaultFilterOptions["Restaurant"].indexOf(filterOption["Restaurant"]);
@@ -73,27 +73,23 @@ export function mapFilterOptionToBodyOption(filterOption){
         body.cuisine = defaultFilterOptions["Cuisine Type"].indexOf(filterOption["Cuisine Type"]);
 
     if(filterOption["Taste Type"].length > 0){
-        body.tasteType = [];
         filterOption["Taste Type"].map(function(option){
             body.tasteType.push(advancedFilterOptions["Taste Type"].indexOf(option));
         });
     }
 
     if(filterOption["Sauce Type"].length > 0){
-        body.sauceType = [];
         filterOption["Sauce Type"].map(function(option){
             body.sauceType.push(advancedFilterOptions["Sauce Type"].indexOf(option));
         });
     }
 
     if(filterOption["Ingredients"].length > 0){
-        body.ingredientsType = [];
         filterOption["Ingredients"].map(function(option){
             body.ingredientsType.push(advancedFilterOptions["Ingredients"].indexOf(option));
         });
     }
 
-    var jsonBody = JSON.stringify(body);
-    console.log(jsonBody);
-    return jsonBody;
+    // var jsonBody = JSON.stringify(body);
+    return body;
 }

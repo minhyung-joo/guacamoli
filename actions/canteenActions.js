@@ -34,6 +34,7 @@ function receiveSearchData(json){
     }
 }
 function receiveFilterData(json){
+    console.log(json);
     return{
         type: 'RECEIVED_FILTER_DATA',
         data: json.data
@@ -81,18 +82,20 @@ export function getSearchReult(query){
 }
 
 export function getFilterResult(filterOptionsBody){
-    console.log(filterOptionsBody);
-
     return dispatch=>{
         dispatch(fetchingData());
         return axios({
-            headers: {
-                'Content-Type': 'application/vnd.api+json'
-            },
             method: 'post',
             url:getFilterResultRoute,
             data: {
-                filterOptionsBody
+                restaurantId: filterOptionsBody.restaurantId,
+                deliveryTime: filterOptionsBody.deliveryTime,
+                offeredTime: filterOptionsBody.offeredTime,
+                cuisine: filterOptionsBody.cuisine,
+
+                tasteType: filterOptionsBody.tasteType,
+                sauceType: filterOptionsBody.sauceType,
+                ingredientsType: filterOptionsBody.ingredientsType
             }
         }).then(json=>dispatch(receiveFilterData(json))).catch(err=>dispatch(requestFail(err)))
     }
