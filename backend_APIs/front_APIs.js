@@ -77,10 +77,10 @@ var init = function(app, DATABASE_URL) {
             }
           }
 
-          lg1Result = lg1Result.sort(function(a,b){return b.rating-a.rating;}).slice(0,10);
-          grbResult = grbResult.sort(function(a,b){return b.rating-a.rating;}).slice(0,10);
-          apcResult = apcResult.sort(function(a,b){return b.rating-a.rating;}).slice(0,10);
-          millanoResult = millanoResult.sort(function(a,b){return b.rating-a.rating;}).slice(0,10);
+          lg1Result = lg1Result.sort(function(a,b){return b.rating-a.rating;}).slice(0,5);
+          grbResult = grbResult.sort(function(a,b){return b.rating-a.rating;}).slice(0,5);
+          apcResult = apcResult.sort(function(a,b){return b.rating-a.rating;}).slice(0,5);
+          millanoResult = millanoResult.sort(function(a,b){return b.rating-a.rating;}).slice(0,5);
 
           var finalResult = [{restaurant_id: 1, title:'lg1 ranking', rankingArray:lg1Result},
                               {restaurant_id: 3, title:'grb ranking', rankingArray:grbResult},
@@ -100,7 +100,7 @@ var init = function(app, DATABASE_URL) {
     var keyword = req.query.query.toLowerCase();
     console.log('GET /api/query_search');
     pg.connect(DATABASE_URL, function(err, client, done) {
-      client.query("SELECT id, name, picture_url, price FROM meal",
+      client.query("SELECT id, name, restaurant_id, picture_url, price FROM meal",
       function(err, result) {
         if (err){
           console.error(err); res.send("Error " + err);
@@ -246,7 +246,7 @@ var init = function(app, DATABASE_URL) {
                 }
               }
             }
-            
+
             if (validMenuFlag) {
               finalResult.push(result.rows[i]);
             }
