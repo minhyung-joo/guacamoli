@@ -12,6 +12,7 @@ import {mapFilterOptionToBodyOption} from '../constants/Utility';
 
 import {showModalFilter, hideModalFilter, clickAdvancedFilter,
     toggleSearchButton,
+    inputSearchQuery, submitSearchQuery
 } from '../actions/uiActions';
 
 import {
@@ -28,13 +29,21 @@ class SearchResultContainer extends Component {
         }
     }
 
+
+
     render () {
         const {
             isFetching,
             searchResultArray,
-            isSearch
+            isSearch,
+            inputSearchQuery, submitSearchQuery
         } = this.props;
 
+        function _handleKeyPress(e) {
+            if (e.key === 'Enter') {
+                submitSearchQuery();
+            }
+        }
         return (
             isFetching?
                 <div>
@@ -55,7 +64,10 @@ class SearchResultContainer extends Component {
                     <Row>
                         <Col md={12}>
                             {
-                                isSearch?<p>Your Search Query: {this.props.params.query} </p>:<SearchStatusBar filterOptions={this.props.filterOptions}/>
+                                isSearch?
+                                    isSearch?<p><b>Your Search Query:</b> {this.props.params.query} </p>:<SearchStatusBar filterOptions={this.props.filterOptions}/>
+                                    :
+                                    <SearchStatusBar filterOptions={this.props.filterOptions}/>
                             }
                         </Col>
                         <Col md={12} style={{paddingTop: 10}}>
@@ -79,5 +91,13 @@ export default connect(
     }),
     {
         getSearchReult, getFilterResult,
+        inputSearchQuery, submitSearchQuery,
     }
 )(SearchResultContainer)
+
+
+const styles = {
+    queryInput:{
+        height: 40
+    },
+}
