@@ -29,7 +29,7 @@ export default class FoodThumbnailComponent extends React.Component {
                 <CardMedia>
                     <img src={imageUrlMapper(food.picture_url)} height="175" width="100%"/>
                 </CardMedia>
-                <CardTitle title={food.name} subtitle={restaurantList[restaurantId] + " - " + food.price + " HKD"} />
+                <CardTitle title={titleHandler(food.name)} subtitle={restaurantList[restaurantId] + " - " + food.price + " HKD"} />
             </Card>
         );
     }
