@@ -100,7 +100,7 @@ var init = function(app, DATABASE_URL) {
     var keyword = req.query.query.toLowerCase();
     console.log('GET /api/query_search');
     pg.connect(DATABASE_URL, function(err, client, done) {
-      client.query("SELECT id, name, restaurant_id, picture_url, price FROM meal",
+      client.query("SELECT id, name, restaurantId, picture_url, price FROM meal",
       function(err, result) {
         if (err){
           console.error(err); res.send("Error " + err);
