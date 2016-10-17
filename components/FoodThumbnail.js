@@ -2,11 +2,15 @@ import React from 'react';
 import {Thumbnail, Button} from 'react-bootstrap';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import {imageUrlMapper} from '../constants/Utility';
+import {restaurantList} from '../constants/StaticData';
+
 
 
 export default class FoodThumbnailComponent extends React.Component {
     render() {
         const food = this.props.foodDetail;
+        console.log(food);
+        console.log(restaurantList[food.restaurantid]);
         function titleHandler(foodTitle){
             if(foodTitle!=undefined && foodTitle!=null){
                 const maxLength = 15;
@@ -23,7 +27,7 @@ export default class FoodThumbnailComponent extends React.Component {
                 <CardMedia>
                     <img src={imageUrlMapper(food.picture_url)} height="175" width="100%"/>
                 </CardMedia>
-                <CardTitle title={titleHandler(food.name)} subtitle={food.price + " HKD"} />
+                <CardTitle style={{overflow: "hidden"}} title={food.name} subtitle={restaurantList[food.restaurantid] + " - " + food.price + " HKD"} />
             </Card>
         );
     }
