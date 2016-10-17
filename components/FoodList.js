@@ -13,7 +13,9 @@ export default class FoodListComponent extends React.Component {
                         return(
                             <Col md={3} xs={12}>
                                 <Link to={`/food/${food.id}`}>
-                                    <FoodThumbnailComponent key={food.id} foodDetail={food}/>
+                                    <div style={{overflow: "hidden"}}>
+                                        <FoodThumbnailComponent key={food.id} foodDetail={food}/>
+                                    </div>
                                 </Link>
                             </Col>
                         )

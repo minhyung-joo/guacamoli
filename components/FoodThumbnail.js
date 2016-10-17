@@ -10,7 +10,9 @@ export default class FoodThumbnailComponent extends React.Component {
     render() {
         const food = this.props.foodDetail;
         console.log(food);
-        console.log(restaurantList[food.restaurantid]);
+        const restaurantId = food.restaurantid;
+        console.log(restaurantList[restaurantId]);
+
         function titleHandler(foodTitle){
             if(foodTitle!=undefined && foodTitle!=null){
                 const maxLength = 15;
@@ -27,7 +29,7 @@ export default class FoodThumbnailComponent extends React.Component {
                 <CardMedia>
                     <img src={imageUrlMapper(food.picture_url)} height="175" width="100%"/>
                 </CardMedia>
-                <CardTitle style={{overflow: "hidden"}} title={food.name} subtitle={restaurantList[food.restaurantid] + " - " + food.price + " HKD"} />
+                <CardTitle title={food.name} subtitle={restaurantList[restaurantId] + " - " + food.price + " HKD"} />
             </Card>
         );
     }
