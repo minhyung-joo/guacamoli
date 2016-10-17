@@ -30,7 +30,7 @@ var init = function(app, DATABASE_URL) {
 
     restaurantId=req.query.restaurantId;
     pg.connect(DATABASE_URL, function(err, client, done) {
-      client.query("SELECT id, name, picture_url, price FROM meal WHERE restaurantId = $1",[restaurantId],
+      client.query("SELECT id, name, picture_url, restaurantId, price FROM meal WHERE restaurantId = $1",[restaurantId],
       function(err, result) {
         if (err){
           console.error(err); res.send("Error " + err);
