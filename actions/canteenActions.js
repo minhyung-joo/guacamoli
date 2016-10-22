@@ -34,7 +34,6 @@ function receiveSearchData(json){
     }
 }
 function receiveFilterData(json){
-    console.log(json);
     return{
         type: 'RECEIVED_FILTER_DATA',
         data: json.data

@@ -61,7 +61,7 @@ export function imageUrlMapper(relativePath){
 }
 
 export function mapFilterOptionToBodyOption(filterOption){
-    var body = {restaurantId:0, deliveryTime:0, offeredTime:0, cuisine:0, tasteType: [], sauceType: [], ingredientsType:[]};
+    var body = {restaurantId:0, deliveryTime:0, offeredTime:0, cuisine:0, tasteType: [], sauceType: [], ingredientsType:[], without:[]};
 
     if(filterOption["Restaurant"] != 'Default')
         body.restaurantId = defaultFilterOptions["Restaurant"].indexOf(filterOption["Restaurant"]);
@@ -74,21 +74,29 @@ export function mapFilterOptionToBodyOption(filterOption){
 
     if(filterOption["Taste Type"].length > 0){
         filterOption["Taste Type"].map(function(option){
-            body.tasteType.push(advancedFilterOptions["Taste Type"].indexOf(option));
+            body.tasteType.push(advancedFilterOptions["Taste Type"].indexOf(option)+1);
         });
     }
 
     if(filterOption["Sauce Type"].length > 0){
         filterOption["Sauce Type"].map(function(option){
-            body.sauceType.push(advancedFilterOptions["Sauce Type"].indexOf(option));
+            body.sauceType.push(advancedFilterOptions["Sauce Type"].indexOf(option)+1);
         });
     }
 
     if(filterOption["Ingredients"].length > 0){
         filterOption["Ingredients"].map(function(option){
-            body.ingredientsType.push(advancedFilterOptions["Ingredients"].indexOf(option));
+            body.ingredientsType.push(advancedFilterOptions["Ingredients"].indexOf(option)+1);
         });
     }
+
+    if(filterOption["Without"].length > 0){
+        filterOption["Without"].map(function(option){
+            body.without.push(advancedFilterOptions["Without"].indexOf(option)+1);
+        });
+    }
+
+    console.log(body);
 
     // var jsonBody = JSON.stringify(body);
     return body;
