@@ -116,7 +116,7 @@ const styles ={
         marginTop:30
     },
     label:{
-        marginTop:30
+        marginTop:15
     }
 }
 
