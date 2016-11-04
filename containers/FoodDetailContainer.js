@@ -78,11 +78,11 @@ class FoodDetailContainer extends React.Component {
                                 </Col>
                             </Panel>
                         </Paper>
-                        <Paper>
-                            <Panel header="FOOD RECOMMENDATION">
-                                <FoodListComponent foodArray={foodArray}/>
-                            </Panel>
-                        </Paper>
+                        {/*<Paper>*/}
+                            {/*<Panel header="FOOD RECOMMENDATION">*/}
+                                {/*<FoodListComponent foodArray={foodArray}/>*/}
+                            {/*</Panel>*/}
+                        {/*</Paper>*/}
                     </Col>
                 </Row>
             </div>
