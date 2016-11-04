@@ -53,8 +53,8 @@ export default connect(
 
 const style = {
     paper:{
-        width: '90%',
-        margin: 20,
+        width: '100%',
+        marginBottom: 20,
         paddingTop:15,
         textAlign: 'center',
         display: 'inline-block',

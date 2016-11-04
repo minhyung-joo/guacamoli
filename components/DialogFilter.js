@@ -56,7 +56,7 @@ class DialogFilter extends React.Component {
                             />
                         </Col>
                         {
-                            isAdvancedFilter?<AdvancedSearchOption />:null
+                            isAdvancedFilter?<AdvancedSearchOption isAdmin="false"/>:null
                         }
                     </Row>
                 </Dialog>

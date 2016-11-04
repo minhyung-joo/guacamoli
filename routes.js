@@ -8,6 +8,8 @@ import RankingContainer from './containers/RankingContainer';
 import AboutUsContainer from './containers/AboutUsContainer';
 import FoodDetailContainer from './containers/FoodDetailContainer';
 import SearchResultContainer from './containers/SearchResultContainer';
+import AdminMenuListContainer from './containers/AdminMenuListContainer';
+import AdminMenuInsertContainer from './containers/AdminMenuInsertContainer';
 
 import {restaurantList} from './constants/StaticData';
 
@@ -47,6 +49,8 @@ export default (
             <Route path='food/:foodid' component={FoodDetailContainer}/>
             <Route path='searchResult/:query' component={SearchResultContainer} />
             <Route path='filterResult/' component={SearchResultContainer} />
+            <Route path='admin/list' component={AdminMenuListContainer} />
+            <Route path='admin/insert' component={AdminMenuInsertContainer} />
             <Route path='*' component={NotFound} />
         </Route>
     </Route>

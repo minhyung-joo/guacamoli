@@ -15,8 +15,6 @@ class RankingContainer extends React.Component {
 
     render () {
         const { isFetching, rankingResults, getRankingResult } = this.props;
-
-        console.log(rankingResults);
         return (
             isFetching?
                 <div>

@@ -7,7 +7,6 @@ import FoodListComponent from '../components/FoodList'
 import {getFoodDetail} from '../actions/canteenActions';
 import {availabilityMapper, tasteMapper, imageUrlMapper} from '../constants/Utility';
 import {restaurantList, deliverySpeed, cuisineType} from '../constants/StaticData';
-// import StarRating from 'react-star-rating';
 import StarRatingComponent from 'react-star-rating-component';
 
 
@@ -25,6 +24,9 @@ class FoodDetailContainer extends React.Component {
 
     render() {
         const {foodDetail, isFetching} = this.props;
+        console.log("food detail");
+        console.log(foodDetail);
+
         return (
         isFetching?
             <div>
@@ -62,6 +64,7 @@ class FoodDetailContainer extends React.Component {
                                     <Col md={6}><b>Delivery Speed</b>: {deliverySpeed[foodDetail.deliveryspeedid]}</Col>
                                     <Col md={6}><b>Cuisine Type</b>: {cuisineType[foodDetail.cuisinetypeid]}</Col>
                                     <Col md={6}><b>Taste Type</b>: {tasteMapper(foodDetail.tastetypesid)}</Col>
+                                    {/*<Col md={6}><b>Sauce Type</b>: {foodDetail.saucetypesid}</Col>*/}
                                     <Col md={12}><b>Ingredient Description</b>: {foodDetail.ingredientsdescription}</Col>
                                     <Col md={12}>
                                         <p><b>Rating:</b></p>

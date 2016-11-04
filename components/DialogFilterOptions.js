@@ -31,13 +31,13 @@ export class DefaultSearchOption extends React.Component {
  */
 export class AdvancedSearchOption extends React.Component {
     render() {
+        const isAdmin = this.props.isAdmin;
+
         return (
             <div>
                 {
                     Object.keys(advancedFilterOptions).map(function(key){
-                        return (
-                            <FilterCheckbox key={key} filterName={key} checkboxOptionList={advancedFilterOptions[key]}/>
-                        )
+                        return (key=='Without' && isAdmin=="true")?null:<FilterCheckbox key={key} filterName={key} checkboxOptionList={advancedFilterOptions[key]}/>;
                     })
                 }
             </div>
