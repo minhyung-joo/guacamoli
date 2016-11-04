@@ -57,8 +57,8 @@ export function tasteMapper(ids){
 
 export function imageUrlMapper(relativePath){
     const absoluteBasePath = 'http://guacamolistorage-hkust25.appcloud.ust.hk/uploads/imageurl';
-    var processedPath = relativePath.replace('.jpg', '_S.jpg');
-    return absoluteBasePath.replace('imageurl', processedPath);
+    //var processedPath = relativePath.replace('.jpg', '_S.jpg');
+    return absoluteBasePath.replace('imageurl', relativePath);
 }
 
 export function mapFilterOptionToBodyOption(filterOption){

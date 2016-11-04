@@ -49,7 +49,7 @@ class FoodDetailContainer extends React.Component {
                         <Paper zDepth={1}>
                             <Panel header="FOOD DETAIL">
                                 <Col md={6}>
-                                    <img width="100%" src={foodDetail.picture_url}/>
+                                    <img width="100%" src={imageUrlMapper(foodDetail.picture_url)}/>
                                 </Col>
                                 <Col md={6}>
                                     <Col md={12}>
