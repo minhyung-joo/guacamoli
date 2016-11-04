@@ -62,10 +62,9 @@ export function imageUrlMapper(relativePath){
     console.log(relativePath);
     if(relativePath!=undefined) {
         console.log("not undefined entered")
-        newAbsoluteBasePath.replace('.jpg','_S.jpg');
+        newAbsoluteBasePath = newAbsoluteBasePath.replace('.jpg','_S.jpg');
+        console.log(newAbsoluteBasePath);
     }
-    // var abs = absoluteBasePath;
-    // console.log(abs.replace('imageurl',processedPath));
     return newAbsoluteBasePath;
 }
 
