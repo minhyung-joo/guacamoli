@@ -14,7 +14,7 @@ import RefreshIndicator from 'material-ui/RefreshIndicator';
 import Paper from 'material-ui/Paper';
 
 class FoodDetailContainer extends React.Component {
-    componentDidMount() {
+    componentWillMount() {
         this.props.getFoodDetail(this.props.params.foodid);
     }
 
