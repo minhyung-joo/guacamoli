@@ -11,9 +11,6 @@ export default class FoodThumbnailComponent extends React.Component {
         const food = this.props.foodDetail;
         const restaurantId = food.restaurantid;
 
-        //var processedPath = food.picture_url.replace('.jpg', '_S.jpg');
-        console.log(food.picture_url);
-
         function titleHandler(foodTitle){
             if(foodTitle!=undefined && foodTitle!=null){
                 const maxLength = 15;
