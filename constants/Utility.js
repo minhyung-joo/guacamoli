@@ -59,7 +59,9 @@ export function imageUrlMapper(relativePath){
     const absoluteBasePath = 'http://guacamolistorage-hkust25.appcloud.ust.hk/uploads/imageurl';
 
     var newAbsoluteBasePath = absoluteBasePath.replace('imageurl', relativePath);
-    if(relativePath!=undefined && relativePath!=null) {
+    console.log(relativePath);
+    if(relativePath!=undefined) {
+        console.log("not undefined entered")
         newAbsoluteBasePath.replace('.jpg','_S.jpg');
     }
     // var abs = absoluteBasePath;
