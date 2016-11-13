@@ -55,14 +55,17 @@ export function tasteMapper(ids){
     }
 }
 
-export function imageUrlMapper(relativePath){
+export function imageUrlMapper(relativePath, isOriginal){
     const absoluteBasePath = 'http://guacamolistorage-hkust25.appcloud.ust.hk/uploads/imageurl';
 
     var newAbsoluteBasePath = absoluteBasePath.replace('imageurl', relativePath);
     console.log(relativePath);
     if(relativePath!=undefined) {
-        console.log("not undefined entered")
-        newAbsoluteBasePath = newAbsoluteBasePath.replace('.jpg','_S.jpg');
+        if(isOriginal){
+            newAbsoluteBasePath = newAbsoluteBasePath.replace('.jpg','_L.jpg');
+        }else{
+            newAbsoluteBasePath = newAbsoluteBasePath.replace('.jpg','_S.jpg');
+        }
         console.log(newAbsoluteBasePath);
     }
     return newAbsoluteBasePath;

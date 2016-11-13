@@ -27,6 +27,7 @@ const initialState = {
 export default function uiStates(state = initialState, action) {
     switch(action.type){
         case 'TOGGLE_NAV_DRAWER':
+            console.log("toggled nav drawer");
             return {...state, isShowDrawer: !state.isShowDrawer};
         case 'CLICK_CANTEEN_LIST':
             return {...state, isShowCanteenList: !state.isShowCanteenList};
