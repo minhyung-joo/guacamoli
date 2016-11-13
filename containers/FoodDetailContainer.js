@@ -15,6 +15,7 @@ import Paper from 'material-ui/Paper';
 
 class FoodDetailContainer extends React.Component {
     componentWillMount() {
+        console.log(this.props.params.foodid);
         this.props.getFoodDetail(this.props.params.foodid);
     }
 

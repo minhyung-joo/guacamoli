@@ -5,10 +5,10 @@ import {imageUrlMapper} from '../constants/Utility';
 
 export default class RankingItem extends React.Component {
     render() {
-        const food = this.props.food;
+        const {food,rank} = this.props;
         return (
             <Row md={12} style={styles.rankingItemStyle}>
-                <Col md={1} style={styles.defaultStyle}>{food.rank}</Col>
+                <Col md={1} style={styles.defaultStyle}>{rank}</Col>
                 <Col md={3}><img src={imageUrlMapper(food.picture_url, false)} style={styles.rankingDetailStyle} height="100%" width="100%"/></Col>
                 <Col md={6}>
                     <p style={styles.rankingDetailStyle}><b>{food.name}</b></p>

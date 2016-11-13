@@ -13,10 +13,10 @@ export default class RankingList extends React.Component {
             <Paper>
                 <Panel header={rankingObject.title}>
                     {
-                        rankingObject.rankingArray.map(function(food){
+                        rankingObject.rankingArray.map(function(food, index){
                             return(
-                            <Link to={`/food/${1}`}>
-                                <RankingItem food={food}/>
+                            <Link to={`/food/${food.id}`}>
+                                <RankingItem food={food} rank={index+1}/>
                             </Link>
 
                             )
