@@ -7,10 +7,10 @@ export default class RankingItem extends React.Component {
     render() {
         const {food,rank} = this.props;
         return (
-            <Row md={12} style={styles.rankingItemStyle}>
+            <Row md={12} xs={12} style={styles.rankingItemStyle}>
                 <Col md={1} style={styles.defaultStyle}>{rank}</Col>
                 <Col md={3}><img src={imageUrlMapper(food.picture_url, false)} style={styles.rankingDetailStyle} height="100%" width="100%"/></Col>
-                <Col md={6}>
+                <Col md={7}>
                     <p style={styles.rankingDetailStyle}><b>{food.name}</b></p>
                     <p style={styles.rankingDetailStyle}>{food.price + "HKD"}</p>
                 </Col>
@@ -21,14 +21,16 @@ export default class RankingItem extends React.Component {
 
 const styles = {
     defaultStyle:{
-        fontSize:25, color:'black'
+        fontSize:20, color:'black'
     },
     rankingDetailStyle:{
         margin:0, padding:0, color:'black',
-        fontSize: '80%'
+        fontSize: '80%',
+        width:'100%'
     },
     rankingItemStyle:{
-        marginTop:20,
-        height:70
+        margin:20,
+        height:70,
+        width:'100%'
     }
 };
