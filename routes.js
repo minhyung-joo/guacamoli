@@ -10,6 +10,7 @@ import FoodDetailContainer from './containers/FoodDetailContainer';
 import SearchResultContainer from './containers/SearchResultContainer';
 import AdminMenuListContainer from './containers/AdminMenuListContainer';
 import AdminMenuInsertContainer from './containers/AdminMenuInsertContainer';
+import AdminMainContainer from './containers/AdminMainContainer';
 
 import {restaurantList} from './constants/StaticData';
 
@@ -37,15 +38,31 @@ const milanoCanteenWrapper = () => (
     <CanteenPage canteenType={canteenNameToIdMapping('Milano')}/>
 );
 
-function authentication(nextState, replace){
-    const correctPwd = 'correct';
+function lg1Authentication(nextState, replace){
+    errorCheckingAndRouting('lg1', replace);
+}
+function apcAuthentication(nextState, replace){
+    errorCheckingAndRouting('apc', replace);
+}
+function grbAuthentication(nextState, replace){
+    errorCheckingAndRouting('grb', replace);
+}
+function milanoAuthentication(nextState, replace){
+    errorCheckingAndRouting('milano', replace);
+}
+
+function errorCheckingAndRouting(pwd, replace){
+    const correctPwd = pwd;
     var attempt = 0;
 
-    var pwd = prompt("Please enter password");
     while(attempt <3){
-        var pwd = prompt("Oops! Wrong password. Please try entering password again.");
+        var pwd;
+        if(attempt==0)
+            pwd = prompt("Please enter password");
+        else
+            pwd = prompt("Oops! Wrong password. Please try entering password again.");
+
         if (pwd == correctPwd) {
-            console.log("correct");
             return;
         }
         attempt=attempt+1;
@@ -69,8 +86,24 @@ export default (
             <Route path='food/:foodid' component={FoodDetailContainer}/>
             <Route path='searchResult/:query' component={SearchResultContainer} />
             <Route path='filterResult/' component={SearchResultContainer} />
-            <Route path='admin/list' component={AdminMenuListContainer} onEnter={authentication}/>
-            <Route path='admin/insert' component={AdminMenuInsertContainer} />
+            <Route path='admin' component={AdminMainContainer} />
+
+            <Route path='lg1' onEnter={lg1Authentication}>
+                <Route path='menu_insert' component={AdminMenuInsertContainer} />
+                <Route path='menu_list' component={AdminMenuListContainer}/>
+            </Route>
+            <Route path='apc' onEnter={apcAuthentication}>
+                <Route path='menu_list' component={AdminMenuListContainer}/>
+                <Route path='menu_insert' component={AdminMenuInsertContainer} />
+            </Route>
+            <Route path='grb' onEnter={grbAuthentication}>
+                <Route path='menu_list' component={AdminMenuListContainer}/>
+                <Route path='menu_insert' component={AdminMenuInsertContainer} />
+            </Route>
+            <Route path='milano' onEnter={milanoAuthentication}>
+                <Route path='menu_list' component={AdminMenuListContainer}/>
+                <Route path='menu_insert' component={AdminMenuInsertContainer} />
+            </Route>
             <Route path='error' component={NoPermission} />
             <Route path='*' component={NotFound} />
         </Route>

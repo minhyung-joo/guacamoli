@@ -6,6 +6,8 @@ import {Row, Col, Glyphicon, Button, Panel} from 'react-bootstrap';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import RaisedButton from 'material-ui/RaisedButton';
+
 import {DefaultSearchOption, AdvancedSearchOption} from '../components/DialogFilterOptions';
 import {restaurantList, deliverySpeed, cuisineType, offeredTime} from '../constants/StaticData';
 
@@ -35,7 +37,6 @@ class AdminMenuInsertContainer extends React.Component {
         return (
             <div>
                 <Row>
-
                     <Col mdOffset={2} md={8}>
                         <InsertTextRow label="Meal Name *"/>
                         <InsertTextRow label="Meal Name (Chinese)"/>
@@ -52,9 +53,11 @@ class AdminMenuInsertContainer extends React.Component {
 
                         <AdvancedSearchOption isAdmin="true"/>
                         <IngredientTextarea label="Detailed Ingredients"/>
-                        <Col md={3}><label style={styles.label}>Rating:</label></Col>
-                        <Col md={9}><SelectRow label="" name="rating" onChangeHandler={onChangeHandler} value={this.state.rating} itemArray={ratingArray}/></Col>
-
+                    </Col>
+                </Row>
+                <Row md={12}>
+                    <Col mdOffset={6}>
+                        <RaisedButton label="Add Menu" primary={true} style={styles.raisedButton} />
                     </Col>
                 </Row>
             </div>
@@ -117,6 +120,10 @@ const styles ={
     },
     label:{
         marginTop:15
+    },
+    raisedButton: {
+        margin: 12,
+        marginTop:22
     }
 }
 

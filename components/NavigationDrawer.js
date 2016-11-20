@@ -26,10 +26,6 @@ class NavigationDrawer extends React.Component {
             toggleNavDrawer, clickCanteenListButton
         } = this.props;
 
-        function testing(){
-            console.log("testing");
-        }
-
         return (
             <Drawer open={isShowDrawer} docked={false} onRequestChange={toggleNavDrawer}>
                 <LinkContainer to="/home">
