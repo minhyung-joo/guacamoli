@@ -20,6 +20,10 @@ function canteenNameToIdMapping(canteenName){
 const NotFound = () => (
     <h1>404.. This page is not found!</h1>);
 
+const NoPermission = () => (
+    <h1>You have no permission to access this page</h1>
+)
+
 const lg1CanteenWrapper = () => (
     <CanteenPage canteenType={canteenNameToIdMapping('LG1')}/>
 );
@@ -32,6 +36,22 @@ const grbCanteenWrapper = () => (
 const milanoCanteenWrapper = () => (
     <CanteenPage canteenType={canteenNameToIdMapping('Milano')}/>
 );
+
+function authentication(nextState, replace){
+    const correctPwd = 'correct';
+    var attempt = 0;
+
+    var pwd = prompt("Please enter password");
+    while(attempt <3){
+        var pwd = prompt("Oops! Wrong password. Please try entering password again.");
+        if (pwd == correctPwd) {
+            console.log("correct");
+            return;
+        }
+        attempt=attempt+1;
+    }
+    replace('/error');
+}
 
 export default (
     <Route path='/'>
@@ -49,8 +69,9 @@ export default (
             <Route path='food/:foodid' component={FoodDetailContainer}/>
             <Route path='searchResult/:query' component={SearchResultContainer} />
             <Route path='filterResult/' component={SearchResultContainer} />
-            <Route path='admin/list' component={AdminMenuListContainer} />
+            <Route path='admin/list' component={AdminMenuListContainer} onEnter={authentication}/>
             <Route path='admin/insert' component={AdminMenuInsertContainer} />
+            <Route path='error' component={NoPermission} />
             <Route path='*' component={NotFound} />
         </Route>
     </Route>
