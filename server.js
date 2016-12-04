@@ -1,6 +1,5 @@
-
 //////////////////////////////////////////////////////////
-// configurations
+// app dependencies
 //////////////////////////////////////////////////////////
 var RUNNING_ON_ITSC_SERVER = false;
 var webpack = require('webpack')
@@ -9,7 +8,7 @@ var webpackHotMiddleware = require('webpack-hot-middleware')
 var config = require('./webpack.config')
 var express = require('express');
 var bodyParser = require("body-parser");
-var fs = require('fs');
+var fs = require('fs');s
 var pg = require('pg');
 var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
@@ -19,28 +18,10 @@ var app = express();
 
 var path = require("path");
 
-var server_ip_address = process.env.OPENSHIFT_NODEJS_IP; // only for openshift
+//////////////////////////////////////////////////////////
+// set DATABASE URI to either heroku or localhost database
+//////////////////////////////////////////////////////////
 var DATABASE_URL;
-
-// //////////////// on openshift
-// if (process.env.OPENSHIFT_NODEJS_PORT) {
-//   DATABASE_URL = process.env.OPENSHIFT_POSTGRESQL_DB_URL;//"postgresql://adminmnvdci3:72fAHfuEN5q6";
-//
-//   app.set('port', (process.env.OPENSHIFT_NODEJS_PORT || 8080));
-//   app.listen(app.get('port'), server_ip_address, function() {
-//     console.log('Node (openshift) app is running on port', app.get('port'));
-//   });
-// }
-// /////////////// on heroku or local
-// else {
-//   DATABASE_URL = process.env.DATABASE_URL
-//     || "postgres://bibcnlyezwlkhl:gdhvCdkdw5znI-LjSspT6wKOfR@ec2-54-225-223-40.compute-1.amazonaws.com:5432/davktp8lndlj83"+'?ssl=true';
-//
-//   app.set('port', (process.env.PORT || 5000));
-//   app.listen(app.get('port'), function() {
-//     console.log('Node (heroku & local) app is running on port', app.get('port'));
-//   });
-// }
 if (RUNNING_ON_ITSC_SERVER) {
   process.chdir("/home/guacamoli/guacamoli");
   DATABASE_URL = "postgres://guacamoli:1234@localhost:5432/guacamoli";
@@ -59,6 +40,9 @@ else {
   });
 }
 
+//////////////////////////////////////////////////////////
+// initialize app
+//////////////////////////////////////////////////////////
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
