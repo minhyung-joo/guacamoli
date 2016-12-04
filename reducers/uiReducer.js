@@ -5,8 +5,8 @@ var _ = require('underscore');
 const DEFAULT_OPTIONS = {
     'Restaurant':'Default',
     'Delivery Speed':'Default',
-    'Offered Time':'Default',
     'Cuisine Type':'Default',
+    'Offered Time':'Default',
     'Taste Type':[],
     'Ingredients':[],
     'Sauce Type':[],
@@ -27,7 +27,6 @@ const initialState = {
 export default function uiStates(state = initialState, action) {
     switch(action.type){
         case 'TOGGLE_NAV_DRAWER':
-            console.log("toggled nav drawer");
             return {...state, isShowDrawer: !state.isShowDrawer};
         case 'CLICK_CANTEEN_LIST':
             return {...state, isShowCanteenList: !state.isShowCanteenList};
@@ -46,6 +45,7 @@ export default function uiStates(state = initialState, action) {
             // http://stackoverflow.com/questions/31079081/programmatically-navigate-using-react-router
             hashHistory.push('/searchResult/'+state.searchQuery);
             return {...state, isSearch:true};
+
         case 'INPUT_FILTER_OPTIONS':
             var newFilterOption = _.extend({},state.filterOptions);
             newFilterOption[action.filterTitle] = action.filterValue;
@@ -53,11 +53,13 @@ export default function uiStates(state = initialState, action) {
         case 'INPUT_FILTER_CHECKBOX_OPTIONS':
             var newFilterOption = updateFilterOption(state.filterOptions, action.isChecked, action.filterTitle, action.filterValue);
             return {...state, filterOptions: newFilterOption};
+
         case 'RESET_FILTER_OPTIONS':
             return {...state, filterOptions: _.extend({},DEFAULT_OPTIONS)};
         case 'SUBMIT_FILTER_SEARCH':
             hashHistory.push('/filterResult/');
             return {...state, isSearch:false};
+
         case 'STEPPER_CHANGE_INDEX':
             return {...state, stepIndex: action.newIndex};
         case 'STEPPER_HANDLE_NEXT':
@@ -73,18 +75,4 @@ export default function uiStates(state = initialState, action) {
         default:
             return state;
     }
-}
-
-function updateFilterOption(filterOptions, isChecked, title, value){
-    var newFilterOptionObject = _.extend({},filterOptions);
-    var newOptionArray = filterOptions[title].slice();
-
-    if(isChecked){  //add new filter option
-        newOptionArray.push(value);
-    }else{  //remove filter option
-        _.without(newOptionArray, value);
-    }
-
-    newFilterOptionObject[title] = newOptionArray;
-    return newFilterOptionObject;
 }

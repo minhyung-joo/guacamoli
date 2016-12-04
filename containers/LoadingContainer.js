@@ -29,7 +29,6 @@ class LoadingPage extends React.Component {
             });
         }
         else {
-            console.log(this.props.user);
             hashHistory.push('/home/');
         }
 

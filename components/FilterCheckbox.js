@@ -7,10 +7,19 @@ import Paper from 'material-ui/Paper';
 import Checkbox from 'material-ui/Checkbox';
 
 import {inputFilterCheckboxOptions} from '../actions/uiActions';
+import {adminInputFilterCheckboxOptions} from '../actions/adminAction';
 
 class FilterCheckbox extends React.Component {
     render() {
         var self = this;
+        var callbackFunction;
+        if(this.props.isAdmin){
+            callbackFunction = this.props.adminInputFilterCheckboxOptions;
+        }
+        else{
+            callbackFunction = this.props.inputFilterCheckboxOptions;
+        }
+
         return (
             <div>
                 <Col md={3}><label style={style.label}>{this.props.filterName} :</label></Col>
@@ -18,17 +27,17 @@ class FilterCheckbox extends React.Component {
                     <Paper style={style.paper} zDepth={1}>
                         <Row>
                             {
-                                this.props.checkboxOptionList.map(function (option) {
-                                    return (
-                                        <Col md={4} xs={4}>
-                                            <Checkbox
-                                                label={option}
-                                                style={style.checkbox}
-                                                onCheck={(event, isInputChecked)=>handleChange(option, isInputChecked, self.props.filterName, self.props.inputFilterCheckboxOptions)}
-                                            />
-                                        </Col>
-                                    )
-                                })
+                            this.props.checkboxOptionList.map(function (option) {
+                                return (
+                                    <Col md={4} xs={4}>
+                                        <Checkbox
+                                            label={option}
+                                            style={style.checkbox}
+                                            onCheck={(event, isInputChecked)=>handleChange(option, isInputChecked, self.props.filterName, callbackFunction)}
+                                        />
+                                    </Col>
+                                )
+                            })
                             }
                         </Row>
                     </Paper>
@@ -47,7 +56,7 @@ export default connect(
         filterOptions: state.uiStates.filterOptions,
     }),
     {
-        inputFilterCheckboxOptions
+        inputFilterCheckboxOptions, adminInputFilterCheckboxOptions
     }
 )(FilterCheckbox)
 

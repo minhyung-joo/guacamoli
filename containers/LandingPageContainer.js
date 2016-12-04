@@ -29,7 +29,6 @@ class LandingPage extends React.Component {
         // Check if User is Logged in
         this.props.setUserData();
         if (this.props.user) {
-            console.log(this.props.user);
             hashHistory.push('/home/');
         }
 

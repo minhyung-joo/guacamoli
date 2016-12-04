@@ -24,6 +24,7 @@ import {resetUserData} from '../actions/userAction';
 import {firebaseApp, firebaseConfig} from '../firebase_init';
 
 var axios = require('axios');
+
 const muiTheme = getMuiTheme(guacamoliTheme);
 
 class HomePage extends React.Component {
