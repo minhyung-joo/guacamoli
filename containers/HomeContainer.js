@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import {render} from 'react-dom';
 import {connect} from 'react-redux';
+import { hashHistory } from 'react-router';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -18,12 +19,40 @@ import {showModalFilter, hideModalFilter, clickAdvancedFilter,
     toggleSearchButton,
     inputSearchQuery, submitSearchQuery
 } from '../actions/uiActions';
+import {resetUserData} from '../actions/userAction';
+
+import {firebaseApp, firebaseConfig} from '../firebase_init';
 
 var axios = require('axios');
+
 const muiTheme = getMuiTheme(guacamoliTheme);
 
 class HomePage extends React.Component {
     render() {
+        // Check if User is Logged in
+        // this.props.getUserData();
+        if (!this.props.user) {
+            console.log(this.props.user);
+            hashHistory.push('/welcome/');
+        }
+
+        var _logoutFunction = () => {
+            // Logout from Faebook
+            this.props.resetUserData();
+            firebaseApp.auth().signOut().then(function() {
+                // Sign-out successful.
+                // Clear store
+                var firebaseKey = firebaseConfig.apiKey;
+                // Clear local storage
+                localStorage.removeItem("firebase:authUser:"+firebaseKey+":[DEFAULT]");
+                // Redirect to welcome
+                hashHistory.push('/welcome/');
+            }, function(error) {
+                // An error happened.
+                console.error(error);
+            });
+        }
+
         const {isShowFilterModal, isAdvancedFilter, showModalFilter, hideModalFilter, clickAdvancedFilter, inputSearchQuery, submitSearchQuery} = this.props;
         function _handleKeyPress(e) {
             if (e.key === 'Enter') {
@@ -54,6 +83,7 @@ class HomePage extends React.Component {
                             <FloatingActionButton secondary={true} style={styles.filterButton} onClick={this.props.toggleSearchButton}>
                                 <Search />
                             </FloatingActionButton>
+                            <FloatingActionButton label="Logout" default={true} style={styles.button} onClick={_logoutFunction}/>
                         </Col>
                     </Row>
                     <DialogFilter isShow={isShowFilterModal} onHide={hideModalFilter} isAdvancedFilter={isAdvancedFilter} onClickAdvanced={clickAdvancedFilter}/>
@@ -68,12 +98,14 @@ export default connect(
         isShowFilterModal: state.uiStates.isShowFilterModal,
         isAdvancedFilter: state.uiStates.isAdvancedFilter,
         isSearch: state.uiStates.isSearch,
-        isFilter: state.uiStates.isFilter
+        isFilter: state.uiStates.isFilter,
+        user: state.users.user,
     }),
     {
         showModalFilter, hideModalFilter, clickAdvancedFilter,
         toggleSearchButton,
-        inputSearchQuery, submitSearchQuery
+        inputSearchQuery, submitSearchQuery,
+        resetUserData,
     }
 )(HomePage)
 

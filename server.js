@@ -10,7 +10,11 @@ var express = require('express');
 var bodyParser = require("body-parser");
 var fs = require('fs');
 var pg = require('pg');
+var multer  = require('multer')
+var upload = multer({ dest: 'uploads/' })
+
 var app = express();
+
 
 var path = require("path");
 
@@ -63,3 +67,12 @@ app.get("/", function(req, res) {
 require("./backend_APIs/admin_routes.js").init(app, DATABASE_URL);
 require("./backend_APIs/admin_APIs.js").init(app, DATABASE_URL);
 require("./backend_APIs/front_APIs.js").init(app, DATABASE_URL);
+
+app.post('/uploadHandler', upload.single('file'), function (req, res, next) {
+  if (req.file && req.file.originalname) {
+    console.log(`Received file ${req.file.originalname}`);
+    console.log(req.body);
+  }
+
+  res.send({ responseText: req.file.path }); // You can send any response to the user here
+});

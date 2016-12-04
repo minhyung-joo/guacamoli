@@ -37,7 +37,7 @@ export class AdvancedSearchOption extends React.Component {
             <div>
                 {
                     Object.keys(advancedFilterOptions).map(function(key){
-                        return (key=='Without' && isAdmin=="true")?null:<FilterCheckbox key={key} filterName={key} checkboxOptionList={advancedFilterOptions[key]}/>;
+                        return ((key=='Without' && isAdmin==true) || (key=='Offered Time' && isAdmin=="false"))?null:<FilterCheckbox isAdmin={isAdmin} key={key} filterName={key} checkboxOptionList={advancedFilterOptions[key]}/>;
                     })
                 }
             </div>

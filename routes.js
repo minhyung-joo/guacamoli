@@ -3,6 +3,7 @@ import { Router, Route, IndexRoute, IndexRedirect} from 'react-router'
 
 import Appp from './components/Appp';
 import HomeContainer from './containers/HomeContainer';
+import LandingPage from './containers/LandingPageContainer';
 import CanteenPage from './containers/CanteenContainer';
 import RankingContainer from './containers/RankingContainer';
 import AboutUsContainer from './containers/AboutUsContainer';
@@ -11,6 +12,7 @@ import SearchResultContainer from './containers/SearchResultContainer';
 import AdminMenuListContainer from './containers/AdminMenuListContainer';
 import AdminMenuInsertContainer from './containers/AdminMenuInsertContainer';
 import AdminMainContainer from './containers/AdminMainContainer';
+import LoadingContainer from './containers/LoadingContainer';
 
 import {restaurantList} from './constants/StaticData';
 
@@ -72,8 +74,9 @@ function errorCheckingAndRouting(pwd, replace){
 
 export default (
     <Route path='/'>
-        <IndexRedirect to='home'/>
+        <IndexRedirect to='welcome'/>
         <Route path='home' components={HomeContainer}/>
+        <Route path='welcome' components={LandingPage}/>
         <Route path='' component={Appp}>
             <Route path='ranking' component={RankingContainer} />
             <Route path='canteens'>
@@ -105,6 +108,7 @@ export default (
                 <Route path='menu_insert' component={AdminMenuInsertContainer} />
             </Route>
             <Route path='error' component={NoPermission} />
+            <Route path='loading' component={LoadingContainer} />
             <Route path='*' component={NotFound} />
         </Route>
     </Route>

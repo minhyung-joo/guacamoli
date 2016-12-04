@@ -30,9 +30,10 @@ module.exports = {
         include: __dirname
       },
       {
-        test: /\.css?$/,
-        loaders: [ 'style', 'raw' ],
-        include: __dirname
+        test: /\.css$/,
+        //loaders: [ 'style', 'raw' ],
+        loader: "style-loader!css-loader",
+        // include: __dirname
       },
       {
         test: /\.png$/,

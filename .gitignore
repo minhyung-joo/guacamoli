@@ -3,3 +3,6 @@ node_modules
 .env
 Dockerfile
 docker-compose.yml
+firebase_init.js
+npm-debug.log
+uploads

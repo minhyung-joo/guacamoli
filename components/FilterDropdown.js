@@ -10,14 +10,14 @@ import {inputFilterOptions} from '../actions/uiActions';
 
 class FilterDropdown extends React.Component {
     render() {
-        const filtername = this.props.filterName;
-        const selectFieldValue = this.props.filterOptions[filtername];
+        const filterName = this.props.filterName;
+        const selectFieldValue = this.props.filterOptions[filterName];
 
         return (
             <div>
                 <Col md={3} xs={3}><label style={styles.label}>{this.props.filterName} :</label></Col>
                 <Col md={3} xs={3}>
-                    <SelectField value={selectFieldValue} onChange={(event, index, value)=>handleChange(value, filtername, this.props.inputFilterOptions)} style={styles.selectField}>
+                    <SelectField value={selectFieldValue} onChange={(event, index, value)=>handleChange(value, filterName, this.props.inputFilterOptions)} style={styles.selectField}>
                         {
                             this.props.selectOptionList.map(function (option) {
                                 return (
