@@ -3,26 +3,29 @@
  */
 var _ = require('underscore');
 
-// const initialState = {
-//     'Meal Name': "",
-//     'Meal Name Chinese': "",
-//     'Price': null,
-//     'Ingredient Description': "",
-//
-//     'Restaurant':'Default',
-//     'Delivery Speed':'Default',
-//     'Cuisine Type':'Default',
-//
-//     'Offered Time':[],
-//     'Taste Type':[],
-//     'Ingredients':[],
-//     'Sauce Type':[],
-// };
+const DEFAULT_OPTIONS = {
+    mealName: "",
+    mealNameChinese:"",
+    price: null,
+    password: "",
+
+    restaurant: 0,
+    cuisineType: 0,
+    deliverySpeed: 0,
+
+    offeredTime: [],
+    tasteType: [],
+    ingredient: [],
+    sauceType: [],
+
+    ingredientDescription: "",
+};
 
 const initialState = {
     mealName: "",
     mealNameChinese:"",
     price: null,
+    password: "",
 
     restaurant: 0,
     cuisineType: 0,
@@ -51,8 +54,30 @@ export default function admin(state = initialState, action) {
         case 'ADMIN_INPUT_FILTER_CHECKBOX_OPTIONS':
             var newState = updateFilterOption(state, action.isChecked, action.filterTitle, action.filterValue);
             console.log(newState);
-
             return newState;
+
+        case 'ADMIN_RESET_INPUT_OPTIONS':
+            var defaultState = _.extend({},DEFAULT_OPTIONS);
+            return defaultState;
+
+        case 'LOAD_UPDATE_PAGE_DATA':
+            var data = action.data;
+            return {...state,
+                mealName: data.name,
+                mealNameChinese: data.chinesename,
+                price: data.price,
+
+                restaurant: data.restaurantid,
+                cuisineType: data.cuisinetypeid,
+                deliverySpeed: data.deliveryspeedid,
+
+                offeredTime: data.offeredtimesid,
+                tasteType: data.tastetypesid,
+                ingredient: data.ingredienttypesid,
+                sauceType: data.saucetypesid,
+
+                ingredientDescription: data.ingredientsdescription,
+            };
 
         default:
             return state;
@@ -99,4 +124,8 @@ function titleMapper(filterTitle){
         case 'Sauce Type':
             return 'sauceType';
     }
+}
+
+function indexToTextMapperForCheckbox(){
+
 }

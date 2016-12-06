@@ -22,9 +22,17 @@ export function adminInputFilterCheckboxOptions(filterTitle, filterValue, isChec
         isChecked: isChecked,
     }
 }
-export function resetFilterOptions(){
-    return{
-        type: 'RESET_FILTER_OPTIONS'
+
+export function loadUpdatePageData(menuData){
+    return {
+        type: 'LOAD_UPDATE_PAGE_DATA',
+        data: menuData,
+    }
+}
+
+export function adminResetInputOptions(){
+    return {
+        type: 'ADMIN_RESET_INPUT_OPTIONS'
     }
 }
 

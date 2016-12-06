@@ -21,10 +21,7 @@ import {showModalFilter, hideModalFilter, clickAdvancedFilter,
 } from '../actions/uiActions';
 import {resetUserData} from '../actions/userAction';
 
-import {firebaseApp, firebaseConfig} from '../firebase_init';
-
 var axios = require('axios');
-
 const muiTheme = getMuiTheme(guacamoliTheme);
 
 class HomePage extends React.Component {
@@ -34,23 +31,6 @@ class HomePage extends React.Component {
         if (!this.props.user) {
             console.log(this.props.user);
             hashHistory.push('/welcome/');
-        }
-
-        var _logoutFunction = () => {
-            // Logout from Faebook
-            this.props.resetUserData();
-            firebaseApp.auth().signOut().then(function() {
-                // Sign-out successful.
-                // Clear store
-                var firebaseKey = firebaseConfig.apiKey;
-                // Clear local storage
-                localStorage.removeItem("firebase:authUser:"+firebaseKey+":[DEFAULT]");
-                // Redirect to welcome
-                hashHistory.push('/welcome/');
-            }, function(error) {
-                // An error happened.
-                console.error(error);
-            });
         }
 
         const {isShowFilterModal, isAdvancedFilter, showModalFilter, hideModalFilter, clickAdvancedFilter, inputSearchQuery, submitSearchQuery} = this.props;
@@ -83,7 +63,7 @@ class HomePage extends React.Component {
                             <FloatingActionButton secondary={true} style={styles.filterButton} onClick={this.props.toggleSearchButton}>
                                 <Search />
                             </FloatingActionButton>
-                            <FloatingActionButton label="Logout" default={true} style={styles.button} onClick={_logoutFunction}/>
+                            {/*<FloatingActionButton label="Logout" default={true} style={styles.button} onClick={_logoutFunction}/>*/}
                         </Col>
                     </Row>
                     <DialogFilter isShow={isShowFilterModal} onHide={hideModalFilter} isAdvancedFilter={isAdvancedFilter} onClickAdvanced={clickAdvancedFilter}/>

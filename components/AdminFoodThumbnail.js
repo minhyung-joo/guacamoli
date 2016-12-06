@@ -14,6 +14,9 @@ export default class AdminFoodThumbnail extends React.Component {
     render() {
         const food = this.props.foodDetail;
         const restaurantId = food.restaurantid;
+        const foodid = food.id;
+
+        const {onUpdate, onDelete} = this.props;
 
         function titleHandler(foodTitle){
             if(foodTitle!=undefined && foodTitle!=null){
@@ -26,14 +29,6 @@ export default class AdminFoodThumbnail extends React.Component {
             }
         }
 
-        function updateMenu(){
-            console.log("haha");
-        }
-
-        function deleteMenu(){
-            console.log("delete");
-        }
-
         return (
             <Card style={{marginBottom:25}}>
                 <CardMedia>
@@ -42,8 +37,8 @@ export default class AdminFoodThumbnail extends React.Component {
                 </CardMedia>
                 <CardTitle title={titleHandler(food.name)} subtitle={restaurantList[restaurantId] + " - " + food.price + " HKD"} />
                 <CardActions>
-                    <FlatButton label="Update" onClick={()=>updateMenu()} />
-                    <FlatButton label="Delete" onTouchTap={()=>deleteMenu()} />
+                    <FlatButton label="Update" onClick={()=>onUpdate(restaurantId, foodid)} />
+                    <FlatButton label="Delete" onClick={()=>onDelete(restaurantId, foodid)} />
                 </CardActions>
             </Card>
         );
