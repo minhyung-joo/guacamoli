@@ -2,10 +2,29 @@ var axios = require('axios');
 const getFoodDetailRoute = '/api/menu/(foodid)';
 const getCanteenDataRoute = 'api/getCanteenList?restaurantId=(p1)';
 const adminDeleteMealRoute = '/deleteMeal';
+const adminUpdateMealRoute = '/updateMeal';
 
 function fetchingData(){
     return{
         type:'ADMIN_FETCHING_DATA'
+    }
+}
+function receiveAdminFoodDetailData(json){
+    return{
+        type: 'ADMIN_RECIEVED_FOOD_DETAIL_DATA',
+        data: json.data
+    }
+}
+function receiveAdminCanteenData(json){
+    return{
+        type: 'ADMIN_RECIEVED_CANTEEN_DATA',
+        data: json.data
+    }
+}
+function requestFail(error){
+    return{
+        type: 'ADMIN_REQUEST_ERROR',
+        error: error
     }
 }
 
@@ -19,31 +38,21 @@ function successDeletingData(){
         type:'ADMIN_DELETING_SUCCESS'
     }
 }
-
-function receiveAdminFoodDetailData(json){
-    return{
-        type: 'ADMIN_RECIEVED_FOOD_DETAIL_DATA',
-        data: json.data
-    }
-}
-function receiveAdminCanteenData(json){
-    return{
-        type: 'ADMIN_RECIEVED_CANTEEN_DATA',
-        data: json.data
-    }
-}
-
-function requestFail(error){
-    return{
-        type: 'ADMIN_REQUEST_ERROR',
-        error: error
-    }
-}
-
 function deleteRequestFail(error){
     return {
         type: 'ADMIN_MEAL_DELETE_ERROR',
         error: error
+    }
+}
+
+function updatingData(){
+    return {
+        type: 'ADMIN_UPDATE_DATA',
+    }
+}
+function successUpdatingData(){
+    return{
+        type:'ADMIN_UPDATING_SUCCESS'
     }
 }
 
@@ -74,23 +83,22 @@ export function clickMenuUpdate(canteenId, foodid) {
 }
 
 export function clickMenuDelete(foodid) {
-    console.log("deleteeeeee " + foodid);
-    return dispatch=>{
+    return dispatch=> {
         dispatch(deletingData());
-        return axios.post(adminDeleteMealRoute, {id:foodid})
+        return axios.post(adminDeleteMealRoute, {id: foodid})
             .then(()=>dispatch(successDeletingData))
             .catch(err=>dispatch(deleteRequestFail(err)))
     }
-    // return {
-    //     type: 'CLICK_DELETE_MENU',
-    //     foodid: foodid,
-    // }
 }
 
-export function updateMenu() {
-    return {
-        type: 'UPDATE_MENU',
-        // value: menuDataToSend,
+export function updateMenu(menuJson) {
+    console.log(menuJson);
+
+    return dispatch=> {
+        dispatch(updatingData());
+        return axios.post(adminUpdateMealRoute, menuJson)
+            .then(()=>dispatch(successUpdatingData()))
+            .catch(err=>dispatch(requestFail(err)))
     }
 }
 

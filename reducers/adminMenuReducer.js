@@ -7,6 +7,7 @@ import { hashHistory } from 'react-router'
 const initialState = {
     isFetching: false,
     isDeleting: false,
+    isUpdating: false,
     foodArray: [],
     foodDetail: null,
 };
@@ -31,6 +32,12 @@ export default function adminMenu(state = initialState, action) {
         case 'UPDATE_MENU':
             console.log("update menu" + action.foodid);
             return state;
+        case 'ADMIN_UPDATE_DATA':
+            return {...state, isUpdating: true};
+
+        case 'ADMIN_UPDATING_SUCCESS':
+            return {...state, isUpdating: false};
+
         default:
             return state;
     }

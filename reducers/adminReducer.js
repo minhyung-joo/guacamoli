@@ -4,6 +4,7 @@
 var _ = require('underscore');
 
 const DEFAULT_OPTIONS = {
+    id:null,
     mealName: "",
     mealNameChinese:"",
     price: null,
@@ -19,9 +20,11 @@ const DEFAULT_OPTIONS = {
     sauceType: [],
 
     ingredientDescription: "",
+    isUpload: false,
 };
 
 const initialState = {
+    id:null,
     mealName: "",
     mealNameChinese:"",
     price: null,
@@ -37,6 +40,7 @@ const initialState = {
     sauceType: [],
 
     ingredientDescription: "",
+    isUpload: false,
 };
 
 export default function admin(state = initialState, action) {
@@ -57,7 +61,9 @@ export default function admin(state = initialState, action) {
             return newState;
 
         case 'ADMIN_RESET_INPUT_OPTIONS':
+            console.log("reset is being called");
             var defaultState = _.extend({},DEFAULT_OPTIONS);
+            console.log(defaultState);
             return defaultState;
 
         case 'LOAD_UPDATE_PAGE_DATA':
@@ -78,6 +84,13 @@ export default function admin(state = initialState, action) {
 
                 ingredientDescription: data.ingredientsdescription,
             };
+
+        case 'IDENTIFY_PAGE_TYPE':
+            console.log(action.foodid);
+            if(action.foodid==null)
+                return {...state, isUpload: true, id:action.foodid};
+            else
+                return {...state, isUpload: false, id:action.foodid};
 
         default:
             return state;

@@ -8,6 +8,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
 import {restaurantList} from '../constants/StaticData';
+import {imageUrlMapper} from '../constants/Utility';
 
 
 export default class AdminFoodThumbnail extends React.Component {
@@ -61,8 +62,8 @@ export default class AdminFoodThumbnail extends React.Component {
             <div>
                 <Card style={{marginBottom:25}}>
                     <CardMedia>
-                        {/*<img src={imageUrlMapper(food.picture_url, false)} height="175" width="100%"/>*/}
-                        <img src={food.picture_url} height="175" width="100%"/>
+                        <img src={imageUrlMapper(food.picture_url, false)} height="175" width="100%"/>
+                        {/*<img src={food.picture_url} height="175" width="100%"/>*/}
                     </CardMedia>
                     <CardTitle title={titleHandler(food.name)} subtitle={restaurantList[restaurantId] + " - " + food.price + " HKD"} />
                     <CardActions>
