@@ -9,6 +9,17 @@ function fetchingData(){
     }
 }
 
+function deletingData(){
+    return{
+        type:'ADMIN_DELETING_DATA'
+    }
+}
+function successDeletingData(){
+    return{
+        type:'ADMIN_DELETING_SUCCESS'
+    }
+}
+
 function receiveAdminFoodDetailData(json){
     return{
         type: 'ADMIN_RECIEVED_FOOD_DETAIL_DATA',
@@ -63,10 +74,11 @@ export function clickMenuUpdate(canteenId, foodid) {
 }
 
 export function clickMenuDelete(foodid) {
+    console.log("deleteeeeee " + foodid);
     return dispatch=>{
-        dispatch(fetchingData());
+        dispatch(deletingData());
         return axios.post(adminDeleteMealRoute, {id:foodid})
-            .then(function(response){ console.log(response); })
+            .then(()=>dispatch(successDeletingData))
             .catch(err=>dispatch(deleteRequestFail(err)))
     }
     // return {
