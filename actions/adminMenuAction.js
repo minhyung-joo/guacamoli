@@ -1,6 +1,7 @@
 var axios = require('axios');
 const getFoodDetailRoute = '/api/menu/(foodid)';
 const getCanteenDataRoute = 'api/getCanteenList?restaurantId=(p1)';
+const adminDeleteMealRoute = '/deleteMeal';
 
 function fetchingData(){
     return{
@@ -28,6 +29,13 @@ function requestFail(error){
     }
 }
 
+function deleteRequestFail(error){
+    return {
+        type: 'ADMIN_MEAL_DELETE_ERROR',
+        error: error
+    }
+}
+
 //  for admin update page
 export function getAdminFoodDetail(foodid) {
     const api = getFoodDetailRoute.replace('(foodid)',foodid);
@@ -46,19 +54,25 @@ export function getAdminCanteenData(canteenid){
     }
 }
 
-export function clickMenuUpdate(canteenId, menuid) {
+export function clickMenuUpdate(canteenId, foodid) {
     return {
         type: 'CLICK_MENU_UPDATE',
         canteenName: restaurantMapper(canteenId),
-        menuid: menuid,
+        foodid: foodid,
     }
 }
 
-export function clickMenuDelete(menuid) {
-    return {
-        type: 'CLICK_DELETE_MENU',
-        canteenId: menuid,
+export function clickMenuDelete(foodid) {
+    return dispatch=>{
+        dispatch(fetchingData());
+        return axios.post(adminDeleteMealRoute, {id:foodid})
+            .then(function(response){ console.log(response); })
+            .catch(err=>dispatch(deleteRequestFail(err)))
     }
+    // return {
+    //     type: 'CLICK_DELETE_MENU',
+    //     foodid: foodid,
+    // }
 }
 
 export function updateMenu() {

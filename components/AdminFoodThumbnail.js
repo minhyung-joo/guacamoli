@@ -38,7 +38,7 @@ export default class AdminFoodThumbnail extends React.Component {
                 <CardTitle title={titleHandler(food.name)} subtitle={restaurantList[restaurantId] + " - " + food.price + " HKD"} />
                 <CardActions>
                     <FlatButton label="Update" onClick={()=>onUpdate(restaurantId, foodid)} />
-                    <FlatButton label="Delete" onClick={()=>onDelete(restaurantId, foodid)} />
+                    <FlatButton label="Delete" onClick={()=>onDelete(foodid)} />
                 </CardActions>
             </Card>
         );

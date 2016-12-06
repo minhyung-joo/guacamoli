@@ -28,15 +28,18 @@ class AdminMenuListContainer extends React.Component {
     }
 
     render () {
+        const {isFetching, foodArray, clickMenuUpdate, clickMenuDelete} = this.props;
         return (
             <div>
                 <Row>
                     {
-                        !this.props.isFetching?
-                            this.props.foodArray.map(function(food){
+                        !isFetching?
+                            foodArray.map(function(food){
                                 return (
                                     <Col md={3} xs={4}>
-                                        <AdminFoodThumbnail foodDetail={food} onUpdate={this.props.clickMenuUpdate} onDelete={this.props.clickMenuDelete}/>
+                                        <AdminFoodThumbnail foodDetail={food}
+                                                            onUpdate={clickMenuUpdate}
+                                                            onDelete={clickMenuDelete}/>
                                     </Col>
                                 )
                             }, this)

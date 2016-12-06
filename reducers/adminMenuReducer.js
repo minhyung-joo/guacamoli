@@ -14,21 +14,20 @@ export default function adminMenu(state = initialState, action) {
     switch(action.type){
         case 'ADMIN_FETCHING_DATA':
             return {...state, isFetching:true};
-
         case 'ADMIN_RECIEVED_CANTEEN_DATA':
             return {...state, foodArray: action.data, isFetching: false};
-
         case 'ADMIN_RECIEVED_FOOD_DETAIL_DATA':
             return {...state, foodDetail: action.data, isFetching: false};
-
         case 'ADMIN_REQUEST_ERROR':
             return {...state};
         case 'CLICK_MENU_UPDATE':
-            hashHistory.push("/" + action.canteenName + '/menu_update/'+action.menuid);
+            hashHistory.push("/" + action.canteenName + '/menu_update/'+action.foodid);
+            return state;
         case 'CLICK_DELETE_MENU':
-
+            console.log("delete " + action.foodid);
+            return state;
         case 'UPDATE_MENU':
-            console.log("update menu");
+            console.log("update menu" + action.foodid);
             return state;
         default:
             return state;
