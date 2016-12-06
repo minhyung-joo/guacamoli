@@ -1,13 +1,14 @@
 var axios = require('axios');
 const getFoodDetailRoute = '/api/menu/(foodid)';
 const getCanteenDataRoute = 'api/getCanteenList?restaurantId=(p1)';
+const adminDeleteMealRoute = '/deleteMeal';
+const adminUpdateMealRoute = '/updateMeal';
 
 function fetchingData(){
     return{
         type:'ADMIN_FETCHING_DATA'
     }
 }
-
 function receiveAdminFoodDetailData(json){
     return{
         type: 'ADMIN_RECIEVED_FOOD_DETAIL_DATA',
@@ -20,11 +21,38 @@ function receiveAdminCanteenData(json){
         data: json.data
     }
 }
-
 function requestFail(error){
     return{
         type: 'ADMIN_REQUEST_ERROR',
         error: error
+    }
+}
+
+function deletingData(){
+    return{
+        type:'ADMIN_DELETING_DATA'
+    }
+}
+function successDeletingData(){
+    return{
+        type:'ADMIN_DELETING_SUCCESS'
+    }
+}
+function deleteRequestFail(error){
+    return {
+        type: 'ADMIN_MEAL_DELETE_ERROR',
+        error: error
+    }
+}
+
+function updatingData(){
+    return {
+        type: 'ADMIN_UPDATE_DATA',
+    }
+}
+function successUpdatingData(){
+    return{
+        type:'ADMIN_UPDATING_SUCCESS'
     }
 }
 
@@ -46,25 +74,31 @@ export function getAdminCanteenData(canteenid){
     }
 }
 
-export function clickMenuUpdate(canteenId, menuid) {
+export function clickMenuUpdate(canteenId, foodid) {
     return {
         type: 'CLICK_MENU_UPDATE',
         canteenName: restaurantMapper(canteenId),
-        menuid: menuid,
+        foodid: foodid,
     }
 }
 
-export function clickMenuDelete(menuid) {
-    return {
-        type: 'CLICK_DELETE_MENU',
-        canteenId: menuid,
+export function clickMenuDelete(foodid) {
+    return dispatch=> {
+        dispatch(deletingData());
+        return axios.post(adminDeleteMealRoute, {id: foodid})
+            .then(()=>dispatch(successDeletingData))
+            .catch(err=>dispatch(deleteRequestFail(err)))
     }
 }
 
-export function updateMenu() {
-    return {
-        type: 'UPDATE_MENU',
-        // value: menuDataToSend,
+export function updateMenu(menuJson) {
+    console.log(menuJson);
+
+    return dispatch=> {
+        dispatch(updatingData());
+        return axios.post(adminUpdateMealRoute, menuJson)
+            .then(()=>dispatch(successUpdatingData()))
+            .catch(err=>dispatch(requestFail(err)))
     }
 }
 

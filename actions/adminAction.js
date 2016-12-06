@@ -36,8 +36,10 @@ export function adminResetInputOptions(){
     }
 }
 
-export function submitFilterSearch(){
+export function identifyPageType(foodid){
     return{
-        type: 'SUBMIT_FILTER_SEARCH'
+        type: 'IDENTIFY_PAGE_TYPE',
+        foodid: foodid,
     }
 }
+

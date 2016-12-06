@@ -12,7 +12,7 @@ import DropzoneComponent from 'react-dropzone-component';
 import {AdvancedSearchOption} from '../components/DialogFilterOptions';
 import {restaurantList, deliverySpeed, cuisineType, advancedFilterOptions} from '../constants/StaticData';
 
-import {inputSingleTextOption, inputSelectOption, loadUpdatePageData, adminResetInputOptions} from '../actions/adminAction';
+import {inputSingleTextOption, inputSelectOption, loadUpdatePageData, adminResetInputOptions, identifyPageType} from '../actions/adminAction';
 import {updateMenu, getAdminFoodDetail} from '../actions/adminMenuAction';
 const ratingArray = ['Please select one', 1,2,3,4,5];
 
@@ -20,10 +20,10 @@ var filepickerCSS = require('react-dropzone-component/styles/filepicker.css');
 var dropzoneCSS = require('dropzone/dist/min/dropzone.min.css');
 
 class AdminMenuInsertContainer extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-            showImageUploadBox:false,
+            isFirstTime:true,
         };
 
         this.djsConfig = {
@@ -48,18 +48,35 @@ class AdminMenuInsertContainer extends React.Component {
     }
 
     componentWillMount(){
-        this.props.adminResetInputOptions();
         const foodId = this.props.params.foodid;
-        if(foodId != null){
+        this.props.identifyPageType(foodId);
+
+        if(!this.props.isUpload){
             this.props.getAdminFoodDetail(foodId);
+        }else{
+            this.props.adminResetInputOptions();
         }
+    }
+
+    componentWillUnmount(){
+        // if(this.props.isUpload){
+        //     this.props.identifyPageType("random")
+        // }else{
+        //     this.props.identifyPageType(null)
+        // }
     }
 
     render () {
         const {inputSingleTextOption, inputSelectOption, loadUpdatePageData,
             isFetching, foodDetail,
+            isUpload
         } = this.props;
         const foodId = this.props.params.foodid;
+
+        if(this.props.foodDetail!=null && !this.props.isUpload && this.state.isFirstTime){
+            loadUpdatePageData(this.props.foodDetail);
+            this.setState({isFirstTime:false});
+        }
 
         var valueStringToIndexConverter = (title, valueArray) =>{
             var resultArray = [];
@@ -90,7 +107,6 @@ class AdminMenuInsertContainer extends React.Component {
             return resultArray;
         }
         var extractUserInputAsParam = () => {
-            this.setState({showImageUploadBox:true});
             var x = {
                 "restaurant_name": this.props.restaurant,
                 "name": this.props.mealName,
@@ -118,14 +134,25 @@ class AdminMenuInsertContainer extends React.Component {
         };
 
         var updateMenu = () => {
-            this.props.updateMenu();
-            alert("Menu update was successful");
+            var x = {
+                "restaurant_name": this.props.restaurant,
+                "name": this.props.mealName,
+                "chineseMealName": this.props.mealNameChinese,
+                "ingredientsDescription": this.props.ingredientDescription,
+                "password": this.props.password,
+                "price": this.props.price,
+
+                "cuisineType": this.props.cuisineType,
+                "deliverySpeed": this.props.deliverySpeed,
+                //
+                // "offeredTimes": valueStringToIndexConverter("offeredTimes",this.props.offeredTime),
+                // "tasteTypes": valueStringToIndexConverter("tasteTypes",this.props.tasteType),
+                // "foodTypes": valueStringToIndexConverter("foodTypes",this.props.ingredient),
+                // "sauceTypes": valueStringToIndexConverter("sauceTypes", this.props.sauceType),
+            };
+            this.props.updateMenu(x);
             // TODO ideally move back
         };
-
-        if(foodDetail!=null && !isFetching){
-            loadUpdatePageData(foodDetail);
-        }
 
         return (
             <div>
@@ -160,7 +187,7 @@ class AdminMenuInsertContainer extends React.Component {
                             </Col>
                         </Row>
                         {
-                            foodId==null?
+                            isUpload?
                                 <Row><AdvancedSearchOption isAdmin={true}/></Row>
                                 :null
                         }
@@ -173,7 +200,7 @@ class AdminMenuInsertContainer extends React.Component {
                             </Col>
                         </Row>
                         {
-                            foodId==null?
+                            isUpload?
                                 <Row>
                                     <DropzoneComponent config={this.componentConfig} eventHandlers={this.eventHandlers} djsConfig={this.djsConfig} />
                                 </Row>:null
@@ -182,7 +209,7 @@ class AdminMenuInsertContainer extends React.Component {
                 </Row>
 
                 {
-                    foodId==null?
+                    isUpload?
                         <Row md={12}>
                             <Col mdOffset={5} xsOffset={5}>
                                 <RaisedButton label="Add Menu" primary={true} style={styles.raisedButton} onMouseDown={extractUserInputAsParam} onMouseUp={postAndResetInputOptions} />
@@ -256,6 +283,8 @@ export default connect(
         foodDetail: state.adminMenu.foodDetail,
         isFetching: state.adminMenu.isFetching,
 
+        isUpload: state.admin.isUpload,
+
         mealName: state.admin.mealName,
         mealNameChinese: state.admin.mealNameChinese,
         price: state.admin.price,
@@ -272,7 +301,7 @@ export default connect(
         sauceType: state.admin.sauceType,
     }),
     {
-        inputSingleTextOption, inputSelectOption, loadUpdatePageData, adminResetInputOptions,
+        inputSingleTextOption, inputSelectOption, loadUpdatePageData, adminResetInputOptions, identifyPageType,
         updateMenu, getAdminFoodDetail
     }
 )(AdminMenuInsertContainer)
