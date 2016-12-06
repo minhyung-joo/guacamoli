@@ -5,6 +5,8 @@ import {Row, Col, Glyphicon, Button, Panel} from 'react-bootstrap';
 
 import AdminFoodThumbnail from '../components/AdminFoodThumbnail';
 
+import {clickMenuUpdate, clickMenuDelete, getAdminCanteenData} from '../actions/adminMenuAction';
+
 var foods = [
     {
         "restaurantid": 1,
@@ -22,7 +24,7 @@ var foods = [
 
 class AdminMenuListContainer extends React.Component {
     componentWillMount(){
-
+        this.props.getAdminCanteenData(this.props.params.canteenid);
     }
 
     render () {
@@ -30,13 +32,16 @@ class AdminMenuListContainer extends React.Component {
             <div>
                 <Row>
                     {
-                        foods.map(function(food){
-                            return (
-                                <Col md={3} xs={4}>
-                                    <AdminFoodThumbnail foodDetail={food}/>
-                                </Col>
-                            )
-                        })
+                        !this.props.isFetching?
+                            this.props.foodArray.map(function(food){
+                                return (
+                                    <Col md={3} xs={4}>
+                                        <AdminFoodThumbnail foodDetail={food} onUpdate={this.props.clickMenuUpdate} onDelete={this.props.clickMenuDelete}/>
+                                    </Col>
+                                )
+                            }, this)
+                            :
+                            null
                     }
                 </Row>
             </div>
@@ -46,9 +51,11 @@ class AdminMenuListContainer extends React.Component {
 
 export default connect(
     state => ({
-        rankingResults: state.canteens.rankingResults,
-        isFetching: state.canteens.isFetching,
+        foodArray: state.adminMenu.foodArray,
+        isFetching: state.adminMenu.isFetching,
     }),
     {
+        clickMenuUpdate, clickMenuDelete,
+        getAdminCanteenData
     }
 )(AdminMenuListContainer)

@@ -9,10 +9,11 @@ import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import DropzoneComponent from 'react-dropzone-component';
 
-import {DefaultSearchOption, AdvancedSearchOption} from '../components/DialogFilterOptions';
-import {restaurantList, deliverySpeed, cuisineType, offeredTime, advancedFilterOptions} from '../constants/StaticData';
+import {AdvancedSearchOption} from '../components/DialogFilterOptions';
+import {restaurantList, deliverySpeed, cuisineType, advancedFilterOptions} from '../constants/StaticData';
 
-import {inputSingleTextOption, inputSelectOption} from '../actions/adminAction';
+import {inputSingleTextOption, inputSelectOption, loadUpdatePageData, adminResetInputOptions} from '../actions/adminAction';
+import {updateMenu, getAdminFoodDetail} from '../actions/adminMenuAction';
 const ratingArray = ['Please select one', 1,2,3,4,5];
 
 var filepickerCSS = require('react-dropzone-component/styles/filepicker.css');
@@ -26,8 +27,10 @@ class AdminMenuInsertContainer extends React.Component {
         };
 
         this.djsConfig = {
-            autoProcessQueue: true,
+            autoProcessQueue: false,
+            addRemoveLinks: true,
             acceptedFiles: "image/jpeg,image/png,image/gif",
+            params: {lala:"testing"}
         }
 
         this.componentConfig = {
@@ -36,11 +39,28 @@ class AdminMenuInsertContainer extends React.Component {
             showFiletypeIcon: true,
         };
 
-        this.eventHandlers = { addedfile: (file) => console.log(file) }
+        this.myDropzone;
+        this.eventHandlers = {
+            init: (dropzone) => {this.myDropzone = dropzone},
+            addedfile: (file) => console.log(file)
+        }
+
+    }
+
+    componentWillMount(){
+        this.props.adminResetInputOptions();
+        const foodId = this.props.params.foodid;
+        if(foodId != null){
+            this.props.getAdminFoodDetail(foodId);
+        }
     }
 
     render () {
-        const {inputSingleTextOption, inputSelectOption} = this.props;
+        const {inputSingleTextOption, inputSelectOption, loadUpdatePageData,
+            isFetching, foodDetail,
+        } = this.props;
+        const foodId = this.props.params.foodid;
+
         var valueStringToIndexConverter = (title, valueArray) =>{
             var resultArray = [];
             if(valueArray.length > 0) {
@@ -69,15 +89,14 @@ class AdminMenuInsertContainer extends React.Component {
             }
             return resultArray;
         }
-
-        var extractUserInputAndShowImageUpload = () => {
+        var extractUserInputAsParam = () => {
             this.setState({showImageUploadBox:true});
             var x = {
                 "restaurant_name": this.props.restaurant,
                 "name": this.props.mealName,
                 "chineseMealName": this.props.mealNameChinese,
                 "ingredientsDescription": this.props.ingredientDescription,
-
+                "password": this.props.password,
                 "price": this.props.price,
 
                 "cuisineType": this.props.cuisineType,
@@ -90,7 +109,22 @@ class AdminMenuInsertContainer extends React.Component {
             };
 
             this.djsConfig.params = x;
-            console.log(x);
+        }
+
+        var postAndResetInputOptions = () => {
+            this.myDropzone.processQueue();
+            this.props.adminResetInputOptions();
+            alert("Menu creation was successful");
+        };
+
+        var updateMenu = () => {
+            this.props.updateMenu();
+            alert("Menu update was successful");
+            // TODO ideally move back
+        };
+
+        if(foodDetail!=null && !isFetching){
+            loadUpdatePageData(foodDetail);
         }
 
         return (
@@ -98,20 +132,20 @@ class AdminMenuInsertContainer extends React.Component {
                 <Row>
                     <Col mdOffset={2} md={8}>
                         <Row>
-                            <Col md={3} xs={3}><label style={styles.label}>{"Meal Name *"} :</label></Col>
+                            <Col md={3} xs={3}><label style={styles.label}>{"Meal Name *:"}</label></Col>
                             <Col md={9} xs={9}>
                                 <TextField fullWidth="true" style={styles.textRow} value={this.props.mealName} onChange={(e)=>inputSingleTextOption("mealName",e.target.value)}/>
                             </Col>
                         </Row>
 
                         <Row>
-                            <Col md={3} xs={3}><label style={styles.label}>{"Meal Name Chinese"} :</label></Col>
+                            <Col md={3} xs={3}><label style={styles.label}>{"Meal Name Chinese:"}</label></Col>
                             <Col md={9} xs={9}>
                                 <TextField fullWidth="true" style={styles.textRow} value={this.props.mealNameChinese} onChange={(e)=>inputSingleTextOption("mealNameChinese",e.target.value)}/>
                             </Col>
                         </Row>
                         <Row>
-                            <Col md={3} xs={3}><label style={styles.label}>{"Price"} :</label></Col>
+                            <Col md={3} xs={3}><label style={styles.label}>{"Price:"}</label></Col>
                             <Col md={9} xs={9}>
                                 <TextField fullWidth="true" style={styles.textRow} value={this.props.price} onChange={(e)=>inputSingleTextOption("price",e.target.value)}/>
                             </Col>
@@ -125,24 +159,39 @@ class AdminMenuInsertContainer extends React.Component {
                                 <SelectRow label="Delivery Speed" name="deliverySpeed" onChangeHandler={inputSelectOption} value={this.props.deliverySpeed} itemArray={deliverySpeed}/>
                             </Col>
                         </Row>
-
-                        <Row><AdvancedSearchOption isAdmin={true}/></Row>
-                        <Row><IngredientTextarea label="Detailed Ingredients" value={this.props.ingredientDescription} onChange={(e)=>inputSingleTextOption("ingredientDescription",e.target.value)} /></Row>
-
                         {
-                            this.state.showImageUploadBox?
+                            foodId==null?
+                                <Row><AdvancedSearchOption isAdmin={true}/></Row>
+                                :null
+                        }
+
+                        <Row><IngredientTextarea label="Detailed Ingredients" value={this.props.ingredientDescription} onChange={(e)=>inputSingleTextOption("ingredientDescription",e.target.value)} /></Row>
+                        <Row>
+                            <Col md={3} xs={3}><label style={styles.label}>{"Password:"}</label></Col>
+                            <Col md={9} xs={9}>
+                                <TextField fullWidth="true" style={styles.textRow} value={this.props.password} onChange={(e)=>inputSingleTextOption("password",e.target.value)}/>
+                            </Col>
+                        </Row>
+                        {
+                            foodId==null?
                                 <Row>
                                     <DropzoneComponent config={this.componentConfig} eventHandlers={this.eventHandlers} djsConfig={this.djsConfig} />
                                 </Row>:null
                         }
-
                     </Col>
                 </Row>
+
                 {
-                    this.state.showImageUploadBox?null:
+                    foodId==null?
                         <Row md={12}>
-                            <Col mdOffset={6}>
-                                <RaisedButton label="Ready To Add Image" primary={true} style={styles.raisedButton} onClick={extractUserInputAndShowImageUpload}/>
+                            <Col mdOffset={5} xsOffset={5}>
+                                <RaisedButton label="Add Menu" primary={true} style={styles.raisedButton} onMouseDown={extractUserInputAsParam} onMouseUp={postAndResetInputOptions} />
+                            </Col>
+                        </Row>
+                        :
+                        <Row md={12} xs={12}>
+                            <Col mdOffset={5} xsOffset={5}>
+                                <RaisedButton label="Update Menu" primary={true} style={styles.raisedButton} onClick={updateMenu}/>
                             </Col>
                         </Row>
                 }
@@ -204,12 +253,13 @@ const styles ={
 
 export default connect(
     state => ({
-        rankingResults: state.canteens.rankingResults,
-        isFetching: state.canteens.isFetching,
+        foodDetail: state.adminMenu.foodDetail,
+        isFetching: state.adminMenu.isFetching,
 
         mealName: state.admin.mealName,
         mealNameChinese: state.admin.mealNameChinese,
         price: state.admin.price,
+        password: state.admin.password,
         ingredientDescription: state.admin.ingredientDescription,
 
         restaurant: state.admin.restaurant,
@@ -222,6 +272,7 @@ export default connect(
         sauceType: state.admin.sauceType,
     }),
     {
-        inputSingleTextOption, inputSelectOption
+        inputSingleTextOption, inputSelectOption, loadUpdatePageData, adminResetInputOptions,
+        updateMenu, getAdminFoodDetail
     }
 )(AdminMenuInsertContainer)

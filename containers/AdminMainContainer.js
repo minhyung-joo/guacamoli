@@ -22,7 +22,7 @@ class AdminMainContainer extends React.Component {
                                 <LinkContainer to="/lg1/menu_insert">
                                     <RaisedButton label="Add Menu" primary={true} style={styles.raisedButton} />
                                 </LinkContainer>
-                                <LinkContainer to="/lg1/menu_list">
+                                <LinkContainer to="/lg1/menu_list/1">
                                     <RaisedButton label="Show Menu" primary={true} style={styles.raisedButton} />
                                 </LinkContainer>
                             </Panel>
@@ -32,7 +32,7 @@ class AdminMainContainer extends React.Component {
                                 <LinkContainer to="/apc/menu_insert">
                                     <RaisedButton label="Add Menu" primary={true} style={styles.raisedButton} />
                                 </LinkContainer>
-                                <LinkContainer to="/apc/menu_list">
+                                <LinkContainer to="/apc/menu_list/4">
                                     <RaisedButton label="Show Menu" primary={true} style={styles.raisedButton} />
                                 </LinkContainer>
                             </Panel>
@@ -42,7 +42,7 @@ class AdminMainContainer extends React.Component {
                                 <LinkContainer to="/grb/menu_insert">
                                     <RaisedButton label="Add Menu" primary={true} style={styles.raisedButton} />
                                 </LinkContainer>
-                                <LinkContainer to="/grb/menu_list">
+                                <LinkContainer to="/grb/menu_list/3">
                                     <RaisedButton label="Show Menu" primary={true} style={styles.raisedButton} />
                                 </LinkContainer>
                             </Panel>
@@ -52,7 +52,7 @@ class AdminMainContainer extends React.Component {
                                 <LinkContainer to="/milano/menu_insert">
                                     <RaisedButton label="Add Menu" primary={true} style={styles.raisedButton} />
                                 </LinkContainer>
-                                <LinkContainer to="/milano/menu_list">
+                                <LinkContainer to="/milano/menu_list/5">
                                     <RaisedButton label="Show Menu" primary={true} style={styles.raisedButton} />
                                 </LinkContainer>
                             </Panel>

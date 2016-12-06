@@ -20,7 +20,7 @@ const initialState = {
     isShowFilterModal: false,
     isAdvancedFilter: false,
     searchQuery:'',
-    filterOptions:_.extend({},DEFAULT_OPTIONS),
+    filterOptions: _.extend({},DEFAULT_OPTIONS),
     stepIndex:0,
 };
 

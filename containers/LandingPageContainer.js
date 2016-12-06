@@ -45,7 +45,7 @@ class LandingPage extends React.Component {
                         <Col md={12} style={styles.greeting}>
                             <p style={styles.greetingMessage}>Nutritionalize HKUST</p>
                             <p style={styles.sloganMessage}>Use Guacamoli | Become Healthy</p>
-                            <RaisedButton label="Temp Login" secondary={true} style={styles.button} onClick={_loginFunction}/>
+                            <RaisedButton label="Login" secondary={true} style={styles.button} onClick={_loginFunction}/>
                         </Col>
                     </Row>
                 </div>
