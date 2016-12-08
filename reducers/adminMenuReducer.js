@@ -30,7 +30,6 @@ export default function adminMenu(state = initialState, action) {
         case 'ADMIN_DELETING_SUCCESS':
             return {...state, isDeleting: false};
         case 'UPDATE_MENU':
-            console.log("update menu" + action.foodid);
             return state;
         case 'ADMIN_UPDATE_DATA':
             return {...state, isUpdating: true};

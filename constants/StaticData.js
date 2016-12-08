@@ -11,7 +11,7 @@ const foodTypeGeneral = ['noodle','rice','soup','bread','dimsum'];
 
 const tasteType = ['spicy','sweet','salty','sour','oily'];
 const foodTypeIngredient = ['pork','beef','chicken','lamb','fish','duck', 'vegetable'];
-const sauceType = ['tomato','cream','black pepper','mayonnaise','curry','soy sauce','oyster sauce','teriyaki'];
+const sauceType = ['tomato','cream','black pepper','mayonnaise','curry','soy sauce','oyster sauce','teriyaki', 'mala'];
 const without = ['vegetable','pork','chicken','beef','lamb','fish'];
 export const advancedFilterOptions = {
     'Offered Time':offeredTime, 'Taste Type':tasteType, 'Ingredients':foodTypeIngredient, 'Sauce Type':sauceType, 'Without':without

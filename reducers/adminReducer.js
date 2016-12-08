@@ -57,11 +57,9 @@ export default function admin(state = initialState, action) {
 
         case 'ADMIN_INPUT_FILTER_CHECKBOX_OPTIONS':
             var newState = updateFilterOption(state, action.isChecked, action.filterTitle, action.filterValue);
-            console.log(newState);
             return newState;
 
         case 'ADMIN_RESET_INPUT_OPTIONS':
-            console.log("reset is being called");
             var defaultState = _.extend({},DEFAULT_OPTIONS);
             console.log(defaultState);
             return defaultState;

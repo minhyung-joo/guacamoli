@@ -11,6 +11,7 @@ import FoodDetailContainer from './containers/FoodDetailContainer';
 import SearchResultContainer from './containers/SearchResultContainer';
 import AdminMenuListContainer from './containers/AdminMenuListContainer';
 import AdminMenuInsertContainer from './containers/AdminMenuInsertContainer';
+import AdminMenuUpdateContainer from './containers/AdminMenuUpdateContainer';
 import AdminMainContainer from './containers/AdminMainContainer';
 import LoadingContainer from './containers/LoadingContainer';
 
@@ -93,23 +94,23 @@ export default (
 
             <Route path='lg1' onEnter={lg1Authentication}>
                 <Route path='menu_list/:canteenid' component={AdminMenuListContainer}/>
-                <Route path='menu_insert' component={AdminMenuInsertContainer} />
-                <Route path='menu_update/:foodid' component={AdminMenuInsertContainer}/>
+                <Route path='menu_insert/:canteenid' component={AdminMenuInsertContainer} />
+                <Route path='menu_update/:foodid' component={AdminMenuUpdateContainer}/>
             </Route>
             <Route path='apc' onEnter={apcAuthentication}>
                 <Route path='menu_list/:canteenid' component={AdminMenuListContainer}/>
-                <Route path='menu_insert' component={AdminMenuInsertContainer} />
-                <Route path='menu_update/:foodid' component={AdminMenuInsertContainer}/>
+                <Route path='menu_insert/:canteenid' component={AdminMenuInsertContainer} />
+                <Route path='menu_update/:foodid' component={AdminMenuUpdateContainer}/>
             </Route>
             <Route path='grb' onEnter={grbAuthentication}>
                 <Route path='menu_list/:canteenid' component={AdminMenuListContainer}/>
-                <Route path='menu_insert' component={AdminMenuInsertContainer} />
-                <Route path='menu_update/:foodid' component={AdminMenuInsertContainer}/>
+                <Route path='menu_insert/:canteenid' component={AdminMenuInsertContainer} />
+                <Route path='menu_update/:foodid' component={AdminMenuUpdateContainer}/>
             </Route>
             <Route path='milano' onEnter={milanoAuthentication}>
                 <Route path='menu_list/:canteenid' component={AdminMenuListContainer}/>
-                <Route path='menu_insert' component={AdminMenuInsertContainer} />
-                <Route path='menu_update/:foodid' component={AdminMenuInsertContainer}/>
+                <Route path='menu_insert/:canteenid' component={AdminMenuInsertContainer} />
+                <Route path='menu_update/:foodid' component={AdminMenuUpdateContainer}/>
             </Route>
 
             <Route path='error' component={NoPermission} />

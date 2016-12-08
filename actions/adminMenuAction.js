@@ -92,8 +92,6 @@ export function clickMenuDelete(foodid) {
 }
 
 export function updateMenu(menuJson) {
-    console.log(menuJson);
-
     return dispatch=> {
         dispatch(updatingData());
         return axios.post(adminUpdateMealRoute, menuJson)

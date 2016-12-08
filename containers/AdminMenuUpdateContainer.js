@@ -7,51 +7,46 @@ import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
-import DropzoneComponent from 'react-dropzone-component';
 
 import {AdvancedSearchOption} from '../components/DialogFilterOptions';
-import {deliverySpeed, cuisineType, advancedFilterOptions} from '../constants/StaticData';
+import {restaurantList, deliverySpeed, cuisineType, advancedFilterOptions} from '../constants/StaticData';
 
-import {inputSingleTextOption, inputSelectOption, adminResetInputOptions} from '../actions/adminAction';
+import {inputSingleTextOption, inputSelectOption, loadUpdatePageData, adminResetInputOptions, identifyPageType} from '../actions/adminAction';
 import {updateMenu, getAdminFoodDetail} from '../actions/adminMenuAction';
-
-var filepickerCSS = require('react-dropzone-component/styles/filepicker.css');
-var dropzoneCSS = require('dropzone/dist/min/dropzone.min.css');
 
 class AdminMenuInsertContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isReadyForImage: false
-        }
-
-        this.djsConfig = {
-            autoProcessQueue: false,
-            addRemoveLinks: true,
-            acceptedFiles: "image/jpeg,image/png,image/gif",
-            params: {}
-        }
-
-        this.componentConfig = {
-            postUrl: 'uploadHandler',
-            iconFiletypes: ['.jpg', '.png', '.gif'],
-            showFiletypeIcon: true,
+            isFirstTime:true,
         };
-
-        this.myDropzone;
-        this.eventHandlers = {
-            init: (dropzone) => {this.myDropzone = dropzone},
-            complete: (file) => { if (this.myDropzone) {this.myDropzone.removeFile(file)} }
-    }
     }
 
     componentWillMount(){
-        this.props.adminResetInputOptions();
+        const foodId = this.props.params.foodid;
+        this.props.identifyPageType(foodId);
+
+        this.props.getAdminFoodDetail(foodId);
+    }
+
+    componentWillUnmount(){
+        // if(this.props.isUpload){
+        //     this.props.identifyPageType("random")
+        // }else{
+        //     this.props.identifyPageType(null)
+        // }
     }
 
     render () {
-        const {inputSingleTextOption, inputSelectOption,
+        const {inputSingleTextOption, inputSelectOption, loadUpdatePageData,
+            isFetching, foodDetail,
         } = this.props;
+        const foodId = this.props.params.foodid;
+
+        if(this.props.foodDetail!=null && this.state.isFirstTime){
+            loadUpdatePageData(this.props.foodDetail);
+            this.setState({isFirstTime:false});
+        }
 
         var valueStringToIndexConverter = (title, valueArray) =>{
             var resultArray = [];
@@ -81,9 +76,10 @@ class AdminMenuInsertContainer extends React.Component {
             }
             return resultArray;
         }
-        var extractUserInputAsParam = () => {
+
+        var updateMenu = () => {
             var x = {
-                "restaurant_name": this.props.params.canteenid,
+                "restaurant_name": this.props.restaurant,
                 "name": this.props.mealName,
                 "chineseMealName": this.props.mealNameChinese,
                 "ingredientsDescription": this.props.ingredientDescription,
@@ -92,36 +88,20 @@ class AdminMenuInsertContainer extends React.Component {
 
                 "cuisineType": this.props.cuisineType,
                 "deliverySpeed": this.props.deliverySpeed,
-
-                "offeredTimes": valueStringToIndexConverter("offeredTimes",this.props.offeredTime),
-                "tasteTypes": valueStringToIndexConverter("tasteTypes",this.props.tasteType),
-                "foodTypes": valueStringToIndexConverter("foodTypes",this.props.ingredient),
-                "sauceTypes": valueStringToIndexConverter("sauceTypes", this.props.sauceType),
+                //
+                // "offeredTimes": valueStringToIndexConverter("offeredTimes",this.props.offeredTime),
+                // "tasteTypes": valueStringToIndexConverter("tasteTypes",this.props.tasteType),
+                // "foodTypes": valueStringToIndexConverter("foodTypes",this.props.ingredient),
+                // "sauceTypes": valueStringToIndexConverter("sauceTypes", this.props.sauceType),
             };
-            this.djsConfig.params = x;
-        }
-
-        var readyForImage = () => {
-            extractUserInputAsParam();
-            this.setState({isReadyForImage:true});
-        }
-        var resetFunction = () => {
-            this.props.adminResetInputOptions();
-        }
-
-        var postAndResetInputOptions = () => {
-            this.myDropzone.processQueue();
-            cancelFunction();
+            this.props.updateMenu(x);
+            // TODO ideally move back
         };
-        var cancelFunction = () => {
-            this.props.adminResetInputOptions();
-            this.setState({isReadyForImage:false});
-        }
 
         return (
             <div>
                 <Row>
-                    <Col mdOffset={2} md={8} xsOffset={2} xs={8}>
+                    <Col mdOffset={2} md={8}>
                         <Row>
                             <Col md={3} xs={3}><label style={styles.label}>{"Meal Name *:"}</label></Col>
                             <Col md={9} xs={9}>
@@ -157,28 +137,12 @@ class AdminMenuInsertContainer extends React.Component {
                                 <TextField fullWidth="true" style={styles.textRow} value={this.props.password} onChange={(e)=>inputSingleTextOption("password",e.target.value)}/>
                             </Col>
                         </Row>
-                        {
-                            this.state.isReadyForImage?
-                                <Row>
-                                    <DropzoneComponent config={this.componentConfig} eventHandlers={this.eventHandlers} djsConfig={this.djsConfig} />
-                                </Row>:null
-                        }
-
+                        <Row md={12} xs={12}>
+                            <Col mdOffset={5} xsOffset={5}>
+                                <RaisedButton label="Update Menu" primary={true} style={styles.raisedButton} onClick={updateMenu}/>
+                            </Col>
+                        </Row>
                     </Col>
-                </Row>
-                <Row md={12}>
-                    {
-                        !this.state.isReadyForImage?
-                            <Col mdOffset={5} xsOffset={5}>
-                                <RaisedButton label="Upload Image" primary={true} style={styles.raisedButton} onMouseDown={readyForImage} />
-                                <RaisedButton label="Reset" primary={true} style={styles.raisedButton} onClick={resetFunction} />
-                            </Col>
-                            :
-                            <Col mdOffset={5} xsOffset={5}>
-                                <RaisedButton label="Create Menu" primary={true} style={styles.raisedButton} onMouseDown={postAndResetInputOptions} />
-                                <RaisedButton label="Cancel" primary={true} style={styles.raisedButton} onClick={cancelFunction}/>
-                            </Col>
-                    }
                 </Row>
             </div>
         );
@@ -228,7 +192,7 @@ const styles ={
         marginTop:30
     },
     label:{
-        marginTop:20
+        marginTop:15
     },
     raisedButton: {
         margin: 12,
@@ -238,6 +202,11 @@ const styles ={
 
 export default connect(
     state => ({
+        foodDetail: state.adminMenu.foodDetail,
+        isFetching: state.adminMenu.isFetching,
+
+        isUpload: state.admin.isUpload,
+
         mealName: state.admin.mealName,
         mealNameChinese: state.admin.mealNameChinese,
         price: state.admin.price,
@@ -254,7 +223,7 @@ export default connect(
         sauceType: state.admin.sauceType,
     }),
     {
-        inputSingleTextOption, inputSelectOption, adminResetInputOptions,
+        inputSingleTextOption, inputSelectOption, loadUpdatePageData, adminResetInputOptions, identifyPageType,
         updateMenu, getAdminFoodDetail
     }
 )(AdminMenuInsertContainer)
