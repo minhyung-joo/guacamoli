@@ -25,14 +25,19 @@ else, node app assumes that it is running on local or heroku testing environment
 ```sh
 sudo stop guacamoli
 sudo start guacamoli
+
+sudo stop guacamoli-image-service
+sudo start guacamoli-image-service
 ```
 
 edit service configuration file:
 ```sh
-vim /etc/init/guacamoli.conf
+sudo vim /etc/init/guacamoli.conf
+sudo vim /etc/init/guacamoli-image-service.conf
 ```
 
 view service log:
 ```sh
 tail -[no. of lines] /var/log/node.log
+tail -[no. of lines] /var/log/image-service.log
 ```

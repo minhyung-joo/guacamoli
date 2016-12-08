@@ -10,11 +10,8 @@ var express = require('express');
 var bodyParser = require("body-parser");
 var fs = require('fs');
 var pg = require('pg');
-var multer  = require('multer')
-var upload = multer({ dest: 'uploads/' })
 
 var app = express();
-
 
 var path = require("path");
 
