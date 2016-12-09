@@ -11,6 +11,7 @@ import DropzoneComponent from 'react-dropzone-component';
 
 import {AdvancedSearchOption} from '../components/DialogFilterOptions';
 import {deliverySpeed, cuisineType, advancedFilterOptions} from '../constants/StaticData';
+import {valueStringToIndexConverter} from '../constants/Utility';
 
 import {inputSingleTextOption, inputSelectOption, adminResetInputOptions} from '../actions/adminAction';
 import {updateMenu, getAdminFoodDetail} from '../actions/adminMenuAction';
@@ -53,34 +54,6 @@ class AdminMenuInsertContainer extends React.Component {
         const {inputSingleTextOption, inputSelectOption,
         } = this.props;
 
-        var valueStringToIndexConverter = (title, valueArray) =>{
-            var resultArray = [];
-            if(valueArray.length > 0) {
-                switch (title) {
-                    case 'offeredTimes':
-                        valueArray.map(function (option) {
-                            resultArray.push(advancedFilterOptions["Offered Time"].indexOf(option) + 1);
-                        });
-                        break;
-                    case 'tasteTypes':
-                        valueArray.map(function (option) {
-                            resultArray.push(advancedFilterOptions["Taste Type"].indexOf(option) + 1);
-                        });
-                        break;
-                    case 'foodTypes':
-                        valueArray.map(function (option) {
-                            resultArray.push(advancedFilterOptions["Ingredients"].indexOf(option) + 1);
-                        });
-                        break;
-                    case 'sauceTypes':
-                        valueArray.map(function (option) {
-                            resultArray.push(advancedFilterOptions["Sauce Type"].indexOf(option) + 1);
-                        });
-                        break;
-                }
-            }
-            return resultArray;
-        }
         var extractUserInputAsParam = () => {
             var x = {
                 "restaurant_name": this.props.params.canteenid,
@@ -123,20 +96,20 @@ class AdminMenuInsertContainer extends React.Component {
                 <Row>
                     <Col mdOffset={2} md={8} xsOffset={2} xs={8}>
                         <Row>
-                            <Col md={3} xs={3}><label style={styles.label}>{"Meal Name *:"}</label></Col>
+                            <Col md={3} xs={3}><label style={styles.label}>{"Meal Name (英文餐名)"}</label></Col>
                             <Col md={9} xs={9}>
                                 <TextField fullWidth="true" style={styles.textRow} value={this.props.mealName} onChange={(e)=>inputSingleTextOption("mealName",e.target.value)}/>
                             </Col>
                         </Row>
 
                         <Row>
-                            <Col md={3} xs={3}><label style={styles.label}>{"Meal Name Chinese:"}</label></Col>
+                            <Col md={3} xs={3}><label style={styles.label}>{"Chinese Name (中文餐名)"}</label></Col>
                             <Col md={9} xs={9}>
                                 <TextField fullWidth="true" style={styles.textRow} value={this.props.mealNameChinese} onChange={(e)=>inputSingleTextOption("mealNameChinese",e.target.value)}/>
                             </Col>
                         </Row>
                         <Row>
-                            <Col md={3} xs={3}><label style={styles.label}>{"Price:"}</label></Col>
+                            <Col md={3} xs={3}><label style={styles.label}>{"Price (價格)"}</label></Col>
                             <Col md={9} xs={9}>
                                 <TextField fullWidth="true" style={styles.textRow} value={this.props.price} onChange={(e)=>inputSingleTextOption("price",e.target.value)}/>
                             </Col>
@@ -145,14 +118,14 @@ class AdminMenuInsertContainer extends React.Component {
                         <Row>
                             <Col md={3}><label style={styles.label}>Details:</label></Col>
                             <Col md={9}>
-                                <SelectRow label="Cuisine Type" name="cuisineType" onChangeHandler={inputSelectOption} value={this.props.cuisineType} itemArray={cuisineType}/>
-                                <SelectRow label="Delivery Speed" name="deliverySpeed" onChangeHandler={inputSelectOption} value={this.props.deliverySpeed} itemArray={deliverySpeed}/>
+                                <SelectRow label="Cuisine Type (菜品種類)" name="cuisineType" onChangeHandler={inputSelectOption} value={this.props.cuisineType} itemArray={cuisineType}/>
+                                <SelectRow label="Delivery Speed (上菜速度)" name="deliverySpeed" onChangeHandler={inputSelectOption} value={this.props.deliverySpeed} itemArray={deliverySpeed}/>
                             </Col>
                         </Row>
-                        <Row><AdvancedSearchOption isAdmin={true}/></Row>
-                        <Row><IngredientTextarea label="Detailed Ingredients" value={this.props.ingredientDescription} onChange={(e)=>inputSingleTextOption("ingredientDescription",e.target.value)} /></Row>
+                        <Row><AdvancedSearchOption isAdmin={true} /></Row>
+                        <Row><IngredientTextarea label="Detailed Ingredients (詳細成分)" value={this.props.ingredientDescription} onChange={(e)=>inputSingleTextOption("ingredientDescription",e.target.value)} /></Row>
                         <Row>
-                            <Col md={3} xs={3}><label style={styles.label}>{"Password:"}</label></Col>
+                            <Col md={3} xs={3}><label style={styles.label}>{"Password (密碼)"}</label></Col>
                             <Col md={9} xs={9}>
                                 <TextField fullWidth="true" style={styles.textRow} value={this.props.password} onChange={(e)=>inputSingleTextOption("password",e.target.value)}/>
                             </Col>
@@ -170,13 +143,13 @@ class AdminMenuInsertContainer extends React.Component {
                     {
                         !this.state.isReadyForImage?
                             <Col mdOffset={5} xsOffset={5}>
-                                <RaisedButton label="Upload Image" primary={true} style={styles.raisedButton} onMouseDown={readyForImage} />
-                                <RaisedButton label="Reset" primary={true} style={styles.raisedButton} onClick={resetFunction} />
+                                <RaisedButton label="Upload Image 上傳圖片" primary={true} style={styles.raisedButton} onMouseDown={readyForImage} />
+                                <RaisedButton label="Reset 重設" primary={true} style={styles.raisedButton} onClick={resetFunction} />
                             </Col>
                             :
                             <Col mdOffset={5} xsOffset={5}>
-                                <RaisedButton label="Create Menu" primary={true} style={styles.raisedButton} onMouseDown={postAndResetInputOptions} />
-                                <RaisedButton label="Cancel" primary={true} style={styles.raisedButton} onClick={cancelFunction}/>
+                                <RaisedButton label="Create Menu 創建菜單" primary={true} style={styles.raisedButton} onMouseDown={postAndResetInputOptions} />
+                                <RaisedButton label="Cancel 取消" primary={true} style={styles.raisedButton} onClick={cancelFunction}/>
                             </Col>
                     }
                 </Row>

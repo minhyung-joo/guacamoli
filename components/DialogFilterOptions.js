@@ -3,7 +3,7 @@ import {render} from 'react-dom';
 import {connect} from 'react-redux';
 import {Row, Col, Panel} from 'react-bootstrap';
 
-import {defaultFilterOptions, advancedFilterOptions} from '../constants/StaticData';
+import {defaultFilterOptions, advancedFilterOptions, chineseAdvancedFilterOptions} from '../constants/StaticData';
 import FilterDropdown from './FilterDropdown';
 import FilterCheckbox from './FilterCheckbox';
 
@@ -34,10 +34,29 @@ export class AdvancedSearchOption extends React.Component {
         const isAdmin = this.props.isAdmin;
 
         return (
+                <div>
+                    {
+                        Object.keys(advancedFilterOptions).map(function(key){
+                            return (key=='Offered Time')?null:<FilterCheckbox isAdmin={isAdmin} key={key} filterName={key} checkboxOptionList={advancedFilterOptions[key]}/>;
+                        })
+                    }
+                </div>
+        );
+    }
+}
+
+/**
+ * Advanced Search Options
+ */
+export class AdminAdvancedSearchOption extends React.Component {
+    render() {
+        const isAdmin = this.props.isAdmin;
+
+        return (
             <div>
                 {
-                    Object.keys(advancedFilterOptions).map(function(key){
-                        return ((key=='Without' && isAdmin==true) || (key=='Offered Time' && isAdmin=="false"))?null:<FilterCheckbox isAdmin={isAdmin} key={key} filterName={key} checkboxOptionList={advancedFilterOptions[key]}/>;
+                    Object.keys(chineseAdvancedFilterOptions).map(function(key){
+                        return (key=='Without')?null:<FilterCheckbox isAdmin={isAdmin} key={key} filterName={key} checkboxOptionList={chineseAdvancedFilterOptions[key]}/>;
                     })
                 }
             </div>

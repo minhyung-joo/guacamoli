@@ -64,14 +64,15 @@ const style = {
     paper:{
         width: '100%',
         marginBottom: 20,
-        paddingTop:15,
+        paddingTop: 15,
         textAlign: 'center',
         display: 'inline-block',
+        padding: 20
     },
     checkbox: {
-        marginBottom: 16, width:20
+        marginBottom: 16, width: '100%', textAlign: 'left'
     },
     filterDropdown:{
-        marginBottom:10
+        marginBottom: 10
     }
 };
