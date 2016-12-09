@@ -48,6 +48,7 @@ class AdminMenuUpdateContainer extends React.Component {
 
         var updateMenu = () => {
             var x = {
+                "menuId": foodId,
                 "restaurant_name": this.props.restaurant,
                 "name": this.props.mealName,
                 "chineseMealName": this.props.mealNameChinese,

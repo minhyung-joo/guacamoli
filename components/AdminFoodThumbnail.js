@@ -81,6 +81,7 @@ export default class AdminFoodThumbnail extends React.Component {
                     onRequestClose={this.handleClose}
                 >
                     If you are sure you want to delete this, please write password:
+
                     <TextField fullWidth={true} value={this.state.password} onChange={(event)=>this.setState({password:event.target.value})}/>
                 </Dialog>
             </div>

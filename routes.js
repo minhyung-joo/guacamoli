@@ -41,18 +41,18 @@ const milanoCanteenWrapper = () => (
     <CanteenPage canteenType={canteenNameToIdMapping('Milano')}/>
 );
 
-function lg1Authentication(nextState, replace){
-    errorCheckingAndRouting('lg1', replace);
-}
-function apcAuthentication(nextState, replace){
-    errorCheckingAndRouting('apc', replace);
-}
-function grbAuthentication(nextState, replace){
-    errorCheckingAndRouting('grb', replace);
-}
-function milanoAuthentication(nextState, replace){
-    errorCheckingAndRouting('milano', replace);
-}
+// function lg1Authentication(nextState, replace){
+//     errorCheckingAndRouting('lg1', replace);
+// }
+// function apcAuthentication(nextState, replace){
+//     errorCheckingAndRouting('apc', replace);
+// }
+// function grbAuthentication(nextState, replace){
+//     errorCheckingAndRouting('grb', replace);
+// }
+// function milanoAuthentication(nextState, replace){
+//     errorCheckingAndRouting('milano', replace);
+// }
 
 function errorCheckingAndRouting(pwd, replace){
     const correctPwd = pwd;
@@ -92,22 +92,26 @@ export default (
             <Route path='filterResult/' component={SearchResultContainer} />
             <Route path='admin' component={AdminMainContainer} />
 
-            <Route path='lg1' onEnter={lg1Authentication}>
+            {/*<Route path='lg1' onEnter={lg1Authentication}>*/}
+            <Route path='lg1'>
                 <Route path='menu_list/:canteenid' component={AdminMenuListContainer}/>
                 <Route path='menu_insert/:canteenid' component={AdminMenuInsertContainer} />
                 <Route path='menu_update/:foodid' component={AdminMenuUpdateContainer}/>
             </Route>
-            <Route path='apc' onEnter={apcAuthentication}>
+            {/*<Route path='apc' onEnter={apcAuthentication}>*/}
+            <Route path='apc'>
                 <Route path='menu_list/:canteenid' component={AdminMenuListContainer}/>
                 <Route path='menu_insert/:canteenid' component={AdminMenuInsertContainer} />
                 <Route path='menu_update/:foodid' component={AdminMenuUpdateContainer}/>
             </Route>
-            <Route path='grb' onEnter={grbAuthentication}>
+            {/*<Route path='grb' onEnter={grbAuthentication}>*/}
+            <Route path='grb'>
                 <Route path='menu_list/:canteenid' component={AdminMenuListContainer}/>
                 <Route path='menu_insert/:canteenid' component={AdminMenuInsertContainer} />
                 <Route path='menu_update/:foodid' component={AdminMenuUpdateContainer}/>
             </Route>
-            <Route path='milano' onEnter={milanoAuthentication}>
+            {/*<Route path='milano' onEnter={milanoAuthentication}>*/}
+            <Route path='milano'>
                 <Route path='menu_list/:canteenid' component={AdminMenuListContainer}/>
                 <Route path='menu_insert/:canteenid' component={AdminMenuInsertContainer} />
                 <Route path='menu_update/:foodid' component={AdminMenuUpdateContainer}/>
