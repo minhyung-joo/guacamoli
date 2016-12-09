@@ -6,6 +6,7 @@ import {Thumbnail, Button} from 'react-bootstrap';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import TextField from 'material-ui/TextField';
 
 import {restaurantList} from '../constants/StaticData';
 import {imageUrlMapper} from '../constants/Utility';
@@ -16,6 +17,7 @@ export default class AdminFoodThumbnail extends React.Component {
         super(props);
         this.state = {
             openDeleteModal: false,
+            password: ''
         }
     }
 
@@ -43,7 +45,7 @@ export default class AdminFoodThumbnail extends React.Component {
         };
 
         var handleModalYes = () => {
-            onDelete(foodid);
+            onDelete(foodid, this.state.password);
             this.setState({openDeleteModal:false});
         };
 
@@ -67,8 +69,8 @@ export default class AdminFoodThumbnail extends React.Component {
                     </CardMedia>
                     <CardTitle title={titleHandler(food.name)} subtitle={restaurantList[restaurantId] + " - " + food.price + " HKD"} />
                     <CardActions>
-                        <FlatButton label="Update" onClick={()=>onUpdate(restaurantId, foodid)} />
-                        <FlatButton label="Delete" onClick={()=>this.setState({openDeleteModal: true})} />
+                        <FlatButton label="Update 更新" onClick={()=>onUpdate(restaurantId, foodid)} />
+                        <FlatButton label="Delete 刪除" onClick={()=>this.setState({openDeleteModal: true})} />
                     </CardActions>
                 </Card>
                 <Dialog
@@ -78,7 +80,8 @@ export default class AdminFoodThumbnail extends React.Component {
                     open={this.state.openDeleteModal}
                     onRequestClose={this.handleClose}
                 >
-                    Are you sure you want to delete this menu?
+                    If you are sure you want to delete this, please write password:
+                    <TextField fullWidth={true} value={this.state.password} onChange={(event)=>this.setState({password:event.target.value})}/>
                 </Dialog>
             </div>
         );

@@ -82,10 +82,10 @@ export function clickMenuUpdate(canteenId, foodid) {
     }
 }
 
-export function clickMenuDelete(foodid) {
+export function clickMenuDelete(foodid, password) {
     return dispatch=> {
         dispatch(deletingData());
-        return axios.post(adminDeleteMealRoute, {id: foodid})
+        return axios.post(adminDeleteMealRoute, {id: foodid, password: password})
             .then(()=>dispatch(successDeletingData))
             .catch(err=>dispatch(deleteRequestFail(err)))
     }

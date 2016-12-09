@@ -64,13 +64,3 @@ app.get("/", function(req, res) {
 require("./backend_APIs/admin_routes.js").init(app, DATABASE_URL);
 require("./backend_APIs/admin_APIs.js").init(app, DATABASE_URL);
 require("./backend_APIs/front_APIs.js").init(app, DATABASE_URL);
-
-app.post('/uploadHandler', upload.single('file'), function (req, res, next) {
-  if (req.file && req.file.originalname) {
-    console.log(`Received file ${req.file.originalname}`);
-    console.log(req.file);
-    console.log(req.body);
-  }
-
-  res.send({ responseText: req.file.path }); // You can send any response to the user here
-});

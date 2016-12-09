@@ -110,3 +110,32 @@ export function mapFilterOptionToBodyOption(filterOption){
     // var jsonBody = JSON.stringify(body);
     return body;
 }
+
+export function valueStringToIndexConverter(title, valueArray) {
+    var resultArray = [];
+    if(valueArray.length > 0) {
+        switch (title) {
+            case 'offeredTimes':
+                valueArray.map(function (option) {
+                    resultArray.push(advancedFilterOptions["Offered Time"].indexOf(option) + 1);
+                });
+                break;
+            case 'tasteTypes':
+                valueArray.map(function (option) {
+                    resultArray.push(advancedFilterOptions["Taste Type"].indexOf(option) + 1);
+                });
+                break;
+            case 'foodTypes':
+                valueArray.map(function (option) {
+                    resultArray.push(advancedFilterOptions["Ingredients"].indexOf(option) + 1);
+                });
+                break;
+            case 'sauceTypes':
+                valueArray.map(function (option) {
+                    resultArray.push(advancedFilterOptions["Sauce Type"].indexOf(option) + 1);
+                });
+                break;
+        }
+    }
+    return resultArray;
+}

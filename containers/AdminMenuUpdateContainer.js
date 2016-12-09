@@ -8,17 +8,19 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import {AdvancedSearchOption} from '../components/DialogFilterOptions';
-import {restaurantList, deliverySpeed, cuisineType, advancedFilterOptions} from '../constants/StaticData';
+import {AdminAdvancedSearchOption} from '../components/DialogFilterOptions';
+import {chineseDeliverySpeed, chineseCuisineType} from '../constants/StaticData';
+import {valueStringToIndexConverter} from '../constants/Utility';
 
 import {inputSingleTextOption, inputSelectOption, loadUpdatePageData, adminResetInputOptions, identifyPageType} from '../actions/adminAction';
 import {updateMenu, getAdminFoodDetail} from '../actions/adminMenuAction';
 
-class AdminMenuInsertContainer extends React.Component {
+class AdminMenuUpdateContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             isFirstTime:true,
+            isChinese: false,
         };
     }
 
@@ -30,11 +32,7 @@ class AdminMenuInsertContainer extends React.Component {
     }
 
     componentWillUnmount(){
-        // if(this.props.isUpload){
         //     this.props.identifyPageType("random")
-        // }else{
-        //     this.props.identifyPageType(null)
-        // }
     }
 
     render () {
@@ -46,35 +44,6 @@ class AdminMenuInsertContainer extends React.Component {
         if(this.props.foodDetail!=null && this.state.isFirstTime){
             loadUpdatePageData(this.props.foodDetail);
             this.setState({isFirstTime:false});
-        }
-
-        var valueStringToIndexConverter = (title, valueArray) =>{
-            var resultArray = [];
-            if(valueArray.length > 0) {
-                switch (title) {
-                    case 'offeredTimes':
-                        valueArray.map(function (option) {
-                            resultArray.push(advancedFilterOptions["Offered Time"].indexOf(option) + 1);
-                        });
-                        break;
-                    case 'tasteTypes':
-                        valueArray.map(function (option) {
-                            resultArray.push(advancedFilterOptions["Taste Type"].indexOf(option) + 1);
-                        });
-                        break;
-                    case 'foodTypes':
-                        valueArray.map(function (option) {
-                            resultArray.push(advancedFilterOptions["Ingredients"].indexOf(option) + 1);
-                        });
-                        break;
-                    case 'sauceTypes':
-                        valueArray.map(function (option) {
-                            resultArray.push(advancedFilterOptions["Sauce Type"].indexOf(option) + 1);
-                        });
-                        break;
-                }
-            }
-            return resultArray;
         }
 
         var updateMenu = () => {
@@ -95,7 +64,6 @@ class AdminMenuInsertContainer extends React.Component {
                 // "sauceTypes": valueStringToIndexConverter("sauceTypes", this.props.sauceType),
             };
             this.props.updateMenu(x);
-            // TODO ideally move back
         };
 
         return (
@@ -103,43 +71,40 @@ class AdminMenuInsertContainer extends React.Component {
                 <Row>
                     <Col mdOffset={2} md={8}>
                         <Row>
-                            <Col md={3} xs={3}><label style={styles.label}>{"Meal Name *:"}</label></Col>
+                            <Col md={3} xs={3}><label style={styles.label}>{"Meal Name (英文餐名)"}</label></Col>
                             <Col md={9} xs={9}>
                                 <TextField fullWidth="true" style={styles.textRow} value={this.props.mealName} onChange={(e)=>inputSingleTextOption("mealName",e.target.value)}/>
                             </Col>
                         </Row>
 
                         <Row>
-                            <Col md={3} xs={3}><label style={styles.label}>{"Meal Name Chinese:"}</label></Col>
+                            <Col md={3} xs={3}><label style={styles.label}>{"Chinese Name (中文餐名)"}</label></Col>
                             <Col md={9} xs={9}>
                                 <TextField fullWidth="true" style={styles.textRow} value={this.props.mealNameChinese} onChange={(e)=>inputSingleTextOption("mealNameChinese",e.target.value)}/>
                             </Col>
                         </Row>
                         <Row>
-                            <Col md={3} xs={3}><label style={styles.label}>{"Price:"}</label></Col>
+                            <Col md={3} xs={3}><label style={styles.label}>{"Price (價格)"}</label></Col>
                             <Col md={9} xs={9}>
                                 <TextField fullWidth="true" style={styles.textRow} value={this.props.price} onChange={(e)=>inputSingleTextOption("price",e.target.value)}/>
                             </Col>
                         </Row>
 
+                        <Col mdOffset={3} md={9}>
+                            <SelectRow label="Cuisine Type (菜品種類)" name="cuisineType" onChangeHandler={inputSelectOption} value={this.props.cuisineType} itemArray={chineseCuisineType}/>
+                            <SelectRow label="Delivery Speed (上菜速度)" name="deliverySpeed" onChangeHandler={inputSelectOption} value={this.props.deliverySpeed} itemArray={chineseDeliverySpeed}/>
+                        </Col>
+                        <Row><AdminAdvancedSearchOption isAdmin={true} isChinese={false} /></Row>
+                        <Row><IngredientTextarea label="Detailed Ingredients (詳細成分)" value={this.props.ingredientDescription} onChange={(e)=>inputSingleTextOption("ingredientDescription",e.target.value)} /></Row>
                         <Row>
-                            <Col md={3}><label style={styles.label}>Details:</label></Col>
-                            <Col md={9}>
-                                <SelectRow label="Cuisine Type" name="cuisineType" onChangeHandler={inputSelectOption} value={this.props.cuisineType} itemArray={cuisineType}/>
-                                <SelectRow label="Delivery Speed" name="deliverySpeed" onChangeHandler={inputSelectOption} value={this.props.deliverySpeed} itemArray={deliverySpeed}/>
-                            </Col>
-                        </Row>
-                        <Row><AdvancedSearchOption isAdmin={true}/></Row>
-                        <Row><IngredientTextarea label="Detailed Ingredients" value={this.props.ingredientDescription} onChange={(e)=>inputSingleTextOption("ingredientDescription",e.target.value)} /></Row>
-                        <Row>
-                            <Col md={3} xs={3}><label style={styles.label}>{"Password:"}</label></Col>
+                            <Col md={3} xs={3}><label style={styles.label}>{"Password (密碼)"}</label></Col>
                             <Col md={9} xs={9}>
                                 <TextField fullWidth="true" style={styles.textRow} value={this.props.password} onChange={(e)=>inputSingleTextOption("password",e.target.value)}/>
                             </Col>
                         </Row>
                         <Row md={12} xs={12}>
                             <Col mdOffset={5} xsOffset={5}>
-                                <RaisedButton label="Update Menu" primary={true} style={styles.raisedButton} onClick={updateMenu}/>
+                                <RaisedButton label="Update (更新)" primary={true} style={styles.raisedButton} onClick={updateMenu}/>
                             </Col>
                         </Row>
                     </Col>
@@ -152,7 +117,7 @@ class AdminMenuInsertContainer extends React.Component {
 
 function SelectRow(props){
     return (
-        <Col md={6}>
+        <Col md={6} xs={6}>
             <SelectField
                 floatingLabelText={props.label}
                 value={props.value}
@@ -171,7 +136,7 @@ function SelectRow(props){
 function IngredientTextarea(props){
     return (
     <Row style={styles.textRow}>
-        <Col md={3} xs={3}><label>{props.label} :</label></Col>
+        <Col md={3} xs={3}><label>{props.label}</label></Col>
         <Col md={9} xs={9}>
             <textarea className="form-control" value={props.value} onChange={props.onChange} />
         </Col>
@@ -205,8 +170,6 @@ export default connect(
         foodDetail: state.adminMenu.foodDetail,
         isFetching: state.adminMenu.isFetching,
 
-        isUpload: state.admin.isUpload,
-
         mealName: state.admin.mealName,
         mealNameChinese: state.admin.mealNameChinese,
         price: state.admin.price,
@@ -226,4 +189,4 @@ export default connect(
         inputSingleTextOption, inputSelectOption, loadUpdatePageData, adminResetInputOptions, identifyPageType,
         updateMenu, getAdminFoodDetail
     }
-)(AdminMenuInsertContainer)
+)(AdminMenuUpdateContainer)
