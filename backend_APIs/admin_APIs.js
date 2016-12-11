@@ -183,8 +183,8 @@ var init = function(app, DATABASE_URL) {
       }
     }
   });
-  app.post('/api/auth/millano', function (req, res) {
-    console.log("POST /api/auth/millano");
+  app.post('/api/auth/milano', function (req, res) {
+    console.log("POST /api/auth/milano");
     if (!auth) {
       res.send({success:true});
       return;
@@ -254,7 +254,7 @@ var init = function(app, DATABASE_URL) {
         }
         else
         {
-          console.log(result.rows);
+          //console.log(result.rows);
           // AUTHENTICATION
           if (!authenticate(request.body.password, result.rows[0].restaurantid, auth)) {
             console.log("ERROR: authentication failed");
