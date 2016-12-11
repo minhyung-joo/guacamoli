@@ -14,7 +14,7 @@ var storage = multer.diskStorage({
     callback(null, Date.now()+"-"+file.originalname);
   }
 })
-var upload = multer({ storage: storage })
+var upload = multer({ storage: storage });
 //var upload = multer({ dest: '../imageStorage/' })
 var auth;
 try {
@@ -39,20 +39,21 @@ var init = function(app, DATABASE_URL) {
     if (pwd==authFile.root) {
       authFlag = true;
     }
-    if (restaurantId==1 && pwd!=authFile.lg1) {
+    if (restaurantId==1 && pwd==authFile.lg1) {
       authFlag = true;
     }
-    if (restaurantId==3 && pwd!=authFile.grb) {
+    if (restaurantId==3 && pwd==authFile.grb) {
       authFlag = true;
     }
-    if (restaurantId==4 && pwd!=authFile.apc) {
+    if (restaurantId==4 && pwd==authFile.apc) {
       authFlag = true;
     }
-    if (restaurantId==5 && pwd!=authFile.millano) {
+    if (restaurantId==5 && pwd==authFile.millano) {
       authFlag = true;
     }
     return authFlag;
   }
+
 
   /*
     NEW VERSION OF meal upload API
@@ -202,7 +203,7 @@ var init = function(app, DATABASE_URL) {
     updateMeal
   */
   app.post('/updateMeal', function (req, res) {
-    console.log("POST /updateMeal/" + req.body.menuId);
+    console.log("POST /updateMeal/");
     console.log(req.body);
 
     // AUTHENTICATION
@@ -212,10 +213,10 @@ var init = function(app, DATABASE_URL) {
       return;
     }
 
-    pg.connect(DATABASE_URL, function(err, client, done) {1
+    pg.connect(DATABASE_URL, function(err, client, done) {
       client.query("UPDATE meal SET ingredientsDescription = $2, "+
-                    "name = $3, chineseName = $4, price = $5"+
-                    "cusineType = $6, deliverySpeed = $7"+
+                    "name = $3, chineseName = $4, price = $5, "+
+                    "cuisineTypeId = $6, deliverySpeedId = $7"+
                     "WHERE meal.id = $1",
                     [req.body.menuId, req.body.ingredientsDescription,
                       req.body.name, req.body.chineseMealName, req.body.price,
@@ -246,17 +247,6 @@ var init = function(app, DATABASE_URL) {
       res.send({success: false, status:"ERROR: authentication failed"});
       return;
     }
-    /*if (auth) {
-      if (req.body.password!=auth.lg1 || req.body.password!=auth.apc ||
-        req.body.password!=auth.grb || req.body.password!=auth.millano) {
-        console.log("ERROR: authentication failed");
-        res.send({status:"ERROR: authentication failed"});
-        return;
-      }
-    }*/
-    //console.log("req.body = "+request.body);
-    //console.log("restaurant id  = "+ request.body.restaurant_name);
-    //console.log("offeredTimes = "+request.body.offeredTimes);
     if (!request.body.id) {
       console.log("delete meal failed: required fields null");
       response.json({"status":"FAIL: required fields null"});
