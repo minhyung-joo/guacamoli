@@ -52,7 +52,10 @@ class AdminMenuUpdateContainer extends React.Component {
             this.setState({isFirstTime:false});
         }
 
-
+        if(this.props.isUpdateSuccess && this.state.isFirstTime){
+            loadUpdatePageData(this.props.foodDetail);
+            this.setState({isFirstTime:false});
+        }
 
         var updateMenu = () => {
             var x = {

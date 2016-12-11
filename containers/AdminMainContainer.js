@@ -125,6 +125,7 @@ const styles ={
         paddingTop:180
     },
     raisedButton: {
-        margin:22,
+        margin:10,
+        padding:10
     }
 }
