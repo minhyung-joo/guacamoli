@@ -4,6 +4,8 @@ const getCanteenDataRoute = 'api/getCanteenList?restaurantId=(p1)';
 const adminDeleteMealRoute = '/deleteMeal';
 const adminUpdateMealRoute = '/updateMeal';
 
+const adminAuthRoute = '/api/auth/(canteen)';
+
 function fetchingData(){
     return{
         type:'ADMIN_FETCHING_DATA'
@@ -51,8 +53,37 @@ function updatingData(){
     }
 }
 function successUpdatingData(){
-    return{
-        type:'ADMIN_UPDATING_SUCCESS'
+    return {
+        type: 'ADMIN_UPDATING_SUCCESS'
+    }
+}
+
+function authSuccess (json){
+    return {
+        type: 'ADMIN_AUTH_SUCCESS',
+        success: json.data.success,
+    }
+}
+
+function authFail (){
+    return {
+        type: 'ADMIN_AUTH_FAIL',
+    }
+}
+
+export function redirectInsertPage(canteenString, canteenId){
+    return {
+        type: 'ADMIN_REDIRECT_TO_INSERT',
+        canteenString: canteenString,
+        canteenId: canteenId
+    }
+}
+
+export function redirectListPage(canteenString, canteenId){
+    return {
+        type: 'ADMIN_REDIRECT_TO_LIST',
+        canteenString: canteenString,
+        canteenId: canteenId
     }
 }
 
@@ -92,11 +123,25 @@ export function clickMenuDelete(foodid, password) {
 }
 
 export function updateMenu(menuJson) {
+    console.log(menuJson);
+
     return dispatch=> {
         dispatch(updatingData());
         return axios.post(adminUpdateMealRoute, menuJson)
             .then(()=>dispatch(successUpdatingData()))
             .catch(err=>dispatch(requestFail(err)))
+    }
+}
+
+export function checkCanteenAuthentication(canteen, password){
+    const api = adminAuthRoute.replace('(canteen)',canteen);
+    console.log("auth api is " + api);
+    console.log("successfully recieved password "+password);
+
+    return dispatch=>{
+        return axios.post(api, { password: password})
+            .then((json)=>dispatch(authSuccess(json)))
+            .catch(err=>dispatch(authFail(err)))
     }
 }
 

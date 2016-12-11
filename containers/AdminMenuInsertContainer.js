@@ -7,6 +7,8 @@ import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
 import DropzoneComponent from 'react-dropzone-component';
 
 import {AdvancedSearchOption} from '../components/DialogFilterOptions';
@@ -23,7 +25,8 @@ class AdminMenuInsertContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isReadyForImage: false
+            isReadyForImage: false,
+            isSuccess: false,
         }
 
         this.djsConfig = {
@@ -53,6 +56,27 @@ class AdminMenuInsertContainer extends React.Component {
     render () {
         const {inputSingleTextOption, inputSelectOption,
         } = this.props;
+
+        const actions = [
+            <FlatButton
+                label="OK"
+                primary={true}
+                onTouchTap={()=>handleModalYes()}
+            />,
+        ];
+
+        var handleClose = () => {
+            this.setState({isSuccess:false});
+        };
+
+        var handleModalYes = () => {
+            postAndResetInputOptions();
+            handleClose();
+        };
+
+        var handleOpen = () => {
+            this.setState({isSuccess:true});
+        };
 
         var extractUserInputAsParam = () => {
             var x = {
@@ -90,6 +114,7 @@ class AdminMenuInsertContainer extends React.Component {
             this.props.adminResetInputOptions();
             this.setState({isReadyForImage:false});
         }
+
 
         return (
             <div>
@@ -148,11 +173,20 @@ class AdminMenuInsertContainer extends React.Component {
                             </Col>
                             :
                             <Col mdOffset={5} xsOffset={5}>
-                                <RaisedButton label="Create Menu 創建菜單" primary={true} style={styles.raisedButton} onMouseDown={postAndResetInputOptions} />
+                                <RaisedButton label="Create Menu 創建菜單" primary={true} style={styles.raisedButton} onMouseDown={handleOpen} />
                                 <RaisedButton label="Cancel 取消" primary={true} style={styles.raisedButton} onClick={cancelFunction}/>
                             </Col>
                     }
                 </Row>
+                <Dialog
+                    title="Confirmation Message"
+                    actions={actions}
+                    modal={false}
+                    open={this.state.isSuccess}
+                    onRequestClose={this.handleClose}
+                >
+                    <p> Successfully added <b>"{this.props.mealName}"</b> to the menu list. </p>
+                </Dialog>
             </div>
         );
     }

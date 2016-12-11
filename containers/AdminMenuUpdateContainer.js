@@ -7,6 +7,8 @@ import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
 
 import {AdminAdvancedSearchOption} from '../components/DialogFilterOptions';
 import {chineseDeliverySpeed, chineseCuisineType} from '../constants/StaticData';
@@ -21,6 +23,7 @@ class AdminMenuUpdateContainer extends React.Component {
         this.state = {
             isFirstTime:true,
             isChinese: false,
+            isSuccess: false,
         };
     }
 
@@ -40,6 +43,26 @@ class AdminMenuUpdateContainer extends React.Component {
             isFetching, foodDetail,
         } = this.props;
         const foodId = this.props.params.foodid;
+        const actions = [
+            <FlatButton
+                label="OK"
+                primary={true}
+                onTouchTap={()=>handleModalYes()}
+            />,
+        ];
+
+        var handleClose = () => {
+            this.setState({isSuccess:false});
+        };
+
+        var handleModalYes = () => {
+            updateMenu();
+            handleClose();
+        };
+
+        var handleOpen = () => {
+            this.setState({isSuccess:true});
+        };
 
         if(this.props.foodDetail!=null && this.state.isFirstTime){
             loadUpdatePageData(this.props.foodDetail);
@@ -58,7 +81,11 @@ class AdminMenuUpdateContainer extends React.Component {
 
                 "cuisineType": this.props.cuisineType,
                 "deliverySpeed": this.props.deliverySpeed,
-                //
+
+                "offeredTimes": [],
+                "tasteTypes": [],
+                "foodTypes": [],
+                "sauceTypes": [],
                 // "offeredTimes": valueStringToIndexConverter("offeredTimes",this.props.offeredTime),
                 // "tasteTypes": valueStringToIndexConverter("tasteTypes",this.props.tasteType),
                 // "foodTypes": valueStringToIndexConverter("foodTypes",this.props.ingredient),
@@ -105,11 +132,20 @@ class AdminMenuUpdateContainer extends React.Component {
                         </Row>
                         <Row md={12} xs={12}>
                             <Col mdOffset={5} xsOffset={5}>
-                                <RaisedButton label="Update (更新)" primary={true} style={styles.raisedButton} onClick={updateMenu}/>
+                                <RaisedButton label="Update (更新)" primary={true} style={styles.raisedButton} onClick={handleOpen}/>
                             </Col>
                         </Row>
                     </Col>
                 </Row>
+                <Dialog
+                    title="Confirmation Message"
+                    actions={actions}
+                    modal={false}
+                    open={this.state.isSuccess}
+                    onRequestClose={this.handleClose}
+                >
+                    <p> Successfully updated <b>"{this.props.mealName}"</b> from the menu list. </p>
+                </Dialog>
             </div>
         );
     }

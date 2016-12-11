@@ -1,5 +1,6 @@
 
 export const restaurantList =['Default', 'LG1','MCDonald','GRB', 'APC', 'Milano','Einstein Cafe', 'Ebeenezer', 'LSK'];
+export const restaurantListForMapping =['Default', 'lg1','MCDonald','grb', 'apc', 'milano','Einstein Cafe', 'Ebeenezer', 'LSK'];
 export const deliverySpeed = ['Default','Pickup','Wait Ticket No.'];
 export const offeredTime = ['Default','Morning','Lunch','Tea Time','Dinner'];
 export const cuisineType = ['Default','Chinese','Japanese','Italian','Thai','Vietnamese','Indian/Turkey'];

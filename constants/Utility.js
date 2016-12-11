@@ -1,4 +1,4 @@
-import {defaultFilterOptions, advancedFilterOptions} from './StaticData';
+import {defaultFilterOptions, advancedFilterOptions, restaurantListForMapping} from './StaticData';
 export function availabilityMapper(ids){
     if(ids==null)
         return null;
@@ -138,4 +138,8 @@ export function valueStringToIndexConverter(title, valueArray) {
         }
     }
     return resultArray;
+}
+
+export function restaurantNameToIdMapper(restaurantName){
+    return restaurantListForMapping.indexOf(restaurantName);
 }

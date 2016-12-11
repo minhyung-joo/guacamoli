@@ -203,6 +203,7 @@ var init = function(app, DATABASE_URL) {
   */
   app.post('/updateMeal', function (req, res) {
     console.log("POST /updateMeal/" + req.body.menuId);
+    console.log(req.body);
 
     // AUTHENTICATION
     if (!authenticate(req.body.password, req.body.restaurant_name, auth)) {
@@ -211,7 +212,7 @@ var init = function(app, DATABASE_URL) {
       return;
     }
 
-    pg.connect(DATABASE_URL, function(err, client, done) {
+    pg.connect(DATABASE_URL, function(err, client, done) {1
       client.query("UPDATE meal SET ingredientsDescription = $2, "+
                     "name = $3, chineseName = $4, price = $5"+
                     "cusineType = $6, deliverySpeed = $7"+
