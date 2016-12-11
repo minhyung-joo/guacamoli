@@ -52,9 +52,16 @@ function updatingData(){
         type: 'ADMIN_UPDATE_DATA',
     }
 }
-function successUpdatingData(){
+function successUpdatingData(json){
     return {
-        type: 'ADMIN_UPDATING_SUCCESS'
+        type: 'ADMIN_UPDATING_SUCCESS',
+        success: json.data.success,
+    }
+}
+
+export function dismissSuccessModal(){
+    return {
+        type: 'DISMISS_ADMIN_SUCCESS_MODAL'
     }
 }
 
@@ -128,7 +135,7 @@ export function updateMenu(menuJson) {
     return dispatch=> {
         dispatch(updatingData());
         return axios.post(adminUpdateMealRoute, menuJson)
-            .then(()=>dispatch(successUpdatingData()))
+            .then((json)=>dispatch(successUpdatingData(json)))
             .catch(err=>dispatch(requestFail(err)))
     }
 }

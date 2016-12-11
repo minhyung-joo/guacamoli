@@ -11,6 +11,8 @@ const initialState = {
     foodArray: [],
     foodDetail: null,
     authStatus: false,
+    isUpdateSuccess: false,
+    isUploadSuccess: false,
 };
 
 export default function adminMenu(state = initialState, action) {
@@ -35,7 +37,10 @@ export default function adminMenu(state = initialState, action) {
         case 'ADMIN_UPDATE_DATA':
             return {...state, isUpdating: true};
         case 'ADMIN_UPDATING_SUCCESS':
-            return {...state, isUpdating: false};
+            return {...state, isUpdating: false, isUpdateSuccess: action.success};
+        case 'DISMISS_ADMIN_SUCCESS_MODAL':
+            return {...state, isUpdateSuccess: false, isUploadSuccess: false}
+
         case 'ADMIN_AUTH_SUCCESS':
             // console.log(action.success);
             if(action.success){

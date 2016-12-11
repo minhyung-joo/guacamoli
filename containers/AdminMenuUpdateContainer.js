@@ -15,7 +15,7 @@ import {chineseDeliverySpeed, chineseCuisineType} from '../constants/StaticData'
 import {valueStringToIndexConverter} from '../constants/Utility';
 
 import {inputSingleTextOption, inputSelectOption, loadUpdatePageData, adminResetInputOptions, identifyPageType} from '../actions/adminAction';
-import {updateMenu, getAdminFoodDetail} from '../actions/adminMenuAction';
+import {updateMenu, getAdminFoodDetail, dismissSuccessModal} from '../actions/adminMenuAction';
 
 class AdminMenuUpdateContainer extends React.Component {
     constructor(props) {
@@ -34,10 +34,6 @@ class AdminMenuUpdateContainer extends React.Component {
         this.props.getAdminFoodDetail(foodId);
     }
 
-    componentWillUnmount(){
-        //     this.props.identifyPageType("random")
-    }
-
     render () {
         const {inputSingleTextOption, inputSelectOption, loadUpdatePageData,
             isFetching, foodDetail,
@@ -47,27 +43,16 @@ class AdminMenuUpdateContainer extends React.Component {
             <FlatButton
                 label="OK"
                 primary={true}
-                onTouchTap={()=>handleModalYes()}
+                onTouchTap={()=>this.props.dismissSuccessModal()}
             />,
         ];
-
-        var handleClose = () => {
-            this.setState({isSuccess:false});
-        };
-
-        var handleModalYes = () => {
-            updateMenu();
-            handleClose();
-        };
-
-        var handleOpen = () => {
-            this.setState({isSuccess:true});
-        };
 
         if(this.props.foodDetail!=null && this.state.isFirstTime){
             loadUpdatePageData(this.props.foodDetail);
             this.setState({isFirstTime:false});
         }
+
+
 
         var updateMenu = () => {
             var x = {
@@ -82,13 +67,13 @@ class AdminMenuUpdateContainer extends React.Component {
                 "cuisineType": this.props.cuisineType,
                 "deliverySpeed": this.props.deliverySpeed,
 
-                "offeredTimes": [],
-                "tasteTypes": [],
-                "foodTypes": [],
-                "sauceTypes": [],
+                "offeredTimes": this.props.offeredTime,
+                "tasteTypes": this.props.tasteType,
+                "ingredienttypesid": this.props.ingredient,
+                "sauceTypes": this.props.sauceType,
                 // "offeredTimes": valueStringToIndexConverter("offeredTimes",this.props.offeredTime),
                 // "tasteTypes": valueStringToIndexConverter("tasteTypes",this.props.tasteType),
-                // "foodTypes": valueStringToIndexConverter("foodTypes",this.props.ingredient),
+                // "ingredienttypesid": valueStringToIndexConverter("ingredientTypes",this.props.ingredient),
                 // "sauceTypes": valueStringToIndexConverter("sauceTypes", this.props.sauceType),
             };
             this.props.updateMenu(x);
@@ -122,7 +107,7 @@ class AdminMenuUpdateContainer extends React.Component {
                             <SelectRow label="Cuisine Type (菜品種類)" name="cuisineType" onChangeHandler={inputSelectOption} value={this.props.cuisineType} itemArray={chineseCuisineType}/>
                             <SelectRow label="Delivery Speed (上菜速度)" name="deliverySpeed" onChangeHandler={inputSelectOption} value={this.props.deliverySpeed} itemArray={chineseDeliverySpeed}/>
                         </Col>
-                        <Row><AdminAdvancedSearchOption isAdmin={true} isChinese={false} /></Row>
+                        {/*<Row><AdminAdvancedSearchOption isAdmin={true} isChinese={false} /></Row>*/}
                         <Row><IngredientTextarea label="Detailed Ingredients (詳細成分)" value={this.props.ingredientDescription} onChange={(e)=>inputSingleTextOption("ingredientDescription",e.target.value)} /></Row>
                         <Row>
                             <Col md={3} xs={3}><label style={styles.label}>{"Password (密碼)"}</label></Col>
@@ -132,7 +117,7 @@ class AdminMenuUpdateContainer extends React.Component {
                         </Row>
                         <Row md={12} xs={12}>
                             <Col mdOffset={5} xsOffset={5}>
-                                <RaisedButton label="Update (更新)" primary={true} style={styles.raisedButton} onClick={handleOpen}/>
+                                <RaisedButton label="Update (更新)" primary={true} style={styles.raisedButton} onClick={updateMenu}/>
                             </Col>
                         </Row>
                     </Col>
@@ -141,8 +126,7 @@ class AdminMenuUpdateContainer extends React.Component {
                     title="Confirmation Message"
                     actions={actions}
                     modal={false}
-                    open={this.state.isSuccess}
-                    onRequestClose={this.handleClose}
+                    open={this.props.isUpdateSuccess}
                 >
                     <p> Successfully updated <b>"{this.props.mealName}"</b> from the menu list. </p>
                 </Dialog>
@@ -221,9 +205,11 @@ export default connect(
         tasteType: state.admin.tasteType,
         ingredient: state.admin.ingredient,
         sauceType: state.admin.sauceType,
+
+        isUpdateSuccess: state.adminMenu.isUpdateSuccess,
     }),
     {
         inputSingleTextOption, inputSelectOption, loadUpdatePageData, adminResetInputOptions, identifyPageType,
-        updateMenu, getAdminFoodDetail
+        updateMenu, getAdminFoodDetail, dismissSuccessModal
     }
 )(AdminMenuUpdateContainer)

@@ -125,7 +125,7 @@ export function valueStringToIndexConverter(title, valueArray) {
                     resultArray.push(advancedFilterOptions["Taste Type"].indexOf(option) + 1);
                 });
                 break;
-            case 'foodTypes':
+            case 'ingredientTypes':
                 valueArray.map(function (option) {
                     resultArray.push(advancedFilterOptions["Ingredients"].indexOf(option) + 1);
                 });

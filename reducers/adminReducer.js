@@ -66,6 +66,9 @@ export default function admin(state = initialState, action) {
 
         case 'LOAD_UPDATE_PAGE_DATA':
             var data = action.data;
+            console.log("data");
+            console.log(data);
+
             return {...state,
                 mealName: data.name,
                 mealNameChinese: data.chinesename,

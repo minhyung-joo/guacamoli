@@ -70,8 +70,8 @@ class AdminMenuInsertContainer extends React.Component {
         };
 
         var handleModalYes = () => {
-            postAndResetInputOptions();
             handleClose();
+            cancelFunction();
         };
 
         var handleOpen = () => {
@@ -108,8 +108,9 @@ class AdminMenuInsertContainer extends React.Component {
 
         var postAndResetInputOptions = () => {
             this.myDropzone.processQueue();
-            cancelFunction();
+            handleOpen();
         };
+
         var cancelFunction = () => {
             this.props.adminResetInputOptions();
             this.setState({isReadyForImage:false});
@@ -173,7 +174,7 @@ class AdminMenuInsertContainer extends React.Component {
                             </Col>
                             :
                             <Col mdOffset={5} xsOffset={5}>
-                                <RaisedButton label="Create Menu 創建菜單" primary={true} style={styles.raisedButton} onMouseDown={handleOpen} />
+                                <RaisedButton label="Create Menu 創建菜單" primary={true} style={styles.raisedButton} onMouseDown={postAndResetInputOptions} />
                                 <RaisedButton label="Cancel 取消" primary={true} style={styles.raisedButton} onClick={cancelFunction}/>
                             </Col>
                     }
