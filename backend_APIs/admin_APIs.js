@@ -118,7 +118,7 @@ var init = function(app, DATABASE_URL) {
                       " values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)",
                       [req.body.restaurant_name, req.body.name,
                         req.body.chineseMealName, req.body.category,
-                        req.body.price, req.body.picture_url,
+                        req.body.price, req.file.filename,
                         req.body.cuisineType, req.body.deliverySpeed,
                         req.body.offeredTimes, req.body.tasteTypes,
                         req.body.foodTypes, req.body.sauceTypes, req.body.ingredientsDescription,
@@ -242,7 +242,7 @@ var init = function(app, DATABASE_URL) {
   app.post('/deleteMeal', function (request, response) {
 
     // AUTHENTICATION
-    if (!authenticate(req.body.password, req.body.restaurant_name, auth)) {
+    if (!authenticate(request.body.password, request.body.restaurant_name, auth)) {
       console.log("ERROR: authentication failed");
       res.send({success: false, status:"ERROR: authentication failed"});
       return;
