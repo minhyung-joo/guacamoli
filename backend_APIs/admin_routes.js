@@ -3,7 +3,7 @@ var pg = require('pg');
 var init = function(app, DATABASE_URL) {
 
   app.get('/admin_only_menu_list', function (req, res) {
-    console.log("menu_list");
+    console.log("GET /menu_list");
     pg.connect(DATABASE_URL, function(err, client, done) {
       client.query("SELECT id, name FROM meal",
                     function(err, result) {
@@ -11,7 +11,7 @@ var init = function(app, DATABASE_URL) {
           console.error(err); res.send("Error " + err);
         }
         else{
-          console.log(result.rows);
+          //console.log(result.rows);
           res.render('pages/menu_list', {results: result.rows});
         }
       });
@@ -32,8 +32,8 @@ var init = function(app, DATABASE_URL) {
         }
         else
         {
-          console.log("menu select result");
-          console.log(result.rows);
+          //console.log("menu select result");
+          //console.log(result.rows);
           res.render('pages/updateMenu', {result: result.rows[0]});
         }
       });
@@ -54,8 +54,8 @@ var init = function(app, DATABASE_URL) {
         }
         else
         {
-          console.log("menu select result");
-          console.log(result.rows);
+          //console.log("menu select result");
+          //console.log(result.rows);
           res.render('pages/updateMenu', {result: result.rows[0]});
         }
       });
@@ -80,8 +80,8 @@ var init = function(app, DATABASE_URL) {
         }
         else
         {
-          console.log("menu select result");
-          console.log(result.rows);
+          //console.log("menu select result");
+          //console.log(result.rows);
           res.render('pages/menu', {result: result.rows[0]});
         }
       });

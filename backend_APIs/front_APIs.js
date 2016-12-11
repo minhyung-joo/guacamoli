@@ -3,7 +3,7 @@ var pg = require('pg');
 var init = function(app, DATABASE_URL) {
 
   app.get('/api/menu/:menuId', function (req, res) {
-    console.log("/menu/params menuID = " + req.params.menuId);
+    console.log("GET /menu/params menuID = " + req.params.menuId);
     pg.connect(DATABASE_URL, function(err, client, done) {
       client.query("SELECT * FROM meal "+
                     "WHERE meal.id = $1",
@@ -15,8 +15,8 @@ var init = function(app, DATABASE_URL) {
         }
         else
         {
-          console.log("menu select result");
-          console.log(result.rows);
+          //console.log("menu select result");
+          //console.log(result.rows);
           res.status(200).send(result.rows[0]);
         }
       });
@@ -26,6 +26,7 @@ var init = function(app, DATABASE_URL) {
 
 
   app.get('/api/getCanteenList', function(req,res) {
+    console.log("GET /api/getCanteenList");
     console.log(req.query.restaurantId+" menus");
 
     restaurantId=req.query.restaurantId;
@@ -36,7 +37,7 @@ var init = function(app, DATABASE_URL) {
           console.error(err); res.send("Error " + err);
         }
         else{
-          console.log(result.rows);
+          //console.log(result.rows);
           res.status(200).send(result.rows);
         }
       });
@@ -55,7 +56,7 @@ var init = function(app, DATABASE_URL) {
           console.error(err); res.send("Error " + err);
         }
         else{
-          console.log(result.rows);
+          //console.log(result.rows);
 
           var lg1Result = new Array();
           var grbResult = new Array();
@@ -115,7 +116,7 @@ var init = function(app, DATABASE_URL) {
               finalResult.push(result.rows[i]);
             }
           }
-          console.log(finalResult);
+          //console.log(finalResult);
           res.status(200).send(finalResult);
         }
       });

@@ -238,34 +238,56 @@ var init = function(app, DATABASE_URL) {
     });
   });
 
-  //
   app.post('/deleteMeal', function (request, response) {
+    console.log("POST /deleteMeal");
+    console.log(request.body);
 
-    // AUTHENTICATION
-    if (!authenticate(request.body.password, request.body.restaurant_name, auth)) {
-      console.log("ERROR: authentication failed");
-      res.send({success: false, status:"ERROR: authentication failed"});
-      return;
-    }
-    if (!request.body.id) {
-      console.log("delete meal failed: required fields null");
-      response.json({"status":"FAIL: required fields null"});
-      return;
-    }
-    if (!request.body.price) {
-      request.body.price = 0;
-    }
+    // retrieve restaurant_name
     pg.connect(DATABASE_URL, function(err, client, done) {
-      client.query("DELETE FROM meal WHERE id = $1",
+      client.query("SELECT * FROM meal "+
+                    "WHERE meal.id = $1",
                     [request.body.id],
                     function(err, result) {
         if (err)
-         { console.error(err); response.send("Error " + err); }
+        {
+          console.error(err); res.send("Error " + err);
+        }
         else
-         { response.status(200).send({"status":"SUCCESSS"}); }
+        {
+          console.log(result.rows);
+          // AUTHENTICATION
+          if (!authenticate(request.body.password, result.rows[0].restaurantid, auth)) {
+            console.log("ERROR: authentication failed");
+            response.send({success: false, status:"ERROR: authentication failed"});
+            return;
+          }
+          // INPUT VALIDATION
+          if (!request.body.id) {
+            console.log("delete meal failed: required fields null");
+            response.json({"status":"FAIL: required fields null"});
+            return;
+          }
+          if (!request.body.price) {
+            request.body.price = 0;
+          }
+          // DELETE
+          pg.connect(DATABASE_URL, function(err, client, done) {
+            client.query("DELETE FROM meal WHERE id = $1",
+                          [request.body.id],
+                          function(err, result) {
+              if (err)
+               { console.error(err); response.send("Error " + err); }
+              else
+               { response.status(200).send({"status":"SUCCESSS"}); }
+            });
+            done();
+          });
+        }
       });
       done();
     });
+
+
   });
 
   // DEPRECIATED
