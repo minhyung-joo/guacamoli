@@ -138,10 +138,11 @@ class AdminMenuUpdateContainer extends React.Component {
                                     <Row>
                                         <Col md={3} xs={3}><label style={styles.label}>{"Nutrition Label"}</label></Col>
                                         <Col md={9} xs={9}>
-                                            <SelectRowNutrition label="G" name="G" onChangeHandler={inputNutritionOption} value={this.props.ingredientsDescription.G} itemArray={boolOptions}/>
-                                            <SelectRowNutrition label="R" name="R" onChangeHandler={inputNutritionOption} value={this.props.ingredientsDescription.R} itemArray={boolOptions}/>
-                                            <SelectRowNutrition label="O" name="O" onChangeHandler={inputNutritionOption} value={this.props.ingredientsDescription.O} itemArray={boolOptions}/>
-                                            <SelectRowNutrition label="S" name="S" onChangeHandler={inputNutritionOption} value={this.props.ingredientsDescription.S} itemArray={boolOptions}/>
+                                            <SelectRowNutrition label="W" name="W" onChangeHandler={inputNutritionOption} value={this.props.ingredientsDescription.W} itemArray={boolOptions}/>
+                                            <SelectRowNutrition label="M" name="M" onChangeHandler={inputNutritionOption} value={this.props.ingredientsDescription.M} itemArray={boolOptions}/>
+                                            <SelectRowNutrition label="I" name="I" onChangeHandler={inputNutritionOption} value={this.props.ingredientsDescription.I} itemArray={boolOptions}/>
+                                            <SelectRowNutrition label="E" name="E" onChangeHandler={inputNutritionOption} value={this.props.ingredientsDescription.E} itemArray={boolOptions}/>
+                                            <SelectRowNutrition label="H" name="H" onChangeHandler={inputNutritionOption} value={this.props.ingredientsDescription.H} itemArray={boolOptions}/>
                                         </Col>
                                     </Row>
                                 </div>
@@ -196,7 +197,7 @@ function SelectRow(props){
 
 function SelectRowNutrition(props){
     return (
-        <Col md={6} xs={6}>
+        <Col md={4} xs={4}>
             <SelectField
                 floatingLabelText={props.label}
                 value={props.value}

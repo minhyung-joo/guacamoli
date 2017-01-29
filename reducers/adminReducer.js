@@ -11,10 +11,11 @@ const DEFAULT_INGREDIENT_DESCRIPTION = {
     fibre:'',
     sugar:'',
     sodium:'',
-    G:false,
-    R:false,
-    O:false,
-    S:false
+    W:false,
+    M:false,
+    I:false,
+    E:false,
+    H:false,
 };
 
 const DEFAULT_OPTIONS = {
@@ -41,10 +42,11 @@ const DEFAULT_OPTIONS = {
         fibre:'',
         sugar:'',
         sodium:'',
-        G:false,
-        R:false,
-        O:false,
-        S:false
+        W:false,
+        M:false,
+        I:false,
+        E:false,
+        H:false,
     },
     isUpload: false,
 };
@@ -73,10 +75,11 @@ const initialState = {
         fibre:'',
         sugar:'',
         sodium:'',
-        G:false,
-        R:false,
-        O:false,
-        S:false
+        W:false,
+        M:false,
+        I:false,
+        E:false,
+        H:false,
     },
     isUpload: false,
 };
