@@ -3,6 +3,20 @@
  */
 var _ = require('underscore');
 
+const DEFAULT_INGREDIENT_DESCRIPTION = {
+    calories:'',
+    carbohydrate:'',
+    protein:'',
+    fat:'',
+    fibre:'',
+    sugar:'',
+    sodium:'',
+    G:false,
+    R:false,
+    O:false,
+    S:false
+};
+
 const DEFAULT_OPTIONS = {
     id:null,
     mealName: "",
@@ -104,6 +118,14 @@ export default function admin(state = initialState, action) {
             // console.log("data");
             // console.log(data);
 
+            let descriptionVal = null;
+
+            if(data.ingredientsdescription==null){
+                descriptionVal = DEFAULT_INGREDIENT_DESCRIPTION;
+            }else{
+                descriptionVal = data.ingredientsdescription;
+            }
+
             return {...state,
                 mealName: data.name,
                 mealNameChinese: data.chinesename,
@@ -118,7 +140,7 @@ export default function admin(state = initialState, action) {
                 ingredient: data.ingredienttypesid,
                 sauceType: data.saucetypesid,
 
-                ingredientsDescription: data.ingredientsdescription,
+                ingredientsDescription: descriptionVal,
             };
 
         case 'IDENTIFY_PAGE_TYPE':
