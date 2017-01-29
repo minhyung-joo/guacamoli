@@ -39,7 +39,6 @@ function receiveFilterData(json){
         data: json.data
     }
 }
-
 function receiveRankingData(json){
     rankingData = json.data;    //TODO
 

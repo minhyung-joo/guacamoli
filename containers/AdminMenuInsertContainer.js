@@ -83,7 +83,7 @@ class AdminMenuInsertContainer extends React.Component {
                 "restaurant_name": this.props.params.canteenid,
                 "name": this.props.mealName,
                 "chineseMealName": this.props.mealNameChinese,
-                "ingredientsDescription": this.props.ingredientDescription,
+                "ingredientsDescription": this.props.ingredientsDescription,
                 "password": this.props.password,
                 "price": this.props.price,
 
@@ -149,7 +149,7 @@ class AdminMenuInsertContainer extends React.Component {
                             </Col>
                         </Row>
                         <Row><AdvancedSearchOption isAdmin={true} /></Row>
-                        <Row><IngredientTextarea label="Detailed Ingredients (詳細成分)" value={this.props.ingredientDescription} onChange={(e)=>inputSingleTextOption("ingredientDescription",e.target.value)} /></Row>
+                        <Row><IngredientTextarea label="Detailed Ingredients (詳細成分)" value={this.props.ingredientsDescription} onChange={(e)=>inputSingleTextOption("ingredientsDescription",e.target.value)} /></Row>
                         <Row>
                             <Col md={3} xs={3}><label style={styles.label}>{"Password (密碼)"}</label></Col>
                             <Col md={9} xs={9}>
@@ -200,7 +200,7 @@ function SelectRow(props){
             <SelectField
                 floatingLabelText={props.label}
                 value={props.value}
-                onChange={(event, index, value)=>props.onChangeHandler(value, props.name)}
+                onChange={(event, index, value)=>props.onChangeHandler(props.name, value)}
                 style={styles.selectRow} >
                 {
                     props.itemArray.map(function(item, index){
@@ -250,7 +250,7 @@ export default connect(
         mealNameChinese: state.admin.mealNameChinese,
         price: state.admin.price,
         password: state.admin.password,
-        ingredientDescription: state.admin.ingredientDescription,
+        ingredientsDescription: state.admin.ingredientsDescription,
 
         restaurant: state.admin.restaurant,
         cuisineType: state.admin.cuisineType,

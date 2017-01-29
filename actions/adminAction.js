@@ -6,10 +6,18 @@ export function inputSingleTextOption(optionTitle, optionValue) {
     }
 }
 
-export function inputSelectOption(value, name){
+export function inputSelectOption(name, value){
     return {
         type: 'INPUT_SELECT_OPTION',
         name: name,
+        value: value
+    }
+}
+
+export function inputNutritionOption(title, value){
+    return {
+        type: 'INPUT_NUTRITION_OPTION',
+        title: title,
         value: value
     }
 }

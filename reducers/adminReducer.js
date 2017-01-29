@@ -19,7 +19,19 @@ const DEFAULT_OPTIONS = {
     ingredient: [],
     sauceType: [],
 
-    ingredientDescription: "",
+    ingredientsDescription: {
+        calories:'',
+        carbohydrate:'',
+        protein:'',
+        fat:'',
+        fibre:'',
+        sugar:'',
+        sodium:'',
+        G:false,
+        R:false,
+        O:false,
+        S:false
+    },
     isUpload: false,
 };
 
@@ -39,7 +51,19 @@ const initialState = {
     ingredient: [],
     sauceType: [],
 
-    ingredientDescription: "",
+    ingredientsDescription: {
+        calories:'',
+        carbohydrate:'',
+        protein:'',
+        fat:'',
+        fibre:'',
+        sugar:'',
+        sodium:'',
+        G:false,
+        R:false,
+        O:false,
+        S:false
+    },
     isUpload: false,
 };
 
@@ -55,6 +79,17 @@ export default function admin(state = initialState, action) {
             newState[action.name] = action.value;
             return newState;
 
+        case 'INPUT_NUTRITION_OPTION':
+            var newState = _.extend({},state);
+            var newNutritionObj = _.extend({}, state.ingredientsDescription);
+            newNutritionObj[action.title] = action.value;
+
+            newState['ingredientsDescription'] = newNutritionObj;
+
+            console.log(newState);
+
+            return newState;
+
         case 'ADMIN_INPUT_FILTER_CHECKBOX_OPTIONS':
             var newState = updateFilterOption(state, action.isChecked, action.filterTitle, action.filterValue);
             return newState;
@@ -66,8 +101,8 @@ export default function admin(state = initialState, action) {
 
         case 'LOAD_UPDATE_PAGE_DATA':
             var data = action.data;
-            console.log("data");
-            console.log(data);
+            // console.log("data");
+            // console.log(data);
 
             return {...state,
                 mealName: data.name,
@@ -83,7 +118,7 @@ export default function admin(state = initialState, action) {
                 ingredient: data.ingredienttypesid,
                 sauceType: data.saucetypesid,
 
-                ingredientDescription: data.ingredientsdescription,
+                ingredientsDescription: data.ingredientsdescription,
             };
 
         case 'IDENTIFY_PAGE_TYPE':
@@ -122,7 +157,7 @@ function titleMapper(filterTitle){
         case 'Price':
             return 'price';
         case 'Ingredient Description':
-            return 'ingredientDescription'
+            return 'ingredientsDescription'
         case 'Restaurant':
             return 'restaurant';
         case 'Delivery Speed':

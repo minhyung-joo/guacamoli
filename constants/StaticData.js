@@ -34,3 +34,6 @@ export const advancedFilterOptions = {
 export const chineseAdvancedFilterOptions = {
     'Offered Time (供應時間)':chineseOfferedTime, 'Taste Type (口味)':chineseTasteType, 'Ingredients (成分)':chineseFoodTypeIngredient, 'Sauce Type (醬料)':chineseSauceType, 'Without':chineseWithout
 };
+
+
+export const boolOptions = [true, false];
