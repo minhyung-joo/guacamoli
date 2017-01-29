@@ -15,8 +15,16 @@ var init = function(app, DATABASE_URL) {
         }
         else
         {
-          //console.log("menu select result");
-          //console.log(result.rows);
+          console.log("menu select result");
+          console.log(result.rows);
+          if (result.rows[0].ingredientsdescription) {
+            try {
+              result.rows[0].ingredientsdescription = JSON.parse(result.rows[0].ingredientsdescription);
+            }
+            catch (err){
+            }
+
+          }
           res.status(200).send(result.rows[0]);
         }
       });

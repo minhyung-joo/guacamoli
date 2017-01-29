@@ -110,6 +110,8 @@ var init = function(app, DATABASE_URL) {
         req.body.sauceTypes=[];
       }
 
+      //var stringifiedIngredients = JSON.stringify(req.body.ingredientsDescription);
+
       pg.connect(DATABASE_URL, function(err, client, done) {
         client.query("INSERT INTO meal"+
                       "(restaurantId, name, chineseName, category, price, picture_url, "+
@@ -213,6 +215,8 @@ var init = function(app, DATABASE_URL) {
       return;
     }
 
+    //var stringifiedIngredients = JSON.stringify(req.body.ingredientsDescription);
+
     pg.connect(DATABASE_URL, function(err, client, done) {
       client.query("UPDATE meal SET ingredientsDescription = $2, "+
                     "name = $3, chineseName = $4, price = $5, "+
@@ -291,7 +295,7 @@ var init = function(app, DATABASE_URL) {
   });
 
   // DEPRECIATED
-  app.post('/admin_only_update_menu', function (req, res) {
+  /*app.post('/admin_only_update_menu', function (req, res) {
     console.log("/admin_only_update_menu menuID = " + req.body.menuId);
     pg.connect(DATABASE_URL, function(err, client, done) {
       client.query("UPDATE meal SET ingredientsDescription = $2, rating = $3, rating_count = $4"+
@@ -311,7 +315,7 @@ var init = function(app, DATABASE_URL) {
       });
       done();
     });
-  });
+  });*/
 
   app.get('/meal/all', function (request, response) {
     //console.log("database URL = "+(process.env.DATABASE_URL || LOCAL_DATABASE_URL));
