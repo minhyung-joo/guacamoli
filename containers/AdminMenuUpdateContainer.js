@@ -127,13 +127,13 @@ class AdminMenuUpdateContainer extends React.Component {
                                     <Row>
                                         <Col md={3} xs={3}><label style={styles.label}>{"Nutrition"}</label></Col>
                                         <Col md={9} xs={9}>
+                                            <NutritionInfoTextarea label={"calories"} value={this.props.nutritionInformation.calories} onChange={(e)=>{inputNutritionOption("calories", e.target.value)}}/>
+                                            <NutritionInfoTextarea label={"carbohydrate"} value={this.props.nutritionInformation.carbohydrate} onChange={(e)=>{inputNutritionOption("carbohydrate", e.target.value)}}/>
                                             <NutritionInfoTextarea label={"protein"} value={this.props.nutritionInformation.protein} onChange={(e)=>{inputNutritionOption("protein", e.target.value)}}/>
                                             <NutritionInfoTextarea label={"fat"} value={this.props.nutritionInformation.fat} onChange={(e)=>{inputNutritionOption("fat", e.target.value)}}/>
                                             <NutritionInfoTextarea label={"fibre"} value={this.props.nutritionInformation.fibre} onChange={(e)=>{inputNutritionOption("fibre", e.target.value)}}/>
                                             <NutritionInfoTextarea label={"sugar"} value={this.props.nutritionInformation.sugar} onChange={(e)=>{inputNutritionOption("sugar", e.target.value)}}/>
                                             <NutritionInfoTextarea label={"sodium"} value={this.props.nutritionInformation.sodium} onChange={(e)=>{inputNutritionOption("sodium", e.target.value)}}/>
-                                            <NutritionInfoTextarea label={"calories"} value={this.props.nutritionInformation.calories} onChange={(e)=>{inputNutritionOption("calories", e.target.value)}}/>
-                                            <NutritionInfoTextarea label={"carbohydrate"} value={this.props.nutritionInformation.carbohydrate} onChange={(e)=>{inputNutritionOption("carbohydrate", e.target.value)}}/>
                                         </Col>
                                     </Row>
                                     <Row>
@@ -218,7 +218,7 @@ function SelectRowNutrition(props){
 function NutritionInfoTextarea(props){
     let labelSize = 4;
     let textSize = 8;
-    let wrapperSize = props.label=='carbohydrate'?6:4;
+    let wrapperSize = 4;//props.label=='carbohydrate'?6:4;
     return (
     <Col md={wrapperSize} xs={wrapperSize} style={styles.textRow}>
         <Col md={labelSize} xs={labelSize}><label>{props.label}: </label></Col>
