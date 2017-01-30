@@ -74,7 +74,7 @@ class FoodDetailContainer extends React.Component {
                                 </Col>
                                 <Col md={6}>
                                     <Panel style={{marginTop:30}} header='Nutrition Information' bsStyle="success">
-                                        Coming Soon
+                                        {foodDetail.nutritioninformation}
                                     </Panel>
                                 </Col>
                             </Panel>
