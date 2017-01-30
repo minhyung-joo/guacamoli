@@ -116,14 +116,14 @@ var init = function(app, DATABASE_URL) {
         client.query("INSERT INTO meal"+
                       "(restaurantId, name, chineseName, category, price, picture_url, "+
                       "cuisineTypeId, deliverySpeedId, offeredTimesId, "+
-                      "tasteTypesId, ingredientTypesId, sauceTypesId, ingredientsDescription, rating, rating_count)"+
-                      " values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)",
+                      "tasteTypesId, ingredientTypesId, sauceTypesId, ingredientsDescription, rating, rating_count, nutritionInformation)"+
+                      " values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)",
                       [req.body.restaurant_name, req.body.name,
                         req.body.chineseMealName, req.body.category,
                         req.body.price, req.file.filename,
                         req.body.cuisineType, req.body.deliverySpeed,
                         req.body.offeredTimes, req.body.tasteTypes,
-                        req.body.foodTypes, req.body.sauceTypes, req.body.ingredientsDescription,
+                        req.body.foodTypes, req.body.sauceTypes, req.body.ingredientsDescription, req.body.nutritionInformation,
                         req.body.rating, 0
                       ],
                       function(err, result) {
@@ -220,11 +220,12 @@ var init = function(app, DATABASE_URL) {
     pg.connect(DATABASE_URL, function(err, client, done) {
       client.query("UPDATE meal SET ingredientsDescription = $2, "+
                     "name = $3, chineseName = $4, price = $5, "+
-                    "cuisineTypeId = $6, deliverySpeedId = $7"+
+                    "cuisineTypeId = $6, deliverySpeedId = $7, "+
+                    "nutritionInformation = $8 "+
                     "WHERE meal.id = $1",
                     [req.body.menuId, req.body.ingredientsDescription,
                       req.body.name, req.body.chineseMealName, req.body.price,
-                      req.body.cuisineType, req.body.deliverySpeed,
+                      req.body.cuisineType, req.body.deliverySpeed, req.body.nutritionInformation
                     ],
                     function(err, result) {
         if (err)

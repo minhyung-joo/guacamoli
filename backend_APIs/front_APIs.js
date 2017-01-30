@@ -17,9 +17,9 @@ var init = function(app, DATABASE_URL) {
         {
           console.log("menu select result");
           console.log(result.rows);
-          if (result.rows[0].ingredientsdescription) {
+          if (result.rows[0].nutritionInformation) {
             try {
-              result.rows[0].ingredientsdescription = JSON.parse(result.rows[0].ingredientsdescription);
+              result.rows[0].nutritionInformation = JSON.parse(result.rows[0].nutritionInformation);
             }
             catch (err){
             }
