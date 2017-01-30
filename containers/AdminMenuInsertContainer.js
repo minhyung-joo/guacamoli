@@ -84,6 +84,7 @@ class AdminMenuInsertContainer extends React.Component {
                 "name": this.props.mealName,
                 "chineseMealName": this.props.mealNameChinese,
                 "ingredientsDescription": this.props.ingredientsDescription,
+                "nutritionInformation": this.props.nutritionInformation,
                 "password": this.props.password,
                 "price": this.props.price,
 
@@ -251,6 +252,7 @@ export default connect(
         price: state.admin.price,
         password: state.admin.password,
         ingredientsDescription: state.admin.ingredientsDescription,
+        nutritionInformation: state.admin.nutritionInformation,
 
         restaurant: state.admin.restaurant,
         cuisineType: state.admin.cuisineType,

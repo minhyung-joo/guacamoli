@@ -34,7 +34,8 @@ const DEFAULT_OPTIONS = {
     ingredient: [],
     sauceType: [],
 
-    ingredientsDescription: {
+    ingredientsDescription: "",
+    nutritionInformation: {
         calories:'',
         carbohydrate:'',
         protein:'',
@@ -67,7 +68,8 @@ const initialState = {
     ingredient: [],
     sauceType: [],
 
-    ingredientsDescription: {
+    ingredientsDescription: "",
+    nutritionInformation: {
         calories:'',
         carbohydrate:'',
         protein:'',
@@ -98,10 +100,10 @@ export default function admin(state = initialState, action) {
 
         case 'INPUT_NUTRITION_OPTION':
             var newState = _.extend({},state);
-            var newNutritionObj = _.extend({}, state.ingredientsDescription);
+            var newNutritionObj = _.extend({}, state.nutritionInformation);
             newNutritionObj[action.title] = action.value;
 
-            newState['ingredientsDescription'] = newNutritionObj;
+            newState['nutritionInformation'] = newNutritionObj;
 
             console.log(newState);
 
@@ -123,10 +125,10 @@ export default function admin(state = initialState, action) {
 
             let descriptionVal = null;
 
-            if(data.ingredientsdescription==null){
+            if(data.nutritioninformation==null){
                 descriptionVal = DEFAULT_INGREDIENT_DESCRIPTION;
             }else{
-                descriptionVal = data.ingredientsdescription;
+                descriptionVal = JSON.parse(data.nutritioninformation);
             }
 
             return {...state,
@@ -143,7 +145,8 @@ export default function admin(state = initialState, action) {
                 ingredient: data.ingredienttypesid,
                 sauceType: data.saucetypesid,
 
-                ingredientsDescription: descriptionVal,
+                ingredientsDescription: data.ingredientsdescription,
+                nutritionInformation: descriptionVal,
             };
 
         case 'IDENTIFY_PAGE_TYPE':

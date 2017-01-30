@@ -64,6 +64,7 @@ class AdminMenuUpdateContainer extends React.Component {
                 "name": this.props.mealName,
                 "chineseMealName": this.props.mealNameChinese,
                 "ingredientsDescription": this.props.ingredientsDescription,
+                "nutritionInformation": this.props.nutritionInformation,
                 "password": this.props.password,
                 "price": this.props.price,
 
@@ -82,8 +83,9 @@ class AdminMenuUpdateContainer extends React.Component {
             this.props.updateMenu(x);
         };
 
-        console.warn(this.props.mealName);
-        console.warn(this.props.ingredientsDescription);
+        console.log(this.props.nutritionInformation);
+        console.log(this.props.nutritionInformation.calories);
+        console.log(this.props.nutritionInformation.protein);
 
         return (
             <div>
@@ -119,30 +121,29 @@ class AdminMenuUpdateContainer extends React.Component {
                         {/*<Row><AdminAdvancedSearchOption isAdmin={true} isChinese={false} /></Row>*/}
                         {/*<Row><IngredientTextarea label="Detailed Ingredients (詳細成分)" value={this.props.ingredientsDescription} onChange={(e)=>inputSingleTextOption("ingredientsDescription",e.target.value)} /></Row>*/}
 
-
                         {
-                            this.props.ingredientsDescription!=null?
+                            this.props.nutritionInformation!=null?
                                 <div>
                                     <Row>
                                         <Col md={3} xs={3}><label style={styles.label}>{"Nutrition"}</label></Col>
                                         <Col md={9} xs={9}>
-                                            <IngredientTextarea label={"protein"} value={this.props.ingredientsDescription.protein} onChange={(e)=>{inputNutritionOption("protein", e.target.value)}}/>
-                                            <IngredientTextarea label={"fat"} value={this.props.ingredientsDescription.fat} onChange={(e)=>{inputNutritionOption("fat", e.target.value)}}/>
-                                            <IngredientTextarea label={"fibre"} value={this.props.ingredientsDescription.fibre} onChange={(e)=>{inputNutritionOption("fibre", e.target.value)}}/>
-                                            <IngredientTextarea label={"sugar"} value={this.props.ingredientsDescription.sugar} onChange={(e)=>{inputNutritionOption("sugar", e.target.value)}}/>
-                                            <IngredientTextarea label={"sodium"} value={this.props.ingredientsDescription.sodium} onChange={(e)=>{inputNutritionOption("sodium", e.target.value)}}/>
-                                            <IngredientTextarea label={"calories"} value={this.props.ingredientsDescription.calories} onChange={(e)=>{inputNutritionOption("calories", e.target.value)}}/>
-                                            <IngredientTextarea label={"carbohydrate"} value={this.props.ingredientsDescription.carbohydrate} onChange={(e)=>{inputNutritionOption("carbohydrate", e.target.value)}}/>
+                                            <NutritionInfoTextarea label={"protein"} value={this.props.nutritionInformation.protein} onChange={(e)=>{inputNutritionOption("protein", e.target.value)}}/>
+                                            <NutritionInfoTextarea label={"fat"} value={this.props.nutritionInformation.fat} onChange={(e)=>{inputNutritionOption("fat", e.target.value)}}/>
+                                            <NutritionInfoTextarea label={"fibre"} value={this.props.nutritionInformation.fibre} onChange={(e)=>{inputNutritionOption("fibre", e.target.value)}}/>
+                                            <NutritionInfoTextarea label={"sugar"} value={this.props.nutritionInformation.sugar} onChange={(e)=>{inputNutritionOption("sugar", e.target.value)}}/>
+                                            <NutritionInfoTextarea label={"sodium"} value={this.props.nutritionInformation.sodium} onChange={(e)=>{inputNutritionOption("sodium", e.target.value)}}/>
+                                            <NutritionInfoTextarea label={"calories"} value={this.props.nutritionInformation.calories} onChange={(e)=>{inputNutritionOption("calories", e.target.value)}}/>
+                                            <NutritionInfoTextarea label={"carbohydrate"} value={this.props.nutritionInformation.carbohydrate} onChange={(e)=>{inputNutritionOption("carbohydrate", e.target.value)}}/>
                                         </Col>
                                     </Row>
                                     <Row>
                                         <Col md={3} xs={3}><label style={styles.label}>{"Nutrition Label"}</label></Col>
                                         <Col md={9} xs={9}>
-                                            <SelectRowNutrition label="W" name="W" onChangeHandler={inputNutritionOption} value={this.props.ingredientsDescription.W} itemArray={boolOptions}/>
-                                            <SelectRowNutrition label="M" name="M" onChangeHandler={inputNutritionOption} value={this.props.ingredientsDescription.M} itemArray={boolOptions}/>
-                                            <SelectRowNutrition label="I" name="I" onChangeHandler={inputNutritionOption} value={this.props.ingredientsDescription.I} itemArray={boolOptions}/>
-                                            <SelectRowNutrition label="E" name="E" onChangeHandler={inputNutritionOption} value={this.props.ingredientsDescription.E} itemArray={boolOptions}/>
-                                            <SelectRowNutrition label="H" name="H" onChangeHandler={inputNutritionOption} value={this.props.ingredientsDescription.H} itemArray={boolOptions}/>
+                                            <SelectRowNutrition label="W" name="W" onChangeHandler={inputNutritionOption} value={this.props.nutritionInformation.W} itemArray={boolOptions}/>
+                                            <SelectRowNutrition label="M" name="M" onChangeHandler={inputNutritionOption} value={this.props.nutritionInformation.M} itemArray={boolOptions}/>
+                                            <SelectRowNutrition label="I" name="I" onChangeHandler={inputNutritionOption} value={this.props.nutritionInformation.I} itemArray={boolOptions}/>
+                                            <SelectRowNutrition label="E" name="E" onChangeHandler={inputNutritionOption} value={this.props.nutritionInformation.E} itemArray={boolOptions}/>
+                                            <SelectRowNutrition label="H" name="H" onChangeHandler={inputNutritionOption} value={this.props.nutritionInformation.H} itemArray={boolOptions}/>
                                         </Col>
                                     </Row>
                                 </div>
@@ -150,6 +151,7 @@ class AdminMenuUpdateContainer extends React.Component {
                                 null
                         }
 
+                        <IngredientTextarea label="Detailed Ingredients (詳細成分)" value={this.props.ingredientsDescription} onChange={(e)=>inputSingleTextOption("ingredientsDescription",e.target.value)} />
                         <Row>
                             <Col md={3} xs={3}><label style={styles.label}>{"Password (密碼)"}</label></Col>
                             <Col md={9} xs={9}>
@@ -213,7 +215,7 @@ function SelectRowNutrition(props){
     )
 }
 
-function IngredientTextarea(props){
+function NutritionInfoTextarea(props){
     let labelSize = 4;
     let textSize = 8;
     let wrapperSize = props.label=='carbohydrate'?6:4;
@@ -224,6 +226,17 @@ function IngredientTextarea(props){
             <TextField value={props.value} fullWidth="true" style={styles.textRow} onChange={props.onChange} />
         </Col>
     </Col>
+    )
+}
+
+function IngredientTextarea(props){
+    return (
+        <Row style={styles.textRow}>
+            <Col md={3} xs={3}><label>{props.label} :</label></Col>
+            <Col md={9} xs={9}>
+                <textarea className="form-control" value={props.value} onChange={props.onChange} />
+            </Col>
+        </Row>
     )
 }
 
@@ -259,6 +272,7 @@ export default connect(
         price: state.admin.price,
         password: state.admin.password,
         ingredientsDescription: state.admin.ingredientsDescription,
+        nutritionInformation: state.admin.nutritionInformation,
 
         restaurant: state.admin.restaurant,
         cuisineType: state.admin.cuisineType,
