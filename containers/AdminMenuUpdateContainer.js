@@ -11,10 +11,10 @@ import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 
 import {AdminAdvancedSearchOption} from '../components/DialogFilterOptions';
-import {chineseDeliverySpeed, chineseCuisineType} from '../constants/StaticData';
+import {chineseDeliverySpeed, chineseCuisineType, boolOptions} from '../constants/StaticData';
 import {valueStringToIndexConverter} from '../constants/Utility';
 
-import {inputSingleTextOption, inputSelectOption, loadUpdatePageData, adminResetInputOptions, identifyPageType} from '../actions/adminAction';
+import {inputSingleTextOption, inputSelectOption, inputNutritionOption, loadUpdatePageData, adminResetInputOptions, identifyPageType} from '../actions/adminAction';
 import {updateMenu, getAdminFoodDetail, dismissSuccessModal} from '../actions/adminMenuAction';
 
 class AdminMenuUpdateContainer extends React.Component {
@@ -35,7 +35,7 @@ class AdminMenuUpdateContainer extends React.Component {
     }
 
     render () {
-        const {inputSingleTextOption, inputSelectOption, loadUpdatePageData,
+        const {inputSingleTextOption, inputSelectOption, inputNutritionOption, loadUpdatePageData,
             isFetching, foodDetail,
         } = this.props;
         const foodId = this.props.params.foodid;
@@ -63,7 +63,7 @@ class AdminMenuUpdateContainer extends React.Component {
                 "restaurant_name": this.props.restaurant,
                 "name": this.props.mealName,
                 "chineseMealName": this.props.mealNameChinese,
-                "ingredientsDescription": this.props.ingredientDescription,
+                "ingredientsDescription": this.props.ingredientsDescription,
                 "password": this.props.password,
                 "price": this.props.price,
 
@@ -81,6 +81,9 @@ class AdminMenuUpdateContainer extends React.Component {
             };
             this.props.updateMenu(x);
         };
+
+        console.warn(this.props.mealName);
+        console.warn(this.props.ingredientsDescription);
 
         return (
             <div>
@@ -106,18 +109,54 @@ class AdminMenuUpdateContainer extends React.Component {
                             </Col>
                         </Row>
 
-                        <Col mdOffset={3} md={9}>
-                            <SelectRow label="Cuisine Type (菜品種類)" name="cuisineType" onChangeHandler={inputSelectOption} value={this.props.cuisineType} itemArray={chineseCuisineType}/>
-                            <SelectRow label="Delivery Speed (上菜速度)" name="deliverySpeed" onChangeHandler={inputSelectOption} value={this.props.deliverySpeed} itemArray={chineseDeliverySpeed}/>
-                        </Col>
+                        <Row>
+                            <Col md={3} xs={3}><label style={styles.label}>{"Details"}</label></Col>
+                            <Col mdOffset={3} md={9}>
+                                <SelectRow label="Cuisine Type (菜品種類)" name="cuisineType" onChangeHandler={inputSelectOption} value={this.props.cuisineType} itemArray={chineseCuisineType}/>
+                                <SelectRow label="Delivery Speed (上菜速度)" name="deliverySpeed" onChangeHandler={inputSelectOption} value={this.props.deliverySpeed} itemArray={chineseDeliverySpeed}/>
+                            </Col>
+                        </Row>
                         {/*<Row><AdminAdvancedSearchOption isAdmin={true} isChinese={false} /></Row>*/}
-                        <Row><IngredientTextarea label="Detailed Ingredients (詳細成分)" value={this.props.ingredientDescription} onChange={(e)=>inputSingleTextOption("ingredientDescription",e.target.value)} /></Row>
+                        {/*<Row><IngredientTextarea label="Detailed Ingredients (詳細成分)" value={this.props.ingredientsDescription} onChange={(e)=>inputSingleTextOption("ingredientsDescription",e.target.value)} /></Row>*/}
+
+
+                        {
+                            this.props.ingredientsDescription!=null?
+                                <div>
+                                    <Row>
+                                        <Col md={3} xs={3}><label style={styles.label}>{"Nutrition"}</label></Col>
+                                        <Col md={9} xs={9}>
+                                            <IngredientTextarea label={"protein"} value={this.props.ingredientsDescription.protein} onChange={(e)=>{inputNutritionOption("protein", e.target.value)}}/>
+                                            <IngredientTextarea label={"fat"} value={this.props.ingredientsDescription.fat} onChange={(e)=>{inputNutritionOption("fat", e.target.value)}}/>
+                                            <IngredientTextarea label={"fibre"} value={this.props.ingredientsDescription.fibre} onChange={(e)=>{inputNutritionOption("fibre", e.target.value)}}/>
+                                            <IngredientTextarea label={"sugar"} value={this.props.ingredientsDescription.sugar} onChange={(e)=>{inputNutritionOption("sugar", e.target.value)}}/>
+                                            <IngredientTextarea label={"sodium"} value={this.props.ingredientsDescription.sodium} onChange={(e)=>{inputNutritionOption("sodium", e.target.value)}}/>
+                                            <IngredientTextarea label={"calories"} value={this.props.ingredientsDescription.calories} onChange={(e)=>{inputNutritionOption("calories", e.target.value)}}/>
+                                            <IngredientTextarea label={"carbohydrate"} value={this.props.ingredientsDescription.carbohydrate} onChange={(e)=>{inputNutritionOption("carbohydrate", e.target.value)}}/>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col md={3} xs={3}><label style={styles.label}>{"Nutrition Label"}</label></Col>
+                                        <Col md={9} xs={9}>
+                                            <SelectRowNutrition label="W" name="W" onChangeHandler={inputNutritionOption} value={this.props.ingredientsDescription.W} itemArray={boolOptions}/>
+                                            <SelectRowNutrition label="M" name="M" onChangeHandler={inputNutritionOption} value={this.props.ingredientsDescription.M} itemArray={boolOptions}/>
+                                            <SelectRowNutrition label="I" name="I" onChangeHandler={inputNutritionOption} value={this.props.ingredientsDescription.I} itemArray={boolOptions}/>
+                                            <SelectRowNutrition label="E" name="E" onChangeHandler={inputNutritionOption} value={this.props.ingredientsDescription.E} itemArray={boolOptions}/>
+                                            <SelectRowNutrition label="H" name="H" onChangeHandler={inputNutritionOption} value={this.props.ingredientsDescription.H} itemArray={boolOptions}/>
+                                        </Col>
+                                    </Row>
+                                </div>
+                                :
+                                null
+                        }
+
                         <Row>
                             <Col md={3} xs={3}><label style={styles.label}>{"Password (密碼)"}</label></Col>
                             <Col md={9} xs={9}>
                                 <TextField fullWidth="true" style={styles.textRow} value={this.props.password} onChange={(e)=>inputSingleTextOption("password",e.target.value)}/>
                             </Col>
                         </Row>
+
                         <Row md={12} xs={12}>
                             <Col mdOffset={5} xsOffset={5}>
                                 <RaisedButton label="Update (更新)" primary={true} style={styles.raisedButton} onClick={updateMenu}/>
@@ -138,14 +177,13 @@ class AdminMenuUpdateContainer extends React.Component {
     }
 }
 
-
 function SelectRow(props){
     return (
-        <Col md={6} xs={6}>
+        <Col md={6}>
             <SelectField
                 floatingLabelText={props.label}
                 value={props.value}
-                onChange={(event, index, value)=>props.onChangeHandler(value, props.name)}
+                onChange={(event, index, value)=>props.onChangeHandler(props.name, value)}
                 style={styles.selectRow} >
                 {
                     props.itemArray.map(function(item, index){
@@ -157,16 +195,38 @@ function SelectRow(props){
     )
 }
 
-function IngredientTextarea(props){
+function SelectRowNutrition(props){
     return (
-    <Row style={styles.textRow}>
-        <Col md={3} xs={3}><label>{props.label}</label></Col>
-        <Col md={9} xs={9}>
-            <textarea className="form-control" value={props.value} onChange={props.onChange} />
+        <Col md={4} xs={4}>
+            <SelectField
+                floatingLabelText={props.label}
+                value={props.value}
+                onChange={(event, index, value)=>props.onChangeHandler(props.name, value)}
+                style={styles.selectRow} >
+                {
+                    props.itemArray.map(function(item, index){
+                        return <MenuItem value={item} primaryText={item.toString()} />
+                    })
+                }
+            </SelectField>
         </Col>
-    </Row>
     )
 }
+
+function IngredientTextarea(props){
+    let labelSize = 4;
+    let textSize = 8;
+    let wrapperSize = props.label=='carbohydrate'?6:4;
+    return (
+    <Col md={wrapperSize} xs={wrapperSize} style={styles.textRow}>
+        <Col md={labelSize} xs={labelSize}><label>{props.label}: </label></Col>
+        <Col md={textSize} xs={textSize}>
+            <TextField value={props.value} fullWidth="true" style={styles.textRow} onChange={props.onChange} />
+        </Col>
+    </Col>
+    )
+}
+
 
 const styles ={
     textRow: {
@@ -198,7 +258,7 @@ export default connect(
         mealNameChinese: state.admin.mealNameChinese,
         price: state.admin.price,
         password: state.admin.password,
-        ingredientDescription: state.admin.ingredientDescription,
+        ingredientsDescription: state.admin.ingredientsDescription,
 
         restaurant: state.admin.restaurant,
         cuisineType: state.admin.cuisineType,
@@ -212,7 +272,7 @@ export default connect(
         isUpdateSuccess: state.adminMenu.isUpdateSuccess,
     }),
     {
-        inputSingleTextOption, inputSelectOption, loadUpdatePageData, adminResetInputOptions, identifyPageType,
+        inputSingleTextOption, inputSelectOption, inputNutritionOption, loadUpdatePageData, adminResetInputOptions, identifyPageType,
         updateMenu, getAdminFoodDetail, dismissSuccessModal
     }
 )(AdminMenuUpdateContainer)

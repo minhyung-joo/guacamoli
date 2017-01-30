@@ -3,6 +3,21 @@
  */
 var _ = require('underscore');
 
+const DEFAULT_INGREDIENT_DESCRIPTION = {
+    calories:'',
+    carbohydrate:'',
+    protein:'',
+    fat:'',
+    fibre:'',
+    sugar:'',
+    sodium:'',
+    W:false,
+    M:false,
+    I:false,
+    E:false,
+    H:false,
+};
+
 const DEFAULT_OPTIONS = {
     id:null,
     mealName: "",
@@ -19,7 +34,20 @@ const DEFAULT_OPTIONS = {
     ingredient: [],
     sauceType: [],
 
-    ingredientDescription: "",
+    ingredientsDescription: {
+        calories:'',
+        carbohydrate:'',
+        protein:'',
+        fat:'',
+        fibre:'',
+        sugar:'',
+        sodium:'',
+        W:false,
+        M:false,
+        I:false,
+        E:false,
+        H:false,
+    },
     isUpload: false,
 };
 
@@ -39,7 +67,20 @@ const initialState = {
     ingredient: [],
     sauceType: [],
 
-    ingredientDescription: "",
+    ingredientsDescription: {
+        calories:'',
+        carbohydrate:'',
+        protein:'',
+        fat:'',
+        fibre:'',
+        sugar:'',
+        sodium:'',
+        W:false,
+        M:false,
+        I:false,
+        E:false,
+        H:false,
+    },
     isUpload: false,
 };
 
@@ -55,6 +96,17 @@ export default function admin(state = initialState, action) {
             newState[action.name] = action.value;
             return newState;
 
+        case 'INPUT_NUTRITION_OPTION':
+            var newState = _.extend({},state);
+            var newNutritionObj = _.extend({}, state.ingredientsDescription);
+            newNutritionObj[action.title] = action.value;
+
+            newState['ingredientsDescription'] = newNutritionObj;
+
+            console.log(newState);
+
+            return newState;
+
         case 'ADMIN_INPUT_FILTER_CHECKBOX_OPTIONS':
             var newState = updateFilterOption(state, action.isChecked, action.filterTitle, action.filterValue);
             return newState;
@@ -66,8 +118,16 @@ export default function admin(state = initialState, action) {
 
         case 'LOAD_UPDATE_PAGE_DATA':
             var data = action.data;
-            console.log("data");
-            console.log(data);
+            // console.log("data");
+            // console.log(data);
+
+            let descriptionVal = null;
+
+            if(data.ingredientsdescription==null){
+                descriptionVal = DEFAULT_INGREDIENT_DESCRIPTION;
+            }else{
+                descriptionVal = data.ingredientsdescription;
+            }
 
             return {...state,
                 mealName: data.name,
@@ -83,7 +143,7 @@ export default function admin(state = initialState, action) {
                 ingredient: data.ingredienttypesid,
                 sauceType: data.saucetypesid,
 
-                ingredientDescription: data.ingredientsdescription,
+                ingredientsDescription: descriptionVal,
             };
 
         case 'IDENTIFY_PAGE_TYPE':
@@ -122,7 +182,7 @@ function titleMapper(filterTitle){
         case 'Price':
             return 'price';
         case 'Ingredient Description':
-            return 'ingredientDescription'
+            return 'ingredientsDescription'
         case 'Restaurant':
             return 'restaurant';
         case 'Delivery Speed':
