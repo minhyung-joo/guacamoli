@@ -37,3 +37,7 @@ export const chineseAdvancedFilterOptions = {
 
 
 export const boolOptions = [true, false];
+
+export const averageIntake = {
+    'calories': 2079.35, 'protein': 50, 'fat': 70, 'carbohydrates': 310, 'sugar': 90, 'fibre': 30, 'sodium': 2300
+}
