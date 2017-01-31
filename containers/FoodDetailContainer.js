@@ -12,6 +12,10 @@ import StarRatingComponent from 'react-star-rating-component';
 
 import RefreshIndicator from 'material-ui/RefreshIndicator';
 import Paper from 'material-ui/Paper';
+import Chip from 'material-ui/Chip';
+import {lightGreen200} from 'material-ui/styles/colors';
+
+var _ = require('underscore');
 
 class FoodDetailContainer extends React.Component {
     componentWillMount() {
@@ -25,8 +29,24 @@ class FoodDetailContainer extends React.Component {
 
     render() {
         const {foodDetail, isFetching} = this.props;
-        console.log("food detail");
-        console.log(foodDetail);
+        var nutritionInfo;
+        let tagArray = [];
+
+        if(foodDetail.nutritioninformation!=null){
+            nutritionInfo = JSON.parse(foodDetail.nutritioninformation);
+            if(nutritionInfo.W)
+                tagArray.push('Weight Loss');
+            if(nutritionInfo.M)
+                tagArray.push('Muscle Gain');
+            if(nutritionInfo.I)
+                tagArray.push('Immunity Enhancement');
+            if(nutritionInfo.H)
+                tagArray.push('Heart Health');
+            if(nutritionInfo.E)
+                tagArray.push('Energy Giving');
+
+            console.log(tagArray);
+        }
 
         return (
         isFetching?
@@ -44,13 +64,26 @@ class FoodDetailContainer extends React.Component {
                 </Row>
             </div>
                 :
-            <div style={foodDetailStyle}>
+            <div style={styles.foodDetailStyle}>
                 <Row>
                     <Col mdOffset={1} md={10}>
                         <Paper zDepth={1}>
                             <Panel header="FOOD DETAIL">
                                 <Col md={6}>
                                     <img width="100%" src={imageUrlMapper(foodDetail.picture_url, true)}/>
+                                    <div>
+                                        <Col md={2} xs={2}>
+                                            <IngredientDisplay label={'Calories'} value={nutritionInfo.calories}/>
+                                        </Col>
+                                        <Col md={8} xs={10}>
+                                            <IngredientDisplay label={'Carbohydrate'} value={nutritionInfo.carbohydrate} color={'red'}/>
+                                            <IngredientDisplay label={'Protein'} value={nutritionInfo.protein} color={'orange'}/>
+                                            <IngredientDisplay label={'Fat'} value={nutritionInfo.fat} color={'green'}/>
+                                            <IngredientDisplay label={'Fibre'} value={nutritionInfo.fibre} color={'green'}/>
+                                            <IngredientDisplay label={'Sugar'} value={nutritionInfo.sugar} color={'orange'}/>
+                                            <IngredientDisplay label={'Sodium'} value={nutritionInfo.sodium} color={'red'}/>
+                                        </Col>
+                                    </div>
                                 </Col>
                                 <Col md={6}>
                                     <Col md={12}>
@@ -71,23 +104,55 @@ class FoodDetailContainer extends React.Component {
                                         <p><b>Rating:</b></p>
                                         <StarRatingComponent name="starRating" starCount={5} value={foodDetail.rating} />
                                     </Col>
-                                </Col>
-                                <Col md={6}>
-                                    <Panel style={{marginTop:30}} header='Nutrition Information' bsStyle="success">
-                                        {foodDetail.nutritioninformation}
-                                    </Panel>
+                                    <Col md={6}>
+                                        <b>Health Tags</b>:
+                                        {
+                                            tagArray.map(function(tagContent){
+                                                return (
+                                                    <Chip style={{display: 'inline-block'}} backgroundColor={lightGreen200} >
+                                                        {tagContent}
+                                                    </Chip>
+                                                )
+                                            })
+                                        }
+                                    </Col>
                                 </Col>
                             </Panel>
                         </Paper>
-                        {/*<Paper>*/}
-                            {/*<Panel header="FOOD RECOMMENDATION">*/}
-                                {/*<FoodListComponent foodArray={foodArray}/>*/}
-                            {/*</Panel>*/}
-                        {/*</Paper>*/}
                     </Col>
                 </Row>
             </div>
         );
+    }
+}
+
+function IngredientDisplay(props){
+    if(props.label=='Calories'){
+        return (
+            <div style={styles.caloriesCircle}>
+                <p style={styles.caloriesLabel}>{props.label}</p>
+                <div style={styles.innerCircle}>
+                    <b style={styles.value}>{props.value}</b>
+                    <font style={styles.value}>{"20%"}</font>
+                </div>
+            </div>
+        )
+
+    }else{
+        const red = '#DC352A', orange = '#EFAB34', green = '#8EC047';
+
+        var newStyle = _.extend({},styles.outerCircle);
+        newStyle['backgroundColor'] = props.color=='red'?red:props.color=='orange'? orange: green;
+
+        return (
+            <div style={newStyle}>
+                <p style={styles.label}>{props.label}</p>
+                <div style={styles.innerCircle}>
+                    <b style={styles.value}>{props.value}</b>
+                    <font style={styles.value}>{"20%"}</font>
+                </div>
+            </div>
+        )
     }
 }
 
@@ -102,19 +167,57 @@ export default connect(
 )(FoodDetailContainer)
 
 
-const foodArray=[
-    {
-        id: 1,
-        imageUrl:"http://www.fastfoodmenunutrition.com/wp-content/uploads/2015/03/fast-food.jpg",
-        foodName:"Hot Dog",
-        price:35
-    },
-    {
-        id: 2,
-        imageUrl:"http://pngimg.com/upload/burger_sandwich_PNG4150.png",
-        foodName:"Sandwich",
-        price:25
-    }
-];
 
-const foodDetailStyle ={ marginTop: 20};
+const styles = {
+    chip: {
+        margin: 4,
+        display: 'inline-block',
+    },
+    outerCircle: {
+        width: 70,
+        height: 60,
+        borderRadius: 30/2,
+        textAlign: 'center',
+        display: 'inline-block'
+    },
+    label: {
+        paddingTop: 5,
+        marginBottom: 3,
+        color: 'black',
+        fontSize: '10px',
+        fontWeight: 'bold',
+    },
+    innerCircle: {
+        marginLeft:5,
+        width: 60,
+        height: 30,
+        borderRadius: 20/2,
+        backgroundColor: 'white',
+        textAlign: 'center'
+    },
+    value: {
+        fontSize: '10px',
+        paddingTop: 10,
+        display: 'block',
+        padding:0,
+    },
+    caloriesCircle: {
+        marginTop: 30,
+        width: 70,
+        height: 60,
+        borderRadius: 30/2,
+        textAlign: 'center',
+        display: 'inline-block',
+        backgroundColor: '#D3D3D3'
+    },
+    caloriesLabel: {
+        paddingTop: 5,
+        marginBottom: 3,
+        color: 'black',
+        fontSize: '10px',
+        fontWeight: 'bold',
+    },
+    foodDetailStyle: {
+        marginTop: 20
+    }
+}
