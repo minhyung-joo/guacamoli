@@ -247,7 +247,7 @@ const styles = {
         padding:0,
     },
     caloriesCircle: {
-        marginTop: 30,
+        // marginTop: 30,
         width: 70,
         height: 70,
         borderRadius: 30/2,
