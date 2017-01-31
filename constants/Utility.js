@@ -143,3 +143,23 @@ export function valueStringToIndexConverter(title, valueArray) {
 export function restaurantNameToIdMapper(restaurantName){
     return restaurantListForMapping.indexOf(restaurantName);
 }
+
+export function nutritionColorLabeller(type, percentage){
+
+    if(type.localeCompare('Fibre')==0 || type.localeCompare('Protein')==0){   //little = bad
+        if(percentage<33)
+            return 'red'
+        else if(percentage<66)
+            return 'orange'
+        else
+            return 'green'
+    }else{  //little = good
+        if(percentage<33)
+            return 'green'
+        else if(percentage<66)
+            return 'orange'
+        else
+            return 'red'
+
+    }
+}

@@ -5,7 +5,7 @@ import {Row, Col, Glyphicon, Button, Panel} from 'react-bootstrap';
 
 import FoodListComponent from '../components/FoodList'
 import {getFoodDetail} from '../actions/canteenActions';
-import {availabilityMapper, tasteMapper, imageUrlMapper} from '../constants/Utility';
+import {availabilityMapper, tasteMapper, imageUrlMapper, nutritionColorLabeller} from '../constants/Utility';
 import {restaurantList, deliverySpeed, cuisineType, averageIntake} from '../constants/StaticData';
 import StarRatingComponent from 'react-star-rating-component';
 
@@ -149,9 +149,10 @@ function IngredientDisplay(props){
 
     }else{
         const red = '#DC352A', orange = '#EFAB34', green = '#8EC047';
-
+        const percentageVal = Math.round(props.value/ props.averageTotalIntake *100);
+        
         var newStyle = _.extend({},styles.outerCircle);
-        newStyle['backgroundColor'] = props.color=='red'?red:props.color=='orange'? orange: green;
+        newStyle['backgroundColor'] = nutritionColorLabeller(props.label, percentageVal);//props.color=='red'?red:props.color=='orange'? orange: green;
 
         return (
             <div style={newStyle}>
@@ -159,7 +160,7 @@ function IngredientDisplay(props){
                 <p style={styles.unitLabel}>{props.unit}</p>
                 <div style={styles.innerCircle}>
                     <b style={styles.value}>{props.value}</b>
-                    <font style={styles.value}>{Math.round(props.value/ props.averageTotalIntake *100)} %</font>
+                    <font style={styles.value}>{percentageVal} %</font>
                 </div>
             </div>
         )
