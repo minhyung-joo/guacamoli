@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {render} from 'react-dom';
-import {Row, Col, Glyphicon, Button, Panel} from 'react-bootstrap';
+import {Row, Col, Glyphicon, Button, Panel, OverlayTrigger, Popover} from 'react-bootstrap';
 
 import FoodListComponent from '../components/FoodList'
 import {getFoodDetail} from '../actions/canteenActions';
@@ -13,6 +13,8 @@ import RefreshIndicator from 'material-ui/RefreshIndicator';
 import Paper from 'material-ui/Paper';
 import Chip from 'material-ui/Chip';
 import {lightGreen200} from 'material-ui/styles/colors';
+
+import Info from 'material-ui/svg-icons/action/info-outline';
 
 var _ = require('underscore');
 
@@ -91,7 +93,13 @@ class FoodDetailContainer extends React.Component {
                                         <StarRatingComponent name="starRating" starCount={5} value={foodDetail.rating} />
                                     </Col>
                                     <Col md={12}>
-                                        <p><b>Nutrition Information</b> <font style={{fontSize: 12}}>authorized by TetraHK</font></p>
+                                        <p>
+                                            <b>Nutrition Information</b> <font style={{fontSize: 12}}>authorized by TetraHK </font>
+                                            <OverlayTrigger trigger="click" placement="right" overlay={nutritionInfoUsage}>
+                                                <Info style={{height:'18px', width: '18px'}} />
+                                            </OverlayTrigger>
+                                        </p>
+
                                         <Col md={11} xs={11} style={{paddingLeft:0}}>
                                             <Col md={2} xs={2} style={{paddingLeft:0}}>
                                                 <IngredientDisplay label={'Calories'} value={nutritionInfo.calories} unit={'kcal'} averageTotalIntake={averageIntake.calories}/>
@@ -106,23 +114,25 @@ class FoodDetailContainer extends React.Component {
                                             </Col>
                                         </Col>
                                     </Col>
-                                    {
-                                        tagArray.length>0?
-                                            <Col md={12} xs={12} style={{marginTop:10}}>
-                                                <p><b>Health Labels</b> <font style={{fontSize: 12}}>(refer to <b>Information</b> page for more detail)</font></p>
-                                                <Col md={12} xs={12} style={{paddingLeft:0}}>
-                                                    {
-                                                        tagArray.map(function(tagContent){
-                                                            return (
-                                                                <Chip backgroundColor={lightGreen200} style={styles.chip}>
-                                                                    {tagContent}
-                                                                </Chip>
-                                                            )
-                                                        })
-                                                    }
-                                                </Col>
-                                            </Col>:null
-                                    }
+                                        <Col md={12} xs={12} style={{marginTop:10}}>
+                                            <p>
+                                                <b>Health Labels </b>
+                                                <OverlayTrigger trigger="click" placement="top" overlay={healthLabel}>
+                                                    <Info style={{height:'18px', width: '18px'}} />
+                                                </OverlayTrigger>
+                                            </p>
+                                            <Col md={12} xs={12} style={{paddingLeft:0}}>
+                                                {
+                                                    tagArray.map(function(tagContent){
+                                                        return (
+                                                            <Chip backgroundColor={lightGreen200} style={styles.chip}>
+                                                                {tagContent}
+                                                            </Chip>
+                                                        )
+                                                    })
+                                                }
+                                            </Col>
+                                        </Col>
                                 </Col>
                             </Panel>
                         </Paper>
@@ -166,6 +176,24 @@ function IngredientDisplay(props){
         )
     }
 }
+
+const nutritionInfoUsage = (
+    <Popover id="popover-positioned-top" title="Nutrition Info Guide">
+        <p>Based on the recommended daily intake to achieve balanced and healthy diet for an average adult, we color labeled each nutrient. </p>
+        <p>What do the colors mean?</p>
+        <p><strong>RED</strong>: It’s fine to have this occasionally, or in small amounts, just make sure you don’t have these products too often.</p>
+        <p><strong>ORANGE</strong>: The product is neither high nor low in this nutrient, so it’s an OK choice most of the time.</p>
+        <p><strong>GREEN</strong>: The more green lights, the healthier the choice. </p>
+        {/*<p>(*) http://www.mydailyintake.net/daily-intake-levels/</p>*/}
+    </Popover>
+);
+
+const healthLabel = (
+    <Popover id="popover-positioned-top2" title="Health Label Guide">
+        <p><b>Health category labels classified by a group of professional Nutritionists (TetraHK).</b></p>
+        <p>5 labels: Weight Loss, Muscle Gain, Immunity Enhancement, Heart Health, Energy Giving</p>
+    </Popover>
+);
 
 export default connect(
     state => ({
