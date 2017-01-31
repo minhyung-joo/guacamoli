@@ -6,9 +6,8 @@ import {Row, Col, Glyphicon, Button, Panel} from 'react-bootstrap';
 import FoodListComponent from '../components/FoodList'
 import {getFoodDetail} from '../actions/canteenActions';
 import {availabilityMapper, tasteMapper, imageUrlMapper} from '../constants/Utility';
-import {restaurantList, deliverySpeed, cuisineType} from '../constants/StaticData';
+import {restaurantList, deliverySpeed, cuisineType, averageIntake} from '../constants/StaticData';
 import StarRatingComponent from 'react-star-rating-component';
-
 
 import RefreshIndicator from 'material-ui/RefreshIndicator';
 import Paper from 'material-ui/Paper';
@@ -92,36 +91,38 @@ class FoodDetailContainer extends React.Component {
                                         <StarRatingComponent name="starRating" starCount={5} value={foodDetail.rating} />
                                     </Col>
                                     <Col md={12}>
-                                        <p><b>Nutrition Information</b></p>
+                                        <p><b>Nutrition Information</b> <font style={{fontSize: 12}}>authorized by TetraHK</font></p>
                                         <Col md={11} xs={11} style={{paddingLeft:0}}>
                                             <Col md={2} xs={2} style={{paddingLeft:0}}>
-                                                <IngredientDisplay label={'Calories'} value={nutritionInfo.calories}/>
+                                                <IngredientDisplay label={'Calories'} value={nutritionInfo.calories} unit={'kcal'} averageTotalIntake={averageIntake.calories}/>
                                             </Col>
                                             <Col md={8} xs={10}>
-                                                <IngredientDisplay label={'Carbohydrate'} value={nutritionInfo.carbohydrate} color={'red'}/>
-                                                <IngredientDisplay label={'Protein'} value={nutritionInfo.protein} color={'orange'}/>
-                                                <IngredientDisplay label={'Fat'} value={nutritionInfo.fat} color={'green'}/>
-                                                <IngredientDisplay label={'Fibre'} value={nutritionInfo.fibre} color={'green'}/>
-                                                <IngredientDisplay label={'Sugar'} value={nutritionInfo.sugar} color={'orange'}/>
-                                                <IngredientDisplay label={'Sodium'} value={nutritionInfo.sodium} color={'red'}/>
+                                                <IngredientDisplay label={'Carbohydrate'} value={nutritionInfo.carbohydrate} color={'red'} unit={'g'} averageTotalIntake={averageIntake.carbohydrates}/>
+                                                <IngredientDisplay label={'Protein'} value={nutritionInfo.protein} color={'orange'} unit={'g'} averageTotalIntake={averageIntake.protein}/>
+                                                <IngredientDisplay label={'Fat'} value={nutritionInfo.fat} color={'green'} unit={'g'} averageTotalIntake={averageIntake.fat}/>
+                                                <IngredientDisplay label={'Fibre'} value={nutritionInfo.fibre} color={'green'} unit={'g'} averageTotalIntake={averageIntake.fibre} />
+                                                <IngredientDisplay label={'Sugar'} value={nutritionInfo.sugar} color={'orange'} unit={'g'} averageTotalIntake={averageIntake.sugar} />
+                                                <IngredientDisplay label={'Sodium'} value={nutritionInfo.sodium} color={'red'} unit={'mg'} averageTotalIntake={averageIntake.sodium} />
                                             </Col>
                                         </Col>
                                     </Col>
-
-                                    <Col md={12} xs={12}>
-                                        <p><b>Health Labels</b></p>
-                                        <Col md={12} xs={12} style={{paddingLeft:0}}>
-                                            {
-                                                tagArray.map(function(tagContent){
-                                                    return (
-                                                        <Chip backgroundColor={lightGreen200} style={styles.chip}>
-                                                            {tagContent}
-                                                        </Chip>
-                                                    )
-                                                })
-                                            }
-                                        </Col>
-                                    </Col>
+                                    {
+                                        tagArray.length>0?
+                                            <Col md={12} xs={12} style={{marginTop:10}}>
+                                                <p><b>Health Labels</b> <font style={{fontSize: 12}}>(refer to <b>Information</b> page for more detail)</font></p>
+                                                <Col md={12} xs={12} style={{paddingLeft:0}}>
+                                                    {
+                                                        tagArray.map(function(tagContent){
+                                                            return (
+                                                                <Chip backgroundColor={lightGreen200} style={styles.chip}>
+                                                                    {tagContent}
+                                                                </Chip>
+                                                            )
+                                                        })
+                                                    }
+                                                </Col>
+                                            </Col>:null
+                                    }
                                 </Col>
                             </Panel>
                         </Paper>
@@ -136,10 +137,11 @@ function IngredientDisplay(props){
     if(props.label=='Calories'){
         return (
             <div style={styles.caloriesCircle}>
-                <p style={styles.caloriesLabel}>{props.label}</p>
+                <p style={styles.label}>{props.label}</p>
+                <p style={styles.unitLabel}>{props.unit}</p>
                 <div style={styles.innerCircle}>
                     <b style={styles.value}>{props.value}</b>
-                    <font style={styles.value}>{"20%"}</font>
+                    <font style={styles.value}>{Math.round(props.value/props.averageTotalIntake)} %</font>
                 </div>
             </div>
         )
@@ -153,9 +155,10 @@ function IngredientDisplay(props){
         return (
             <div style={newStyle}>
                 <p style={styles.label}>{props.label}</p>
+                <p style={styles.unitLabel}>{props.unit}</p>
                 <div style={styles.innerCircle}>
                     <b style={styles.value}>{props.value}</b>
-                    <font style={styles.value}>{"20%"}</font>
+                    <font style={styles.value}>{Math.round(props.value/ props.averageTotalIntake)} %</font>
                 </div>
             </div>
         )
@@ -181,17 +184,23 @@ const styles = {
     },
     outerCircle: {
         width: 70,
-        height: 60,
+        height: 70,
         borderRadius: 30/2,
         textAlign: 'center',
         display: 'inline-block'
     },
     label: {
         paddingTop: 5,
-        marginBottom: 3,
+        marginBottom: 0,
         color: 'black',
         fontSize: '10px',
         fontWeight: 'bold',
+    },
+    unitLabel: {
+        marginTop: -2,
+        marginBottom: 3,
+        color: 'black',
+        fontSize: '10px',
     },
     innerCircle: {
         marginLeft:5,
@@ -210,18 +219,11 @@ const styles = {
     caloriesCircle: {
         marginTop: 30,
         width: 70,
-        height: 60,
+        height: 70,
         borderRadius: 30/2,
         textAlign: 'center',
         display: 'inline-block',
         backgroundColor: '#D3D3D3'
-    },
-    caloriesLabel: {
-        paddingTop: 5,
-        marginBottom: 3,
-        color: 'black',
-        fontSize: '10px',
-        fontWeight: 'bold',
     },
     foodDetailStyle: {
         marginTop: 20
