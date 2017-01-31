@@ -71,19 +71,6 @@ class FoodDetailContainer extends React.Component {
                             <Panel header="FOOD DETAIL">
                                 <Col md={6}>
                                     <img width="100%" src={imageUrlMapper(foodDetail.picture_url, true)}/>
-                                    <div>
-                                        <Col md={2} xs={2}>
-                                            <IngredientDisplay label={'Calories'} value={nutritionInfo.calories}/>
-                                        </Col>
-                                        <Col md={8} xs={10}>
-                                            <IngredientDisplay label={'Carbohydrate'} value={nutritionInfo.carbohydrate} color={'red'}/>
-                                            <IngredientDisplay label={'Protein'} value={nutritionInfo.protein} color={'orange'}/>
-                                            <IngredientDisplay label={'Fat'} value={nutritionInfo.fat} color={'green'}/>
-                                            <IngredientDisplay label={'Fibre'} value={nutritionInfo.fibre} color={'green'}/>
-                                            <IngredientDisplay label={'Sugar'} value={nutritionInfo.sugar} color={'orange'}/>
-                                            <IngredientDisplay label={'Sodium'} value={nutritionInfo.sodium} color={'red'}/>
-                                        </Col>
-                                    </div>
                                 </Col>
                                 <Col md={6}>
                                     <Col md={12}>
@@ -104,17 +91,36 @@ class FoodDetailContainer extends React.Component {
                                         <p><b>Rating:</b></p>
                                         <StarRatingComponent name="starRating" starCount={5} value={foodDetail.rating} />
                                     </Col>
-                                    <Col md={6}>
-                                        <b>Health Tags</b>:
-                                        {
-                                            tagArray.map(function(tagContent){
-                                                return (
-                                                    <Chip style={{display: 'inline-block'}} backgroundColor={lightGreen200} >
-                                                        {tagContent}
-                                                    </Chip>
-                                                )
-                                            })
-                                        }
+                                    <Col md={12}>
+                                        <p><b>Nutrition Information</b></p>
+                                        <Col md={11} xs={11} style={{paddingLeft:0}}>
+                                            <Col md={2} xs={2} style={{paddingLeft:0}}>
+                                                <IngredientDisplay label={'Calories'} value={nutritionInfo.calories}/>
+                                            </Col>
+                                            <Col md={8} xs={10}>
+                                                <IngredientDisplay label={'Carbohydrate'} value={nutritionInfo.carbohydrate} color={'red'}/>
+                                                <IngredientDisplay label={'Protein'} value={nutritionInfo.protein} color={'orange'}/>
+                                                <IngredientDisplay label={'Fat'} value={nutritionInfo.fat} color={'green'}/>
+                                                <IngredientDisplay label={'Fibre'} value={nutritionInfo.fibre} color={'green'}/>
+                                                <IngredientDisplay label={'Sugar'} value={nutritionInfo.sugar} color={'orange'}/>
+                                                <IngredientDisplay label={'Sodium'} value={nutritionInfo.sodium} color={'red'}/>
+                                            </Col>
+                                        </Col>
+                                    </Col>
+
+                                    <Col md={12} xs={12}>
+                                        <p><b>Health Labels</b></p>
+                                        <Col md={12} xs={12} style={{paddingLeft:0}}>
+                                            {
+                                                tagArray.map(function(tagContent){
+                                                    return (
+                                                        <Chip backgroundColor={lightGreen200} style={styles.chip}>
+                                                            {tagContent}
+                                                        </Chip>
+                                                    )
+                                                })
+                                            }
+                                        </Col>
                                     </Col>
                                 </Col>
                             </Panel>
@@ -170,7 +176,7 @@ export default connect(
 
 const styles = {
     chip: {
-        margin: 4,
+        marginRight: 2,
         display: 'inline-block',
     },
     outerCircle: {
