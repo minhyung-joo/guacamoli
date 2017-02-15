@@ -3,7 +3,7 @@ UI for HKUST25 Guacamoli Project
 
 Deployed on HKUST ITSC server pvs0087.ust.hk (www.guacamoli.ust.hk)
 
-## Deployment
+## Deployment Process
 ### SSH into server
 ```sh
 ssh guacamoli@pvs0087.ust.hk
@@ -29,15 +29,28 @@ sudo start guacamoli
 sudo stop guacamoli-image-service
 sudo start guacamoli-image-service
 ```
-
+## Server Management
 edit service configuration file:
 ```sh
 sudo vim /etc/init/guacamoli.conf
 sudo vim /etc/init/guacamoli-image-service.conf
 ```
 
-view service log:
+view log history:
 ```sh
-tail -[no. of lines] /var/log/node.log
-tail -[no. of lines] /var/log/image-service.log
+tail -100 /var/log/node.log
+tail -100 /var/log/image-service.log
+```
+
+access Postgres Database:
+```sh
+psql
+\d meal
+\q
+```
+
+Backup & Restore Database:
+```sh
+pg_dump guacamoli > backup_filename
+psql guacamoli < backup_filename
 ```
