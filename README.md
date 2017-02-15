@@ -51,6 +51,7 @@ psql
 
 Backup & Restore Database:
 ```sh
+cd /home/guacamoli/database_backup
 pg_dump guacamoli > backup_filename
 psql guacamoli < backup_filename
 ```
